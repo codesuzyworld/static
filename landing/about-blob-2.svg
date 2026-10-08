@@ -1,0 +1,9 @@
+<svg width="760" height="460" viewBox="0 0 760 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#b)"><path d="M80 220c0-90 90-160 200-150s120 60 220 30 210 20 230 110-60 190-180 200-170-40-250-10S80 310 80 220Z" fill="url(#g)"/></g>
+<defs>
+<filter id="b" x="0" y="0" width="760" height="460" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="22"/></filter>
+<radialGradient id="g" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(330 250) rotate(20) scale(330 220)">
+<stop stop-color="#F7D774"/><stop offset="0.12" stop-color="#FBF3C4"/><stop offset="0.75" stop-color="#FCE7A4"/>
+</radialGradient>
+</defs>
+</svg>
