@@ -438,6 +438,24 @@ main>section.block{padding-top:180px}
 .nav:not(.solid) .mib-version-switch-item{color:#4a4a4a}.nav:not(.solid) .mib-version-switch-item:hover{color:var(--midnight);background:rgba(255,255,255,.8)}
 .nav:not(.solid) .mib-version-switch-item[data-active]{color:var(--midnight);background:var(--yellow)}
 .nav:not(.solid) .nav-toggle{color:var(--midnight)}
+/* bigger mega menu */
+.mega-surface{grid-template-columns:minmax(0,1fr) 440px;gap:16px;padding:16px}
+.mega-list{gap:8px 16px;padding:12px}
+.nav .mega-item{gap:18px;padding:18px}
+.mega-icon{width:56px;height:56px;border-radius:14px;font-size:28px}
+.mega-text b{font-size:20px}
+.mega-text small{font-size:15px}
+.nav .mega-feat{min-height:340px;padding:28px}
+.mega-copy b{font-size:28px}
+.mega-copy small{font-size:15px}
+.mega-cta{font-size:15px;padding:12px 18px 12px 22px}
+/* mega menu matches the nav: light glass over the hero */
+.nav:not(.solid) .mega-surface{background:rgba(255,255,255,.96)!important;border-color:rgba(255,255,255,.9)!important;box-shadow:0 24px 60px rgba(42,43,47,.14),inset 0 1px 0 #fff}
+.nav:not(.solid) .mega-item{color:var(--midnight)}
+.nav:not(.solid) .mega-item:hover,.nav:not(.solid) .mega-item:focus-visible{background:rgba(42,43,47,.05)}
+.nav:not(.solid) .mega-text small{color:var(--muted)}
+.nav:not(.solid) .mega-icon{color:#8c6d0a;background:rgba(246,212,56,.18);border-color:rgba(246,212,56,.4)}
+.nav:not(.solid) .mega-item:hover .mega-icon{background:var(--yellow);color:var(--midnight)}
 .nav-logo img{height:56px}
 .nav-links a{font-size:19px!important;padding:12px 20px!important}
 .nav .btn{min-height:60px;padding:0 36px;font-size:17px}
@@ -570,7 +588,7 @@ main>section.block{padding-top:180px}
 <main>
   <!-- hero -->
   <section class="hero" data-mode="personal" aria-labelledby="hero-title">
-    <div class="hero-bg" aria-hidden="true"><img data-for="personal" src="/static/landing/v5-sky.webp" alt=""><img data-for="commercial" src="/static/landing/v5-office.webp" alt="" loading="lazy"></div>
+    <div class="hero-bg" aria-hidden="true"><img data-for="personal" src="/static/landing/v5-sky.webp?v=3" alt=""><img data-for="commercial" src="/static/landing/v5-office.webp" alt="" loading="lazy"></div>
     <div class="wrap">
       <div class="hero-copy">
         <div class="seg" role="group" aria-label="Insurance type">
