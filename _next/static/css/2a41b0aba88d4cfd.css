@@ -10,3 +10,21 @@ button[aria-label="Switch to dark theme"],button[aria-label="Switch to light the
 .ml-hero-v3{position:relative}.ml-hero-v3:after{content:"";position:absolute;left:0;right:0;bottom:0;height:220px;z-index:5;pointer-events:none;background:linear-gradient(to bottom,rgba(246,247,242,0) 0,rgba(246,247,242,.55) 55%,#f6f7f2 100%);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 60%);mask-image:linear-gradient(to bottom,transparent 0,#000 60%)}html[data-theme=dark] .ml-hero-v3:after{background:linear-gradient(to bottom,rgba(19,19,20,0) 0,rgba(19,19,20,.55) 55%,#131314 100%)}@media (max-width:720px){.ml-hero-v3:after{height:140px}}
 @media (min-width:1600px){.ml-hero-copy-v1{left:max(calc(9.32vw - (100vw - 100%) / 2),calc(50% - 680px))}}
 .ml-hero-v3 .ml-logos{width:min(620px,100%)}
+
+/* V2 mega menu: banner image stacked under the list (Figma 7869:86890) */
+/* left edge lines up with the hovered pill; +half width cancels the menu's -50% x shift */
+.ml-v2 .mib-mega{width:min(460px,92vw);left:calc(var(--mega-left,0px) + min(230px,46vw))}
+.ml-v2 .mib-mega-grid[data-featured]{grid-template-columns:1fr}
+
+/* pinned scrolly titles: shorter hold so they take less scroll */
+.ml-pin-track .ml-pin-hold{height:20vh}
+
+.ml-v2 .ml-news-tag{background:var(--ml-yellow);color:#0f0f0f}
+
+/* V2 locations: smaller Ontario map behind the card */
+.ml-v2-loc-blob{left:-62%;right:2%;top:2%;height:96%}
+.ml-v2-loc-blob img{object-fit:contain;object-position:right center;-webkit-mask-image:linear-gradient(90deg,#0000,#000 22%);mask-image:linear-gradient(90deg,#0000,#000 22%)}
+
+/* V2 locations card: frosted glass */
+.ml-v2-loc-card .ml-hq{background:#ffffff8c;-webkit-backdrop-filter:blur(22px) saturate(1.4);backdrop-filter:blur(22px) saturate(1.4);box-shadow:0 10px 40px #0000001a,inset 0 0 0 1px #ffffffb3}
+.ml-v2-loc-card .ml-hq-box{background:#ffffff80;box-shadow:inset 0 0 0 1px #fff,0 2px 10px #0000000d}
