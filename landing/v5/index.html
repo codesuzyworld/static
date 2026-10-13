@@ -8,6 +8,7 @@
 <meta property="og:type" content="website"><meta property="og:site_name" content="My Insurance Broker"><meta property="og:title" content="MIB Landing Exploration"><meta property="og:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4 and V5 concepts."><meta property="og:url" content="https://codesuzyworld.github.io/static/landing/v5/"><meta property="og:image" content="https://codesuzyworld.github.io/static/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MIB Landing Exploration"><meta name="twitter:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4 and V5 concepts."><meta name="twitter:image" content="https://codesuzyworld.github.io/static/og-image.jpg">
 <link rel="icon" href="/static/api/media/file/favicon.svg" type="image/svg+xml"><link rel="icon" href="/static/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -355,11 +356,128 @@ body{background:var(--beige);color:var(--midnight)}
 /* sections size to their content; only the hero is full-screen */
 main>section.block{padding-top:180px}
 
+/* ---------- mega menu: same smoked glass as the V5 nav bar, full bar width ---------- */
+.material-symbols-rounded{font-family:"Material Symbols Rounded";font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;-webkit-font-smoothing:antialiased;font-feature-settings:"liga"}
+.nav-links li{position:static}
+.nav-links .has-mega>a{display:flex;align-items:center;gap:6px}
+.caret{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;rotate:45deg;translate:0 -2px;opacity:.7;transition:rotate .2s,translate .2s}
+.mega{position:absolute;top:calc(100% + 8px);left:0;right:0;translate:0 6px;opacity:0;visibility:hidden;transition:opacity .2s,translate .25s,visibility 0s .25s;z-index:60}
+.mega::before{content:"";position:absolute;inset:-10px 0 auto;height:10px} /* hover bridge */
+.has-mega:hover>.mega,.has-mega:focus-within>.mega,.has-mega.open>.mega{opacity:1;visibility:visible;translate:0 0;transition:opacity .2s,translate .25s}
+.has-mega:hover .caret,.has-mega:focus-within .caret,.has-mega.open .caret{rotate:225deg;translate:0 2px}
+.mega-surface{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:12px;padding:12px;border-radius:18px;background:rgba(36,37,41,.985);backdrop-filter:blur(20px) saturate(1.2);border:1px solid rgba(254,249,239,.08);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.mega-list{list-style:none;margin:0;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;align-content:start}
+.nav .mega-item{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;color:var(--beige);text-decoration:none!important;opacity:1;font:inherit;transition:background-color .2s}
+.nav .mega-item:hover,.nav .mega-item:focus-visible{background:rgba(254,249,239,.06)}
+.mega-icon{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;color:var(--yellow);background:rgba(246,212,56,.1);border:1px solid rgba(246,212,56,.18);transition:background-color .2s,color .2s}
+.mega-item:hover .mega-icon{background:var(--yellow);color:var(--midnight)}
+.mega-text{display:flex;flex-direction:column;gap:3px}
+.mega-text b{font:500 16px/1.25 var(--sans)}
+.mega-text small{font:400 13px/1.45 var(--sans);color:rgba(254,249,239,.6)}
+.nav .mega-feat{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;min-height:260px;padding:22px;border-radius:14px;overflow:hidden;color:#fff;text-decoration:none!important;opacity:1}
+.mega-feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:scale .5s}
+.mega-feat:hover img{scale:1.05}
+.mega-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,20,22,.1) 15%,rgba(20,20,22,.9) 80%)}
+.mega-copy{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.mega-copy b{font:400 22px/1.2 var(--sans);letter-spacing:-.01em}
+.mega-copy small{font:400 13px/1.45 var(--sans);opacity:.8}
+.mega-cta{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:10px 16px 10px 20px;border-radius:999px;background:var(--yellow);color:var(--midnight);font:600 14px var(--sans);transition:gap .2s}
+.mega-cta .material-symbols-rounded{font-size:18px}
+.mega-feat:hover .mega-cta{gap:10px}
+
+/* ---------- Personal / Commercial toggle (from V3) ---------- */
+.seg{display:flex;width:fit-content;gap:4px;padding:5px;margin-bottom:28px;border-radius:999px;background:rgba(254,249,239,.08);border:1px solid rgba(254,249,239,.12);backdrop-filter:blur(8px)}
+.seg button{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:0;border-radius:999px;background:transparent;color:rgba(254,249,239,.75);font:500 15px var(--sans);letter-spacing:0;text-transform:none;cursor:pointer;transition:background-color .25s,color .25s}
+.seg button .material-symbols-rounded{font-size:20px}
+.seg button:hover{color:#fff}
+.seg button[aria-pressed=true]{background:var(--yellow);color:var(--midnight);box-shadow:0 6px 18px rgba(246,212,56,.25)}
+.hero-art .people{transition:opacity .45s ease}
+/* family is a tall portrait: sit it lower and smaller so heads clear the nav and legs fade into the logo strip */
+.hero .hero-art .people[data-for=personal]{top:16%;height:100%;left:0;width:100%;-webkit-mask-image:linear-gradient(180deg,#000 58%,transparent 86%);mask-image:linear-gradient(180deg,#000 58%,transparent 86%)}
+.hero[data-mode=personal] .people[data-for=commercial],.hero[data-mode=commercial] .people[data-for=personal]{opacity:0!important;pointer-events:none}
+.hero .shield{transition:opacity .45s}
+.hero-copy .eyebrow{transition:opacity .2s}
+
+
+/* ---------- hero photo backgrounds: V3 sky (family baked in) / office ---------- */
+.hero{color:var(--midnight);background:#eef1f4!important}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s ease}
+.hero-bg img[data-for=personal]{object-position:50% 100%}
+.hero-bg img[data-for=commercial]{object-position:30% 50%;filter:blur(2px) saturate(.9);scale:1.03}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(248,248,244,.92) 0%,rgba(248,248,244,.7) 34%,rgba(248,248,244,0) 62%)}
+.hero[data-mode=commercial] .hero-bg::after{background:linear-gradient(90deg,rgba(248,248,244,.94) 0%,rgba(248,248,244,.78) 36%,rgba(248,248,244,.1) 66%)}
+.hero[data-mode=personal] .hero-bg img[data-for=commercial],.hero[data-mode=commercial] .hero-bg img[data-for=personal]{opacity:0}
+.hero .wrap{z-index:1}
+/* sky photo for personal (family cutout on top), blurred office for commercial */
+.hero .hero-art .glow{opacity:0!important}
+.hero .shield{opacity:.75;filter:saturate(1.15)}
+.hero[data-mode=commercial] .shield{opacity:.28}
+.hero h1{color:var(--midnight)}
+.hero h1 em{color:var(--bronze)}
+.hero .hero-copy .eyebrow{color:var(--muted)}
+.hero .btn-ghost{color:var(--midnight);border-color:rgba(42,43,47,.3)}.hero .btn-ghost:hover{border-color:var(--midnight)}
+.hero .seg{background:rgba(255,255,255,.7);border-color:rgba(42,43,47,.08);box-shadow:0 10px 30px rgba(42,43,47,.08)}
+.hero .seg button{color:var(--muted)}.hero .seg button:hover{color:var(--midnight)}
+.hero .seg button[aria-pressed=true]{color:var(--midnight)}
+.hero .partners::before{background:linear-gradient(180deg,rgba(248,248,244,0) 0%,rgba(248,248,244,.7) 50%,rgba(248,248,244,.85) 100%)}
+.hero .marquee-track img{filter:brightness(0);opacity:.7}
+
+/* on a photo background a fading cutout looks ghostly: keep people solid, let the logo band cover their legs */
+.hero .hero-art .people{-webkit-mask-image:none!important;mask-image:none!important}
+.hero .partners{margin-top:-90px;padding-top:110px}
+.hero .partners::before{background:linear-gradient(180deg,rgba(248,248,244,0) 0%,rgba(248,248,244,.85) 45%,#f8f8f4 75%)!important;backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 45%);mask-image:linear-gradient(180deg,transparent,#000 45%)}
+/* nav: bigger, smoked glass that lets the hero photo blur through */
+.nav{top:20px;width:min(1480px,calc(100% - 40px));padding:18px 20px 18px 32px;gap:40px;border-radius:24px;background:rgba(30,31,35,.88)!important;backdrop-filter:blur(24px) saturate(1.4)!important;-webkit-backdrop-filter:blur(24px) saturate(1.4)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 12px 40px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.12)}
+/* over the hero: light glass + dark text; once scrolled ('solid'): dark + white text */
+.nav{transition:background-color .35s,color .35s,box-shadow .35s,border-color .35s}
+.nav:not(.solid){background:rgba(255,255,255,.42)!important;color:var(--midnight);border-color:rgba(255,255,255,.6)!important;box-shadow:0 12px 40px rgba(42,43,47,.1),inset 0 1px 0 rgba(255,255,255,.7)}
+.nav-logo .logo-on-light{display:none}
+.nav:not(.solid) .logo-on-light{display:block}.nav:not(.solid) .logo-on-dark{display:none}
+.nav:not(.solid) .mib-version-switch{background:rgba(42,43,47,.08)!important}
+.nav:not(.solid) .mib-version-switch-item{color:#4a4a4a}.nav:not(.solid) .mib-version-switch-item:hover{color:var(--midnight);background:rgba(255,255,255,.8)}
+.nav:not(.solid) .mib-version-switch-item[data-active]{color:var(--midnight);background:var(--yellow)}
+.nav:not(.solid) .nav-toggle{color:var(--midnight)}
+.nav-logo img{height:56px}
+.nav-links a{font-size:19px!important;padding:12px 20px!important}
+.nav .btn{min-height:60px;padding:0 36px;font-size:17px}
+.nav .mib-version-switch-item{min-width:40px;height:36px;font-size:13px}
+.mega{top:calc(100% + 10px)}
+.mega-surface{background:rgba(36,37,41,.9)!important;backdrop-filter:blur(24px) saturate(1.4);border-color:rgba(255,255,255,.12)!important}
+
+/* footer: V2 format in V5 colours */
+.v5f{position:relative;margin-top:180px;border-radius:40px 40px 0 0;color:#fff;overflow:hidden;display:flex;flex-direction:column;min-height:0;
+  background:radial-gradient(ellipse 38% 55% at 18% 82%,rgba(246,216,72,.28),transparent 70%),radial-gradient(ellipse 34% 60% at 84% 76%,rgba(246,186,61,.22),transparent 70%),radial-gradient(ellipse 40% 50% at 55% 10%,rgba(255,255,255,.06),transparent 70%),#2a2b2f}
+.v5f-cols{display:flex;justify-content:space-between;gap:clamp(40px,6vw,120px);padding:96px clamp(40px,6vw,110px) 0}
+.v5f-col{display:flex;flex-direction:column;gap:28px}
+.v5f-contact{max-width:420px}
+.v5f-h{font:600 18px var(--sans);color:var(--yellow);margin:0}
+.v5f-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.v5f a{text-decoration:none;color:inherit}
+.v5f-links a,.v5f-item a{font:600 15px var(--sans);background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .35s}
+.v5f-links a:hover,.v5f-item a:hover{background-size:100% 1px}
+.v5f-item{display:flex;align-items:flex-start;gap:10px}
+.v5f-item img{filter:brightness(0) invert(1);opacity:.85;margin-top:2px}
+.v5f-item p{margin:0;font:400 14px/1.75 var(--sans);color:rgba(255,255,255,.75)}
+.v5f-item strong{font-weight:700;color:#fff}
+.v5f-socials{display:flex;gap:18px}
+.v5f-socials img{width:26px;height:26px;filter:brightness(0) invert(1);opacity:.85;transition:opacity .2s,translate .2s}
+.v5f-socials a:hover img{opacity:1;translate:0 -3px}
+.v5f-top{margin-top:auto;font:600 13px var(--sans);opacity:.6}.v5f-top:hover{opacity:1}
+.v5f-3d{flex:none;height:clamp(260px,32vw,520px);margin-top:40px;position:relative;cursor:pointer}
+.v5f-3d canvas{display:block;width:100%!important;height:100%!important}
+.v5f-fallback{position:absolute;left:50%;top:50%;translate:-50% -50%;height:55%;width:auto;opacity:.9}
+.v5f-3d.live .v5f-fallback{display:none}
+.v5f-cols{max-width:1400px;width:100%;margin:0 auto}
+@media (max-width:900px){.v5f-cols{flex-direction:column;gap:40px;padding:56px 24px 0}.v5f{min-height:0}.v5f-3d{min-height:260px}}
+
 /* ---------- tablet ---------- */
 @media (max-width:1100px){
   .nav-links{display:none}
   .nav-links.open{display:flex;flex-direction:column;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--glow),var(--navy);border:1px solid var(--line);border-radius:26px;padding:12px;box-shadow:0 20px 40px rgba(15,15,15,.3)}
   .nav-links.open a{font-size:20px;padding:12px 16px}
+  .mega,.caret{display:none}
+  .seg button{padding:9px 14px;font-size:13px}
   .nav-toggle{display:block}
   .nav .mib-version-switch{margin-left:auto}
   .nav .btn{display:none}
@@ -436,10 +554,10 @@ main>section.block{padding-top:180px}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="star" viewBox="0 0 24 24"><path d="M12 2.5l2.94 6.26 6.86.8-5.08 4.7 1.36 6.78L12 17.6l-6.08 3.44 1.36-6.78-5.08-4.7 6.86-.8z" fill="currentColor"/></symbol></svg>
 
 <header class="nav">
-  <a class="nav-logo" href="/static/landing/v5" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="84" height="36"></a>
+  <a class="nav-logo" href="/static/landing/v5" aria-label="My Insurance Broker home"><img class="logo-on-dark" src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="84" height="36"><img class="logo-on-light" src="/static/brand/miblogo.svg" alt="" width="84" height="36"></a>
   <ul class="nav-links" id="nav-links">
-    <li><a href="/static/personal">Personal</a></li>
-    <li><a href="/static/commercial">Business</a></li>
+    <li class="has-mega"><a href="/static/personal" aria-haspopup="true">Personal <span class="caret" aria-hidden="true"></span></a><div class="mega" role="region" aria-label="Bundle Home + Auto"><div class="mega-surface"><ul class="mega-list"><li><a class="mega-item" href="/static/insurance/home"><span class="mega-icon material-symbols-rounded" aria-hidden="true">home</span><span class="mega-text"><b>Home Insurance</b><small>Coverage for houses, condos, and rentals.</small></span></a></li><li><a class="mega-item" href="/static/insurance/auto"><span class="mega-icon material-symbols-rounded" aria-hidden="true">directions_car</span><span class="mega-text"><b>Auto Insurance</b><small>Personal auto policies for every driver.</small></span></a></li><li><a class="mega-item" href="/static/personal/motorcycle"><span class="mega-icon material-symbols-rounded" aria-hidden="true">two_wheeler</span><span class="mega-text"><b>Motorcycle</b><small>Bike + rider coverage.</small></span></a></li><li><a class="mega-item" href="/static/personal/travel"><span class="mega-icon material-symbols-rounded" aria-hidden="true">flight</span><span class="mega-text"><b>Travel</b><small>Trip cancellation and travel medical.</small></span></a></li><li><a class="mega-item" href="/static/personal/life"><span class="mega-icon material-symbols-rounded" aria-hidden="true">shield</span><span class="mega-text"><b>Life</b><small>Term and whole-life policies.</small></span></a></li></ul><a class="mega-feat" href="#quote"><img src="/static/product-pages/home/hero.png" alt="" loading="lazy"><span class="mega-shade"></span><span class="mega-copy"><b>Bundle Home + Auto</b><small>Save up to 20% when you bring both under one broker.</small><span class="mega-cta">Get A Quote <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></span></span></a></div></div></li>
+    <li class="has-mega"><a href="/static/commercial" aria-haspopup="true">Business <span class="caret" aria-hidden="true"></span></a><div class="mega" role="region" aria-label="One conversation, 30+ markets"><div class="mega-surface"><ul class="mega-list"><li><a class="mega-item" href="/static/insurance/commercial"><span class="mega-icon material-symbols-rounded" aria-hidden="true">work</span><span class="mega-text"><b>Business Insurance</b><small>The four policies most businesses start with.</small></span></a></li><li><a class="mega-item" href="/static/commercial/retail"><span class="mega-icon material-symbols-rounded" aria-hidden="true">storefront</span><span class="mega-text"><b>Retail</b><small>Storefront coverage for goods on hand.</small></span></a></li><li><a class="mega-item" href="/static/commercial/hospitality"><span class="mega-icon material-symbols-rounded" aria-hidden="true">restaurant</span><span class="mega-text"><b>Hospitality</b><small>Restaurants, cafes, and hotels.</small></span></a></li><li><a class="mega-item" href="/static/commercial/health"><span class="mega-icon material-symbols-rounded" aria-hidden="true">spa</span><span class="mega-text"><b>Health &amp; Beauty</b><small>Spas, salons, clinics.</small></span></a></li><li><a class="mega-item" href="/static/commercial/food"><span class="mega-icon material-symbols-rounded" aria-hidden="true">lunch_dining</span><span class="mega-text"><b>Food &amp; Bev</b><small>Food trucks, bakeries, caterers.</small></span></a></li></ul><a class="mega-feat" href="#quote"><img src="/static/product-pages/business/hero.png" alt="" loading="lazy"><span class="mega-shade"></span><span class="mega-copy"><b>One conversation, 30+ markets</b><small>We shop every major Canadian commercial carrier for you.</small><span class="mega-cta">Get A Quote <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></span></span></a></div></div></li>
     <li><a href="#about">About Us</a></li>
     <li><a href="#careers">Careers</a></li>
     <li><a href="#locations">Contact Us</a></li>
@@ -451,20 +569,26 @@ main>section.block{padding-top:180px}
 
 <main>
   <!-- hero -->
-  <section class="hero" aria-labelledby="hero-title">
+  <section class="hero" data-mode="personal" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"><img data-for="personal" src="/static/landing/v5-sky.webp" alt=""><img data-for="commercial" src="/static/landing/v5-office.webp" alt="" loading="lazy"></div>
     <div class="wrap">
       <div class="hero-copy">
-        <p class="eyebrow">Best insurance solutions in Canada</p>
+        <div class="seg" role="group" aria-label="Insurance type">
+          <button type="button" data-mode="personal" aria-pressed="true"><span class="material-symbols-rounded" aria-hidden="true">home</span>Personal</button>
+          <button type="button" data-mode="commercial" aria-pressed="false"><span class="material-symbols-rounded" aria-hidden="true">business_center</span>Commercial</button>
+        </div>
+        <p class="eyebrow" data-personal="Best personal insurance solutions in Canada" data-commercial="Best business insurance solutions in Canada">Best personal insurance solutions in Canada</p>
         <h1 id="hero-title">Insurance<br>for <em>All</em> Needs</h1>
         <div class="hero-ctas">
           <a class="btn btn-gold" href="#quote">Get a Quote</a>
-          <a class="btn btn-ghost" href="/static/commercial">Learn More</a>
+          <a class="btn btn-ghost" href="/static/personal" data-learn>Learn More</a>
         </div>
       </div>
       <div class="hero-art">
         <div class="glow"></div>
         <img class="shield" src="/static/landing/v5-shield.svg" alt="" aria-hidden="true">
-        <img class="people" src="/static/landing/v4/people.webp" alt="Two brokers reviewing a policy on a tablet" width="1800" height="1200">
+        <img class="people" data-for="personal" src="/static/landing/v5-family.webp?v=2" alt="A smiling family in yellow shirts" width="1492" height="1853">
+        <img class="people" data-for="commercial" src="/static/landing/v4/people.webp" alt="Two brokers reviewing a policy on a tablet" width="1800" height="1200" loading="lazy">
       </div>
     </div>
     <div class="partners" aria-label="Insurance partners">
@@ -608,23 +732,20 @@ main>section.block{padding-top:180px}
   </section>
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div><img class="logo logo-big" src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="223" height="96"></div>
-      <div><h4>NAVIGATION</h4><ul><li><a href="/static/personal">Personal Insurance</a></li><li><a href="/static/commercial">Business Insurance</a></li><li><a href="/static/about-us">About Us</a></li><li><a href="/static/careers">Careers</a></li><li><a href="/static/contact-us">Contact Us</a></li></ul></div>
-      <div><h4>CONTACT US</h4><ul>
-        <li><img src="/static/landing/icon-briefcase.svg" alt="">6 - 50 West Wilmot Street Richmond Hill, ON L4B 1M5</li>
-        <li><img src="/static/landing/icon-email.svg" alt=""><a href="mailto:info@myinsurancebroker.com">info@myinsurancebroker.com</a></li>
-        <li><img src="/static/landing/icon-phone.svg" alt=""><a href="tel:18331234">1-833-1234</a></li>
-      </ul></div>
-      <div><h4>SOCIALS</h4><div class="socials">
-        <a href="#" aria-label="Facebook"><img src="/static/landing/social-facebook.svg" alt=""></a><a href="#" aria-label="Instagram"><img src="/static/landing/social-instagram.svg" alt=""></a><a href="#" aria-label="LinkedIn"><img src="/static/landing/social-linkedin.svg" alt=""></a><a href="#" aria-label="X"><img src="/static/landing/social-x.svg" alt=""></a><a href="#" aria-label="Messenger"><img src="/static/landing/social-messenger.svg" alt=""></a>
-      </div></div>
-    </div>
-    <p class="foot-bottom">© 2026 My Insurance Broker. All rights reserved.</p>
-  </div>
-</footer>
+<footer class="v5f">
+      <div class="v5f-cols">
+        <div class="v5f-col"><p class="v5f-h">Navigation</p><ul class="v5f-links"><li><a href="/static/personal">Personal Insurance</a></li><li><a href="/static/commercial">Business Insurance</a></li><li><a href="/static/about-us">About Us</a></li><li><a href="/static/careers">Careers</a></li><li><a href="/static/contact-us">Contact Us</a></li></ul></div>
+        <div class="v5f-col v5f-contact"><p class="v5f-h">Contact Us</p>
+          <div class="v5f-item"><img src="/static/landing/icon-briefcase.svg" alt="" width="22" height="22"><p><strong>My Insurance Broker Head Office</strong><br><span>6 - 50 West Wilmot Street Richmond Hill, ON L4B 1M5</span></p></div>
+          <div class="v5f-item"><img src="/static/landing/icon-email.svg" alt="" width="21" height="21"><p><strong>Email</strong><br><a href="mailto:info@myinsurancebroker.com">info@myinsurancebroker.com</a></p></div>
+          <div class="v5f-item"><img src="/static/landing/icon-phone.svg" alt="" width="21" height="21"><p><strong>Customer Support Hotline</strong><br><a href="tel:+19056952080">+1 (905) 695-2080</a></p></div>
+        </div>
+        <div class="v5f-col"><p class="v5f-h">Socials</p><div class="v5f-socials">
+          <a href="https://www.facebook.com/" aria-label="Facebook"><img src="/static/landing/social-facebook.svg" alt=""></a><a href="https://www.instagram.com/" aria-label="Instagram"><img src="/static/landing/social-instagram.svg" alt=""></a><a href="https://www.linkedin.com/" aria-label="LinkedIn"><img src="/static/landing/social-linkedin.svg" alt=""></a><a href="https://x.com/" aria-label="X"><img src="/static/landing/social-x.svg" alt=""></a><a href="https://www.messenger.com/" aria-label="Messenger"><img src="/static/landing/social-messenger.svg" alt=""></a>
+        </div></div>
+      </div>
+      <div class="v5f-3d" role="img" aria-label="My Insurance Broker"><img class="v5f-fallback" src="/static/brand/miblogo-dark.svg" alt=""></div>
+    </footer>
 
 <script>
 // Office data copied from the V1 locations block
@@ -689,8 +810,27 @@ document.querySelector('.hero-ctas').style.setProperty('--d','.5s');
 
 // nav turns solid once past the hero so it stays readable over light sections
 const nav=document.querySelector('.nav'),heroEl=document.querySelector('.hero');
-const dock=()=>nav.classList.toggle('solid',scrollY>heroEl.offsetHeight-120);
+const dock=()=>nav.classList.toggle('solid',scrollY>80); // 'solid' is now the lighter glass state once you start scrolling
 addEventListener('scroll',dock,{passive:true});dock();
+
+// Personal / Commercial toggle: swaps the hero photo, eyebrow and Learn More link
+(()=>{
+  const hero=document.querySelector('.hero'),eb=hero.querySelector('.hero-copy .eyebrow'),learn=hero.querySelector('[data-learn]');
+  hero.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+    const m=b.dataset.mode;if(hero.dataset.mode===m)return;
+    hero.dataset.mode=m;
+    hero.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    eb.style.opacity=0;setTimeout(()=>{eb.textContent=eb.dataset[m];eb.style.opacity=''},180);
+    learn.href=m==='personal'?'/static/personal':'/static/commercial';
+  }));
+})();
+// mega menu: Escape closes; tapping the label on touch screens opens it first
+document.querySelectorAll('.has-mega').forEach(li=>{
+  const a=li.querySelector(':scope>a');
+  a.addEventListener('click',e=>{if(matchMedia('(hover:none)').matches&&!li.classList.contains('open')){e.preventDefault();document.querySelectorAll('.has-mega.open').forEach(x=>x.classList.remove('open'));li.classList.add('open')}});
+  li.addEventListener('keydown',e=>{if(e.key==='Escape'){li.classList.remove('open');a.focus();li.querySelector('.mega').style.visibility='hidden';setTimeout(()=>li.querySelector('.mega').style.visibility='',300)}});
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.has-mega'))document.querySelectorAll('.has-mega.open').forEach(x=>x.classList.remove('open'))});
 
 // mobile menu
 const tog=document.querySelector('.nav-toggle'),links=document.getElementById('nav-links');
@@ -699,6 +839,48 @@ links.onclick=e=>{if(e.target.closest('a')){links.classList.remove('open');tog.s
 
 // shortcut: the quote form doesn't submit anywhere (same as V1); wire to the real endpoint when there is one
 document.getElementById('quote-form').addEventListener('submit',e=>{e.preventDefault();e.target.classList.add('sent');e.target.reset()});
+</script>
+<script type="module">
+// V2's 3D footer logo, recoloured for V4: cream body, bronze shield on navy
+const box=document.querySelector('.v5f-3d');
+if(box&&true){(async()=>{
+  const [T,{GLTFLoader},{RoomEnvironment}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js')]);
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.toneMapping=T.ACESFilmicToneMapping;r.outputColorSpace=T.SRGBColorSpace;
+  const scene=new T.Scene(),pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
+  const dl=new T.DirectionalLight('#fff1d6',1.2);dl.position.set(-3,4,6);scene.add(dl,new T.AmbientLight('#ffffff',.5));
+  const cam=new T.PerspectiveCamera(28,1,.01,100);
+  const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
+  const bb=new T.Box3().setFromObject(g),size=bb.getSize(new T.Vector3),ctr=bb.getCenter(new T.Vector3),grp=new T.Group;g.position.sub(ctr);grp.add(g);grp.scale.setScalar(4/size.x);grp.updateMatrixWorld(true);
+  const body=new T.MeshPhysicalMaterial({color:'#efe6d6',roughness:.55,transmission:.08,thickness:.4,ior:1.4,sheen:.4,sheenRoughness:.8,sheenColor:new T.Color('#fff6e0')});
+  let shield=null;g.traverse(o=>{if(o.isMesh){if(o.name.replace(/\W/g,'')==='Curve020')shield=o;else o.material=body}});
+  const spin=new T.Group;
+  if(shield){const geo=shield.geometry,pos=geo.attributes.position,v=new T.Vector3,ds=[];let lo=1/0,hi=-1/0;
+    for(let i=0;i<pos.count;i++){v.fromBufferAttribute(pos,i).applyMatrix4(shield.matrixWorld);const d=v.x-v.y;ds.push(d);lo=Math.min(lo,d);hi=Math.max(hi,d)}
+    const stops=['#c98a0e','#edb92a','#f7ee7a'].map(c=>new T.Color(c)),col=new Float32Array(3*pos.count),c=new T.Color;
+    ds.forEach((d,i)=>{const t=(d-lo)/(hi-lo||1);t<.5?c.lerpColors(stops[0],stops[1],t/.5):c.lerpColors(stops[1],stops[2],(t-.5)/.5);col.set([c.r,c.g,c.b],3*i)});
+    geo.setAttribute('color',new T.BufferAttribute(col,3));
+    shield.material=new T.MeshPhysicalMaterial({vertexColors:true,roughness:.5,transmission:.35,thickness:.6,ior:1.35,attenuationColor:new T.Color('#f2c94c'),attenuationDistance:.8,sheen:.8,sheenRoughness:.7,sheenColor:new T.Color('#fff4c2')});
+    const sc=new T.Box3().setFromObject(shield).getCenter(new T.Vector3);grp.worldToLocal(sc);spin.position.copy(sc);grp.add(spin);spin.updateMatrixWorld(true);spin.attach(shield)}
+  const wrap=new T.Group;wrap.add(grp);scene.add(wrap);
+  box.appendChild(r.domElement);box.classList.add('live');
+  const fit=()=>{const w=box.clientWidth,h=box.clientHeight;r.setSize(w,h);cam.aspect=w/h;const t=Math.tan(cam.fov*Math.PI/360),need=size.y/size.x*6.2;cam.position.set(0,0,Math.max(2.6/(t*cam.aspect),need/2/t));cam.lookAt(0,0,0);cam.updateProjectionMatrix()};
+  fit();new ResizeObserver(fit).observe(box);
+  const m={x:0,y:0},host=box.closest('.v5f');
+  host.addEventListener('pointermove',e=>{const b=box.getBoundingClientRect();m.x=(e.clientX-b.left)/b.width*2-1;m.y=(e.clientY-b.top)/b.height*2-1});
+  host.addEventListener('pointerleave',()=>{m.x=0;m.y=0});
+  let bump=0,ang=0,goal=0;box.addEventListener('click',()=>{bump=1;goal+=2*Math.PI});
+  let vis=false,raf=0,rx=0,ry=0,intro=reduce?1:0;const clock=new T.Clock;
+  const tick=()=>{raf=0;const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+    if(!reduce){intro=Math.min(1,intro+.9*dt);const e=1+2.6*Math.pow(intro-1,3)+1.6*Math.pow(intro-1,2);
+      rx+=(.08*m.y-rx)*Math.min(1,2.5*dt);ry+=(.14*m.x-ry)*Math.min(1,2.5*dt);
+      wrap.rotation.set(rx-(1-e)*.9,ry+.05*Math.sin(.6*t),.015*Math.sin(.8*t));wrap.position.y=-(1-e)*1.6+.05*Math.sin(1.1*t);
+      bump*=Math.exp(-5*dt);const sq=Math.sin((1-bump)*Math.PI*3)*bump*.18;wrap.scale.set(1+.6*sq,1-sq,1+.6*sq);
+      ang+=(goal-ang)*Math.min(1,4.5*dt);spin.rotation.y=ang+.08*Math.sin(1.4*t)}
+    r.render(scene,cam);if(vis&&!reduce)raf=requestAnimationFrame(tick)};
+  new IntersectionObserver(([e])=>{vis=e.isIntersecting;if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}},{threshold:.1}).observe(box);
+  if(reduce)tick();
+})().catch(e=>console.warn('[v5 footer 3d]',e))}
 </script>
 </body>
 </html>

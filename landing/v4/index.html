@@ -270,11 +270,8 @@ section{scroll-margin-top:100px}
   main{display:none}
   .slides{display:block;position:relative}
   .sl-pin{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--sl-tint,#fbf7ee)}
-  .sl-track{display:flex;height:100%;width:max-content;will-change:transform}
+  .sl-track{position:relative;z-index:1;display:flex;height:100%;width:max-content;will-change:transform}
   .sl{position:relative;flex:none;width:100vw;height:100vh;overflow:hidden;color:var(--ink)}
-  .sl-snaps{position:absolute;inset:0;pointer-events:none}
-  .sl-snaps i{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start}
-  .foot{margin-top:0;scroll-snap-align:end}
   .sl-bar{display:block;position:fixed;left:0;right:0;bottom:0;height:3px;z-index:60;background:rgba(0,3,26,.08)}
   .sl-bar span{display:block;height:100%;background:var(--bronze);transform-origin:left;transform:scaleX(0)}
 
@@ -299,6 +296,53 @@ section{scroll-margin-top:100px}
   .sl-pill:hover{border-color:#fff}
   .sl-pill small{font-size:10px;letter-spacing:.14em;opacity:.7;font-weight:600}
   .sl .shape{position:absolute;z-index:3}
+
+  /* ---------- V4 desktop: no top bar, rail menu, footer slide ---------- */
+  .nav,.foot{display:none!important}
+  .sl-1 .sl-col{top:0;height:92vh;padding:4vh 3vw 4vh}
+  .sl-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:6vh}
+  .sl-brand img{height:44px;width:auto}
+  .sl-quote{bottom:calc(var(--u) * 63 + var(--u) * 3)}
+  /* rail: same navy + rounded bottom as the hero column; width is set by JS while it collapses */
+  .sl-rail{position:absolute;left:3vw;top:0;height:92vh;width:var(--rail-w,44vw);z-index:0;pointer-events:none;color:#fff;background:var(--glow),var(--navy);border-radius:0 0 var(--r-xl) var(--r-xl);overflow:hidden;transition:width .45s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  .sl-rail.docked{z-index:70;pointer-events:auto;left:0;height:100vh;border-radius:0 var(--r-lg) var(--r-lg) 0;box-shadow:12px 0 40px rgba(0,3,26,.18);transition:width .45s cubic-bezier(.2,.8,.2,1),left .35s ease,height .35s ease,border-radius .35s ease,box-shadow .3s}
+  .sl-rail.docked .sl-rail-mini{width:84px}
+  .sl-rail.docked.open{width:min(420px,40vw)!important;box-shadow:24px 0 60px rgba(0,3,26,.35)}
+  .sl-rail-mini{position:absolute;inset:0 auto 0 0;width:84px;display:flex;flex-direction:column;align-items:center;gap:26px;padding-top:30px;opacity:0;transition:opacity .25s}
+  .sl-rail.docked .sl-rail-mini{opacity:1}
+  .sl-rail.open .sl-rail-mini{opacity:0}
+  .sl-rail-mini img{width:34px;height:auto}
+  .sl-rail-burger{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+  .sl-rail-burger i,.sl-rail-burger i::before,.sl-rail-burger i::after{display:block;width:16px;height:2px;background:#fff;border-radius:2px;position:relative}
+  .sl-rail-burger i::before,.sl-rail-burger i::after{content:"";position:absolute;left:0}
+  .sl-rail-burger i::before{top:-5px}.sl-rail-burger i::after{top:5px}
+  .sl-rail-label{writing-mode:vertical-rl;font:600 11px var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.7}
+  .sl-rail-full{position:absolute;top:0;left:0;width:min(420px,40vw);height:100%;padding:4vh 36px;display:flex;flex-direction:column;align-items:flex-start;gap:4vh;opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+  .sl-rail.open .sl-rail-full{opacity:1;visibility:visible;transition:opacity .3s .12s}
+  .sl-rail-logo img{height:44px;width:auto}
+  .sl-rail-links{display:flex;flex-direction:column;gap:.4vh;margin-top:2vh}
+  .sl-rail-links a{font:400 clamp(26px,2.4vw,38px)/1.25 var(--serif);text-decoration:none;opacity:.85;transition:opacity .2s,translate .2s}
+  .sl-rail-links a:hover{opacity:1;translate:8px 0;color:#d9bf9a}
+  .sl-rail .btn{margin-top:auto}
+  /* footer slide */
+  .sl-8{color:#fff}
+  .sl-foot{position:absolute;inset:0;padding:10vh 7vw 6vh 12vw;display:flex;flex-direction:column;justify-content:space-between}
+  .sl-foot-top{display:flex;align-items:flex-end;gap:4vw}
+  .sl-foot-logo{height:clamp(80px,13vh,140px);width:auto}
+  .sl-foot-tag{flex:1;max-width:30vw;font:400 clamp(24px,2.3vw,40px)/1.25 var(--serif)}
+  .sl-foot-tag em{font-style:italic;color:#d9bf9a}
+  .sl-foot-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4vw;padding-top:5vh;border-top:1px solid rgba(255,255,255,.12)}
+  .sl-foot h4{margin:0 0 2vh;font:700 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--bronze)}
+  .sl-foot ul{list-style:none;margin:0;padding:0;display:grid;gap:1.4vh;font-size:clamp(14px,1.05vw,17px);line-height:1.5;opacity:.85}
+  .sl-foot a{text-decoration:none}.sl-foot ul a:hover{text-decoration:underline}
+  .sl-foot .socials{display:flex;gap:10px}
+  .sl-foot .socials a{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+  .sl-foot .socials a:hover{background:rgba(255,255,255,.1)}
+  .sl-foot .socials img{width:20px;filter:brightness(0) invert(1)}
+  .sl-foot-bottom{display:flex;justify-content:space-between;font-size:12px;opacity:.55}
+  .sl-foot-bottom a:hover{opacity:1;text-decoration:underline}
+  .sl-s8a{width:9vw;right:5vw;top:8vh}
+  .sl-s8b{width:7vw;right:7vw;bottom:14vh;transform:rotate(-10deg)}
 
   /* 1 — quote column + talk-to-us block */
   .sl-1 .sl-col{left:3vw;width:44vw;padding:16vh 3vw 4vh;display:flex;flex-direction:column}
@@ -675,10 +719,26 @@ section{scroll-margin-top:100px}
 
 <!-- desktop: horizontal slides, one screen-width each (layout from the Figma moodboard) -->
 <div class="slides" id="slides">
-<div class="sl-pin"><div class="sl-track">
+<div class="sl-pin"><aside class="sl-rail" aria-label="Main menu">
+  <div class="sl-rail-mini" aria-hidden="true">
+    <img src="/static/landing/v5-shield.svg" alt="" width="34" height="44">
+    <span class="sl-rail-burger"><i></i></span>
+    <span class="sl-rail-label">Menu</span>
+  </div>
+  <div class="sl-rail-full">
+    <a class="sl-rail-logo" href="/static/landing/v4"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a>
+    <nav class="sl-rail-links">
+      <a href="/static/personal">Personal</a><a href="/static/commercial">Business</a><a href="#about">About Us</a><a href="#careers">Careers</a><a href="#locations">Contact Us</a>
+    </nav>
+    <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav>
+    <a class="btn btn-gold" href="#quote">Get a Quote</a>
+  </div>
+</aside>
+<div class="sl-track">
 
   <section class="sl sl-1" data-tint="#fbf7ee" aria-label="Insurance for All Needs">
     <div class="sl-col navy">
+      <div class="sl-brand"><a href="/static/landing/v4" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a><nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav></div>
       <p class="eyebrow rv">Best insurance solutions in Canada</p>
       <h2 class="sl-h1 rv">Insurance<br>for <em>All</em> Needs</h2>
       <div class="sl-ctas rv"><a class="btn btn-gold" href="#quote">Get a Quote</a><a class="btn btn-ghost" href="/static/commercial">Learn More</a></div>
@@ -792,8 +852,26 @@ section{scroll-margin-top:100px}
     </form>
   </section>
 
+  <section class="sl sl-8" data-tint="#00031a" aria-label="Footer">
+    <div class="sl-foot">
+      <div class="sl-foot-top">
+        <img class="sl-foot-logo" src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="280" height="120">
+        <p class="sl-foot-tag">We make sure to tailor your insurance experience to <em>your needs.</em></p>
+        <a class="btn btn-gold" href="#quote">Get a Quote</a>
+      </div>
+      <div class="sl-foot-cols">
+        <div><h4>Navigation</h4><ul><li><a href="/static/personal">Personal Insurance</a></li><li><a href="/static/commercial">Business Insurance</a></li><li><a href="/static/about-us">About Us</a></li><li><a href="/static/careers">Careers</a></li><li><a href="/static/contact-us">Contact Us</a></li></ul></div>
+        <div><h4>Contact us</h4><ul><li>6 - 50 West Wilmot Street<br>Richmond Hill, ON L4B 1M5</li><li><a href="mailto:info@myinsurancebroker.com">info@myinsurancebroker.com</a></li><li><a href="tel:+19056952080">+1 (905) 695-2080</a></li></ul></div>
+        <div><h4>Socials</h4><div class="socials">
+          <a href="#" aria-label="Facebook"><img src="/static/landing/social-facebook.svg" alt=""></a><a href="#" aria-label="Instagram"><img src="/static/landing/social-instagram.svg" alt=""></a><a href="#" aria-label="LinkedIn"><img src="/static/landing/social-linkedin.svg" alt=""></a><a href="#" aria-label="X"><img src="/static/landing/social-x.svg" alt=""></a><a href="#" aria-label="Messenger"><img src="/static/landing/social-messenger.svg" alt=""></a>
+        </div></div>
+      </div>
+      <p class="sl-foot-bottom"><span>© 2026 My Insurance Broker. All rights reserved.</span><a href="#" data-top>Back to start &larr;</a></p>
+    </div>
+    <img class="shape sl-s8a" src="sphere.webp" alt=""><img class="shape sl-s8b" src="pyramid.webp" alt="">
+  </section>
+
 </div></div>
-<div class="sl-snaps" aria-hidden="true"></div>
 </div>
 <div class="sl-bar" aria-hidden="true"><span></span></div>
 
@@ -884,73 +962,69 @@ const nav=document.querySelector('.nav'),heroEl=document.querySelector('.hero');
 const dock=()=>nav.classList.toggle('solid',scrollY>heroEl.offsetHeight-120);
 addEventListener('scroll',dock,{passive:true});dock();
 
-// desktop slides: scrolling down slides the track one screen-width at a time (snap points per slide)
+// desktop slides: vertical scroll drives a continuous sideways track, eased so it glides instead of stepping
 (()=>{
   const mq=matchMedia('(min-width:1101px) and (min-height:640px)');
-  const root=document.getElementById('slides'),pin=root.querySelector('.sl-pin'),track=root.querySelector('.sl-track'),snaps=root.querySelector('.sl-snaps'),bar=document.querySelector('.sl-bar span');
+  const root=document.getElementById('slides'),pin=root.querySelector('.sl-pin'),track=root.querySelector('.sl-track'),bar=document.querySelector('.sl-bar span');
+  const rail=document.querySelector('.sl-rail'),col=root.querySelector('.sl-1 .sl-col');
   const slides=[...track.children],n=slides.length,rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
-  slides.forEach((s,i)=>s.querySelectorAll('.rv').forEach((el,k)=>el.style.setProperty('--d',k)));
-  for(let i=0;i<n;i++)snaps.append(document.createElement('i'));
-  let step=0,start=0,cur=-1;
+  slides.forEach(s=>s.querySelectorAll('.rv').forEach((el,k)=>el.style.setProperty('--d',k)));
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let step=0,start=0,cur=0,target=0,raf=0,colW=0,colL=0;
   function size(){
     if(!mq.matches){root.style.height='';return}
-    step=Math.round(innerHeight*1.3); // a bit more than a screen of scrolling per slide keeps it calm
+    step=Math.round(innerHeight*1.1);
     root.style.height=(step*(n-1)+innerHeight)+'px';
-    [...snaps.children].forEach((m,i)=>m.style.top=(i*step)+'px');
     start=root.getBoundingClientRect().top+scrollY;
-    move();
+    const r=col.getBoundingClientRect();colW=r.width;colL=parseFloat(getComputedStyle(rail).left);
+    target=progress();cur=target;paint();
   }
-  function move(){
-    if(!mq.matches)return;
-    const p=Math.min(Math.max((scrollY-start)/step,0),n-1),i=Math.round(p);
-    // backdrop tint blends continuously between neighbouring slides
+  const progress=()=>Math.min(Math.max((scrollY-start)/step,0),n-1);
+  function paint(){
+    const p=cur,x=p*innerWidth;
+    track.style.transform=`translate3d(${-x}px,0,0)`;
+    bar.style.transform=`scaleX(${p/(n-1)})`;
     const a=Math.floor(p),b=Math.min(a+1,n-1),t=p-a,A=rgb(slides[a].dataset.tint),B=rgb(slides[b].dataset.tint);
     pin.style.setProperty('--sl-tint',`rgb(${A.map((v,k)=>Math.round(v+(B[k]-v)*t)).join(',')})`);
-    // track follows the scroll directly (no auto-animated jumps); snap points just let it settle on a slide
-    track.style.transform=`translate3d(${-p*100}vw,0,0)`;
-    bar.style.transform=`scaleX(${p/(n-1)})`;
-    // reveal a slide as soon as its edge starts coming in (and keep it shown)
     slides.forEach((s,k)=>{if(k<=p+0.8)s.classList.add('on')});
-    cur=i;
+    // the hero column's right edge slides left; the rail tracks it, then stops at 84px and takes over as the menu
+    const w=Math.max(84,colW-x);
+    if(!rail.classList.contains('open'))rail.style.setProperty('--rail-w',w+'px');
+    rail.style.transition=x>0&&w>84?'none':'';
+    rail.classList.toggle('docked',w<=84.5);
+    if(w>84.5)rail.classList.remove('open');
   }
-  addEventListener('scroll',move,{passive:true});
+  function loop(){
+    cur+=(target-cur)*(reduce?1:0.11);
+    if(Math.abs(target-cur)<0.0005)cur=target;
+    paint();
+    raf=cur!==target?requestAnimationFrame(loop):0;
+  }
+  addEventListener('scroll',()=>{if(!mq.matches)return;target=progress();if(!raf)raf=requestAnimationFrame(loop)},{passive:true});
   addEventListener('resize',size);
-  mq.addEventListener('change',()=>{cur=-1;size()});
+  mq.addEventListener('change',size);
   size();
-  // after a refresh the browser restores the old scroll spot, which can sit between two slides: settle on the nearest one
-  const settle=()=>{if(!mq.matches)return;const p=(scrollY-start)/step;if(p>0&&p<n-1&&Math.abs(p-Math.round(p))>.01)scrollTo({top:start+Math.round(p)*step,behavior:'instant'})};
-  addEventListener('load',()=>requestAnimationFrame(settle));
-  // one gesture = one slide: wheel/trackpad input inside the slides is turned into a single step,
-  // and the rest of that gesture (trackpad momentum) is ignored until the move has finished
-  let acc=0,lock=0,quiet;
-  addEventListener('wheel',e=>{
-    if(!mq.matches||e.ctrlKey)return;
-    const dy=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX;
-    const p=(scrollY-start)/step,end=start+(n-1)*step;
-    if(scrollY>end+2||(dy>0&&p>=n-1-.01)||(dy<0&&p<=.01))return; // past the last slide / before the first: normal page scroll
-    e.preventDefault();
-    clearTimeout(quiet);quiet=setTimeout(()=>{lock=0;acc=0},160); // gesture over once input goes quiet
-    if(lock)return;
-    acc+=dy;
-    if(Math.abs(acc)<24)return; // tiny jitter isn't a gesture
-    const target=Math.max(0,Math.min(n-1,(dy>0?Math.floor(p+.02):Math.ceil(p-.02))+(dy>0?1:-1)));
-    lock=1;acc=0;
-    scrollTo({top:start+target*step,behavior:'smooth'});
-  },{passive:false});
+  // sideways trackpad swipes move it too
+  addEventListener('wheel',e=>{if(mq.matches&&Math.abs(e.deltaX)>Math.abs(e.deltaY)*1.2)scrollBy(0,e.deltaX)},{passive:true});
   const go=i=>scrollTo({top:start+Math.max(0,Math.min(n-1,i))*step,behavior:'smooth'});
   addEventListener('keydown',e=>{
     if(!mq.matches||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
-    const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k&&scrollY<start+step*(n-1)+innerHeight){e.preventDefault();go(cur+k)}
+    const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){e.preventDefault();go(Math.round(target)+k)}
   });
-  // sideways trackpad swipes count as scrolling
-  // #about, #careers, #locations, #quote point at the matching slide on desktop
+  // rail: hover (or focus / click) opens the full menu
+  rail.addEventListener('mouseenter',()=>{if(rail.classList.contains('docked'))rail.classList.add('open')});
+  rail.addEventListener('mouseleave',()=>rail.classList.remove('open'));
+  rail.addEventListener('focusin',()=>{if(rail.classList.contains('docked'))rail.classList.add('open')});
+  rail.addEventListener('focusout',e=>{if(!rail.contains(e.relatedTarget))rail.classList.remove('open')});
+  rail.querySelector('.sl-rail-mini').addEventListener('click',()=>rail.classList.add('open'));
+  // #about, #careers, #locations, #quote jump to the matching slide; "Back to start" returns to the first
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href^="#"]');if(!a||!mq.matches)return;
+    if(a.hasAttribute('data-top')){e.preventDefault();rail.classList.remove('open');go(0);return}
     const id=a.getAttribute('href').slice(1);if(!id)return;
     const t=document.getElementById('s-'+id);if(!t)return;
-    e.preventDefault();go(slides.indexOf(t));
+    e.preventDefault();rail.classList.remove('open');go(slides.indexOf(t));
   });
-  // reveal the first slide on load
   if(mq.matches)slides[0].classList.add('on');
 })();
 
