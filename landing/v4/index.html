@@ -297,33 +297,27 @@ section{scroll-margin-top:100px}
   .sl-pill small{font-size:10px;letter-spacing:.14em;opacity:.7;font-weight:600}
   .sl .shape{position:absolute;z-index:3}
 
-  /* ---------- V4 desktop: no top bar, rail menu, footer slide ---------- */
+  /* ---------- V4 desktop: no top bar, hero column doubles as the side menu, footer slide ---------- */
   .nav,.foot{display:none!important}
-  .sl-1 .sl-col{top:0;height:92vh;padding:4vh 3vw 4vh}
-  .sl-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:6vh}
+  .sl-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:5vh}
   .sl-brand img{height:44px;width:auto}
   .sl-quote{bottom:calc(var(--u) * 63 + var(--u) * 3)}
-  /* rail: same navy + rounded bottom as the hero column; width is set by JS while it collapses */
-  .sl-rail{position:absolute;left:3vw;top:0;height:92vh;width:var(--rail-w,44vw);z-index:0;pointer-events:none;color:#fff;background:var(--glow),var(--navy);border-radius:0 0 var(--r-xl) var(--r-xl);overflow:hidden;transition:width .45s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
-  .sl-rail.docked{z-index:70;pointer-events:auto;left:0;height:100vh;border-radius:0 var(--r-lg) var(--r-lg) 0;box-shadow:12px 0 40px rgba(0,3,26,.18);transition:width .45s cubic-bezier(.2,.8,.2,1),left .35s ease,height .35s ease,border-radius .35s ease,box-shadow .3s}
-  .sl-rail.docked .sl-rail-mini{width:84px}
-  .sl-rail.docked.open{width:min(420px,40vw)!important;box-shadow:24px 0 60px rgba(0,3,26,.35)}
-  .sl-rail-mini{position:absolute;inset:0 auto 0 0;width:84px;display:flex;flex-direction:column;align-items:center;gap:26px;padding-top:30px;opacity:0;transition:opacity .25s}
-  .sl-rail.docked .sl-rail-mini{opacity:1}
-  .sl-rail.open .sl-rail-mini{opacity:0}
-  .sl-rail-mini img{width:34px;height:auto}
-  .sl-rail-burger{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
-  .sl-rail-burger i,.sl-rail-burger i::before,.sl-rail-burger i::after{display:block;width:16px;height:2px;background:#fff;border-radius:2px;position:relative}
-  .sl-rail-burger i::before,.sl-rail-burger i::after{content:"";position:absolute;left:0}
-  .sl-rail-burger i::before{top:-5px}.sl-rail-burger i::after{top:5px}
-  .sl-rail-label{writing-mode:vertical-rl;font:600 11px var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.7}
-  .sl-rail-full{position:absolute;top:0;left:0;width:min(420px,40vw);height:100%;padding:4vh 36px;display:flex;flex-direction:column;align-items:flex-start;gap:4vh;opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
-  .sl-rail.open .sl-rail-full{opacity:1;visibility:visible;transition:opacity .3s .12s}
-  .sl-rail-logo img{height:44px;width:auto}
-  .sl-rail-links{display:flex;flex-direction:column;gap:.4vh;margin-top:2vh}
-  .sl-rail-links a{font:400 clamp(26px,2.4vw,38px)/1.25 var(--serif);text-decoration:none;opacity:.85;transition:opacity .2s,translate .2s}
-  .sl-rail-links a:hover{opacity:1;translate:8px 0;color:#d9bf9a}
-  .sl-rail .btn{margin-top:auto}
+  /* the hero column itself collapses into the side menu (width driven by JS), hover expands it back */
+  .sl-menu{position:absolute;left:3vw;top:0;height:92vh;width:var(--menu-w,44vw);z-index:5;overflow:hidden;padding:0!important;display:block!important;transition:box-shadow .3s}
+  .sl-menu.docked{left:0;height:100vh;border-radius:0 var(--r-lg) var(--r-lg) 0;box-shadow:12px 0 40px rgba(0,3,26,.18);transition:width .5s cubic-bezier(.2,.8,.2,1),left .35s ease,height .35s ease,border-radius .35s ease,box-shadow .3s}
+  .sl-menu.docked.open{width:var(--menu-full)!important;box-shadow:24px 0 60px rgba(0,3,26,.35)}
+  .sl-menu-body{position:absolute;top:0;left:0;width:var(--menu-full,44vw);height:92vh;padding:3vh 3vw 4vh;display:flex;flex-direction:column;opacity:var(--body-o,1);transition:opacity .25s}
+  .sl-menu.docked .sl-menu-body{height:100vh;opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}
+  .sl-menu.docked.open .sl-menu-body{opacity:1;visibility:visible;transition:opacity .3s .15s}
+  .sl-menu-mini{position:absolute;inset:0 auto 0 0;width:84px;display:flex;flex-direction:column;align-items:center;gap:26px;padding-top:30px;opacity:0;pointer-events:none;transition:opacity .25s}
+  .sl-menu.docked .sl-menu-mini{opacity:1;pointer-events:auto;cursor:pointer}
+  .sl-menu.docked.open .sl-menu-mini{opacity:0;pointer-events:none}
+  .sl-menu-mini img{width:34px;height:auto}
+  .sl-menu-burger{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center}
+  .sl-menu-burger i,.sl-menu-burger i::before,.sl-menu-burger i::after{display:block;width:16px;height:2px;background:#fff;border-radius:2px;position:relative}
+  .sl-menu-burger i::before,.sl-menu-burger i::after{content:"";position:absolute;left:0}
+  .sl-menu-burger i::before{top:-5px}.sl-menu-burger i::after{top:5px}
+  .sl-menu-label{writing-mode:vertical-rl;font:600 11px var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.7}
   /* footer slide */
   .sl-8{color:#fff}
   .sl-foot{position:absolute;inset:0;padding:10vh 7vw 6vh 12vw;display:flex;flex-direction:column;justify-content:space-between}
@@ -345,10 +339,9 @@ section{scroll-margin-top:100px}
   .sl-s8b{width:7vw;right:7vw;bottom:14vh;transform:rotate(-10deg)}
 
   /* 1 — quote column + talk-to-us block */
-  .sl-1 .sl-col{left:3vw;width:44vw;padding:16vh 3vw 4vh;display:flex;flex-direction:column}
-  .sl-h1{font-size:clamp(40px,min(4.4vw,8vh),92px);margin:0 0 3vh}
+  .sl-h1{font-size:clamp(40px,min(4.4vw,8vh),92px);margin:0 0 4vh}
   .sl-ctas{display:flex;gap:12px;margin-bottom:3.4vh}
-  .sl-tiles{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:14px}
+  .sl-tiles{flex:1;min-height:0;display:grid;grid-template-columns:1.15fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:16px}
   .sl-tile{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r-md);background:var(--glow);color:#fff;text-decoration:none;transition:transform .3s,border-color .3s}
   .sl-tile:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.7)}
   .sl-tile span{position:absolute;left:16px;top:14px;font:600 clamp(15px,1.25vw,20px) var(--serif);text-transform:uppercase;letter-spacing:.03em}
@@ -719,37 +712,24 @@ section{scroll-margin-top:100px}
 
 <!-- desktop: horizontal slides, one screen-width each (layout from the Figma moodboard) -->
 <div class="slides" id="slides">
-<div class="sl-pin"><aside class="sl-rail" aria-label="Main menu">
-  <div class="sl-rail-mini" aria-hidden="true">
-    <img src="/static/landing/v5-shield.svg" alt="" width="34" height="44">
-    <span class="sl-rail-burger"><i></i></span>
-    <span class="sl-rail-label">Menu</span>
-  </div>
-  <div class="sl-rail-full">
-    <a class="sl-rail-logo" href="/static/landing/v4"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a>
-    <nav class="sl-rail-links">
-      <a href="/static/personal">Personal</a><a href="/static/commercial">Business</a><a href="#about">About Us</a><a href="#careers">Careers</a><a href="#locations">Contact Us</a>
-    </nav>
-    <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav>
-    <a class="btn btn-gold" href="#quote">Get a Quote</a>
-  </div>
-</aside>
+<div class="sl-pin">
+    <div class="sl-col navy sl-menu" aria-label="Main menu">
+      <div class="sl-menu-mini" aria-hidden="true"><img src="/static/landing/v5-shield.svg" alt="" width="34" height="44"><span class="sl-menu-burger"><i></i></span><span class="sl-menu-label">Menu</span></div>
+      <div class="sl-menu-body">
+      <div class="sl-brand"><a href="/static/landing/v4" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a><nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav></div>
+      <h2 class="sl-h1">Insurance<br>for <em>All</em> Needs</h2>
+      <div class="sl-tiles">
+        <a class="sl-tile t-a" href="/static/insurance/auto"><span>Auto</span><img src="auto.webp" alt=""></a>
+        <a class="sl-tile t-h" href="/static/insurance/home"><span>Home</span><img src="home.webp" alt=""></a>
+        <a class="sl-tile t-c" href="/static/insurance/condo"><span>Condo</span><img src="condo.webp" alt=""></a>
+        <a class="sl-tile t-b" href="/static/insurance/commercial"><span>Business</span><img src="business.webp" alt=""></a>
+      </div>
+      <nav class="sl-links" aria-label="Quick links"><a href="#about">About Us</a><a href="/static/quote">Customer Login</a><a href="#careers">Careers</a><a href="#locations">Contact Us</a></nav>
+      </div>
+    </div>
 <div class="sl-track">
 
   <section class="sl sl-1" data-tint="#fbf7ee" aria-label="Insurance for All Needs">
-    <div class="sl-col navy">
-      <div class="sl-brand"><a href="/static/landing/v4" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a><nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav></div>
-      <p class="eyebrow rv">Best insurance solutions in Canada</p>
-      <h2 class="sl-h1 rv">Insurance<br>for <em>All</em> Needs</h2>
-      <div class="sl-ctas rv"><a class="btn btn-gold" href="#quote">Get a Quote</a><a class="btn btn-ghost" href="/static/commercial">Learn More</a></div>
-      <div class="sl-tiles">
-        <a class="sl-tile t-a rv" href="/static/insurance/auto"><span>Auto</span><img src="auto.webp" alt=""></a>
-        <a class="sl-tile t-h rv" href="/static/insurance/home"><span>Home</span><img src="home.webp" alt=""></a>
-        <a class="sl-tile t-c rv" href="/static/insurance/condo"><span>Condo</span><img src="condo.webp" alt=""></a>
-        <a class="sl-tile t-b rv" href="/static/insurance/commercial"><span>Business</span><img src="business.webp" alt=""></a>
-      </div>
-      <nav class="sl-links rv" aria-label="Quick links"><a href="#about">About Us</a><a href="/static/quote">Customer Login</a><a href="#careers">Careers</a><a href="#locations">Contact Us</a></nav>
-    </div>
     <blockquote class="sl-quote rv"><p>We make sure to tailor your insurance experience to your needs</p><cite>Rishi Jaitley</cite></blockquote>
     <div class="sl-talk rv">
       <h3>want to<br>talk to <b>us</b> ?</h3>
@@ -966,7 +946,7 @@ addEventListener('scroll',dock,{passive:true});dock();
 (()=>{
   const mq=matchMedia('(min-width:1101px) and (min-height:640px)');
   const root=document.getElementById('slides'),pin=root.querySelector('.sl-pin'),track=root.querySelector('.sl-track'),bar=document.querySelector('.sl-bar span');
-  const rail=document.querySelector('.sl-rail'),col=root.querySelector('.sl-1 .sl-col');
+  const rail=root.querySelector('.sl-menu'),col=rail;
   const slides=[...track.children],n=slides.length,rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
   slides.forEach(s=>s.querySelectorAll('.rv').forEach((el,k)=>el.style.setProperty('--d',k)));
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -976,7 +956,7 @@ addEventListener('scroll',dock,{passive:true});dock();
     step=Math.round(innerHeight*1.1);
     root.style.height=(step*(n-1)+innerHeight)+'px';
     start=root.getBoundingClientRect().top+scrollY;
-    const r=col.getBoundingClientRect();colW=r.width;colL=parseFloat(getComputedStyle(rail).left);
+    colW=Math.round(innerWidth*.44);rail.style.setProperty('--menu-full',colW+'px');
     target=progress();cur=target;paint();
   }
   const progress=()=>Math.min(Math.max((scrollY-start)/step,0),n-1);
@@ -987,9 +967,10 @@ addEventListener('scroll',dock,{passive:true});dock();
     const a=Math.floor(p),b=Math.min(a+1,n-1),t=p-a,A=rgb(slides[a].dataset.tint),B=rgb(slides[b].dataset.tint);
     pin.style.setProperty('--sl-tint',`rgb(${A.map((v,k)=>Math.round(v+(B[k]-v)*t)).join(',')})`);
     slides.forEach((s,k)=>{if(k<=p+0.8)s.classList.add('on')});
-    // the hero column's right edge slides left; the rail tracks it, then stops at 84px and takes over as the menu
+    // the hero column folds from its right edge as the page slides, then docks at 84px as the side menu
     const w=Math.max(84,colW-x);
-    if(!rail.classList.contains('open'))rail.style.setProperty('--rail-w',w+'px');
+    if(!rail.classList.contains('open'))rail.style.setProperty('--menu-w',w+'px');
+    rail.style.setProperty('--body-o',Math.max(0,Math.min(1,(w-84)/(colW*.55))).toFixed(3)); // content fades as it folds away
     rail.style.transition=x>0&&w>84?'none':'';
     rail.classList.toggle('docked',w<=84.5);
     if(w>84.5)rail.classList.remove('open');
@@ -1016,7 +997,7 @@ addEventListener('scroll',dock,{passive:true});dock();
   rail.addEventListener('mouseleave',()=>rail.classList.remove('open'));
   rail.addEventListener('focusin',()=>{if(rail.classList.contains('docked'))rail.classList.add('open')});
   rail.addEventListener('focusout',e=>{if(!rail.contains(e.relatedTarget))rail.classList.remove('open')});
-  rail.querySelector('.sl-rail-mini').addEventListener('click',()=>rail.classList.add('open'));
+  rail.querySelector('.sl-menu-mini').addEventListener('click',()=>rail.classList.add('open'));
   // #about, #careers, #locations, #quote jump to the matching slide; "Back to start" returns to the first
   document.addEventListener('click',e=>{
     const a=e.target.closest('a[href^="#"]');if(!a||!mq.matches)return;
