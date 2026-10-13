@@ -367,6 +367,11 @@ section{scroll-margin-top:100px}
   .sl-talk h3 b{color:#f6d438}
   .sl-talk .sl-pill{background:#f6d438!important;border-color:#f6d438!important;color:#0f0f0f!important}
   .sl-talk .sl-pill:hover{background:#ffe066!important}
+  .sl-talk-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  /* smaller pills: yellow quote button + outlined phone */
+  .sl-talk .sl-talk-btns .sl-pill{padding:calc(var(--u) * .9) calc(var(--u) * 2);font:600 calc(var(--u) * 1.75) var(--sans);border-radius:999px;letter-spacing:.01em}
+  .sl-talk .sl-talk-call{background:transparent!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff!important}
+  .sl-talk .sl-talk-call:hover{border-color:#fff!important;background:rgba(255,255,255,.08)!important}
   .sl-talk h3{font:400 calc(var(--u) * 5.2)/1.15 var(--serif);margin-bottom:calc(var(--u) * 2.6)}
   .sl-talk .sl-pill{padding:calc(var(--u) * 1.3) calc(var(--u) * 2.8);font:600 calc(var(--u) * 2.5) var(--serif);border-radius:calc(var(--u) * 1.6);background:rgba(255,255,255,.08)}
   .sl-woman{position:absolute;bottom:0;left:50%;translate:-50% 0;height:60%;width:auto;z-index:1}
@@ -593,7 +598,7 @@ section{scroll-margin-top:100px}
         <h1 id="hero-title">Insurance<br>for <em>All</em> Needs</h1>
         <div class="hero-ctas">
           <a class="btn btn-gold" href="#quote">Get a Quote</a>
-          <a class="btn btn-ghost" href="/static/commercial">Learn More</a>
+          <a class="btn btn-ghost" href="tel:+19056952080">+1 (905) 695-2080</a>
         </div>
       </div>
       <div class="hero-art">
@@ -773,7 +778,7 @@ section{scroll-margin-top:100px}
     <blockquote class="sl-quote rv"><p>We make sure to tailor your insurance experience to your needs</p><cite>Rishi Jaitley</cite></blockquote>
     <div class="sl-talk rv">
       <h3>want to<br>talk to <b>us</b> ?</h3>
-      <a class="sl-pill" href="tel:+19056952080">+1 (905) 695-2080</a>
+      <div class="sl-talk-btns"><a class="sl-pill sl-talk-quote" href="/static/quote">Get a Quote</a><a class="sl-pill sl-talk-call" href="tel:+19056952080">+1 (905) 695-2080</a></div>
       <img class="shape sl-t-cube" src="cube.webp" alt=""><img class="shape sl-t-pyr" src="pyramid.webp" alt="">
       <img class="sl-woman" src="woman-phone.webp" alt="Smiling broker on the phone">
       <img class="shape sl-t-sph" src="sphere.webp" alt="">

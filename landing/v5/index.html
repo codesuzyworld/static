@@ -599,7 +599,7 @@ main>section.block{padding-top:180px}
         <h1 id="hero-title">Insurance<br>for <em>All</em> Needs</h1>
         <div class="hero-ctas">
           <a class="btn btn-gold" href="#quote">Get a Quote</a>
-          <a class="btn btn-ghost" href="/static/personal" data-learn>Learn More</a>
+          <a class="btn btn-ghost" href="tel:+19056952080">+1 (905) 695-2080</a>
         </div>
       </div>
       <div class="hero-art">
@@ -833,13 +833,12 @@ addEventListener('scroll',dock,{passive:true});dock();
 
 // Personal / Commercial toggle: swaps the hero photo, eyebrow and Learn More link
 (()=>{
-  const hero=document.querySelector('.hero'),eb=hero.querySelector('.hero-copy .eyebrow'),learn=hero.querySelector('[data-learn]');
+  const hero=document.querySelector('.hero'),eb=hero.querySelector('.hero-copy .eyebrow');
   hero.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
     const m=b.dataset.mode;if(hero.dataset.mode===m)return;
     hero.dataset.mode=m;
     hero.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));
     eb.style.opacity=0;setTimeout(()=>{eb.textContent=eb.dataset[m];eb.style.opacity=''},180);
-    learn.href=m==='personal'?'/static/personal':'/static/commercial';
   }));
 })();
 // mega menu: Escape closes; tapping the label on touch screens opens it first
