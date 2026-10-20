@@ -636,6 +636,9 @@ html[data-theme=dark] .v5f{background:radial-gradient(ellipse 38% 55% at 18% 82%
 
 /* mobile: fixed-size glows so they stay round on tall narrow screens */
 @media (max-width:1100px){.v5f{background:radial-gradient(circle 220px at 18% 82%,rgba(246,216,72,.14),transparent 70%),radial-gradient(circle 200px at 84% 76%,rgba(246,186,61,.1),transparent 70%),#161617}.talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.2),transparent 70%),var(--midnight)}html[data-theme=dark] .talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.14),transparent 70%),#1c1c1e}html[data-theme=dark] .careers{background:radial-gradient(circle 260px at 85% 100%,rgba(246,212,56,.1),transparent 70%),#1c1c1e}}
+
+/* phones: talk card sizes to its content */
+@media (max-width:1100px){.talk{min-height:0!important;padding:36px 24px!important;justify-content:flex-start}}
 </style>
 </head>
 <body>
