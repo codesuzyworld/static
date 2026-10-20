@@ -646,6 +646,8 @@ html[data-theme=dark] .sl-2 .sl-block{background:radial-gradient(34% 52% at 78% 
 /* dark: Our Locations panel neutral (was navy-blue), messenger icon visible */
 html[data-theme=dark] .locations{background:radial-gradient(circle 300px at 85% 0%,rgba(246,212,56,.08) 0%,transparent 60%),#161618!important}
 .socials img[src$="social-messenger.svg"]{filter:invert(1)!important}
+html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#fff!important;background:#0f0f0f!important}
+/* toggle follows a dark nav even in light mode */html:not([data-theme=dark]) .nav .theme-toggle,html:not([data-theme=dark]) .sl-menu .theme-toggle{background:#1f1f22!important;color:#f3f1ea!important;border-color:rgba(255,255,255,.14)!important}
 </style>
 <script>
 // before paint, so the page never flashes the wrong theme; same key as V1–V3

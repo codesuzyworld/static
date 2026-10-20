@@ -70,3 +70,27 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
 // wrap the unit in stat values ("10+ yrs") so CSS can size it separately
 function wire(){[].forEach.call(document.querySelectorAll(".ml-about-value"),function(el){if(el.querySelector(".ml-about-unit"))return;var m=el.textContent.match(/^(.*?\S)\s+([A-Za-z]+)$/);if(!m)return;el.textContent=m[1]+" ";var u=document.createElement("span");u.className="ml-about-unit";u.textContent=m[2];el.appendChild(u)})}
 var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,150)}).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState!=="loading")wire();else document.addEventListener("DOMContentLoaded",wire)})();
+;(function(){if(typeof document==="undefined")return;
+// V1 footer logo: inline the classed SVG so shield, m, i, b and tagline can fade in one after another
+var svg=null;
+function wire(){var img=document.querySelector(".ml-footer-v1 .ml-footer-logo img");if(!img||img.dataset.anim)return;img.dataset.anim="1";
+fetch("/static/brand/miblogo-dark-anim.svg").then(function(r){return r.text()}).then(function(t){var box=document.createElement("span");box.className="ml-logo-anim";box.setAttribute("aria-hidden","true");box.innerHTML=t;var s=box.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");img.after(box);
+if(!("IntersectionObserver" in window)){box.classList.add("is-in");return}
+new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("is-in",e.isIntersecting)})},{threshold:.35}).observe(box)}).catch(function(){})}
+var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState!=="loading")wire();else document.addEventListener("DOMContentLoaded",wire)})();
+;(function(){if(typeof document==="undefined")return;
+// V3 nav + footer logos (and V1 footer ink): inline the classed SVG so its parts fade in one after another
+var txt=null,io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("is-in",e.isIntersecting)})},{threshold:.3}):null;
+function make(ink,extra){var b=document.createElement("span");b.className="ml-logo-anim"+(extra?" "+extra:"");b.setAttribute("aria-hidden","true");b.dataset.ink=ink;b.innerHTML=txt;var s=b.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");s.setAttribute("preserveAspectRatio","xMinYMid meet");if(io)io.observe(b);else b.classList.add("is-in");return b}
+function wire(){if(!txt)return;
+[].forEach.call(document.querySelectorAll(".ml-footer-v1 .ml-logo-anim:not([data-ink])"),function(b){b.dataset.ink="theme"});
+[].forEach.call(document.querySelectorAll(".mib-v3-footer img[src*='miblogo']:not([data-anim])"),function(i){i.dataset.anim="1";i.style.display="none";i.after(make("white"))});
+[].forEach.call(document.querySelectorAll("a > span:not([data-anim])"),function(sp){if(!/miblogo/.test(getComputedStyle(sp).backgroundImage))return;sp.dataset.anim="1";sp.style.backgroundImage="none";sp.appendChild(make("theme","in-span"))})}
+fetch("/static/brand/miblogo-dark-anim.svg").then(function(r){return r.text()}).then(function(t){txt=t;wire()}).catch(function(){});
+var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,150)}).observe(document.documentElement,{childList:true,subtree:true})})();
+;(function(){if(typeof document==="undefined")return;
+// V3 desktop nav: line the (V2-style) mega menu up with the hovered pill, like V2 does via --mega-left
+var pill=null;
+function place(){var m=document.querySelector(".mib-topnav-desktop .mib-mega");if(!m||!pill)return;var op=m.offsetParent||m.parentElement;m.style.setProperty("--mega-left",(pill.getBoundingClientRect().left-op.getBoundingClientRect().left)+"px")}
+document.addEventListener("pointerover",function(e){var a=e.target.closest&&e.target.closest(".mib-topnav-desktop a,.mib-topnav-desktop button");if(!a||!/^(PERSONAL|BUSINESS)$/i.test(a.textContent.trim()))return;pill=a;requestAnimationFrame(place)},true);
+new MutationObserver(function(){if(pill)place()}).observe(document.documentElement,{childList:true,subtree:true})})();
