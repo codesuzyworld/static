@@ -10,6 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<script>
+// theme before first paint; V1–V3 write 'payload-theme' (and 'mib-theme' on load), so read both to stay in sync across versions
+(function(){var t,ok=function(v){return v==='light'||v==='dark'};try{t=localStorage.getItem('payload-theme');if(!ok(t))t=localStorage.getItem('mib-theme')}catch(e){}if(!ok(t))t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();
+</script>
 <style>
 :root{
   /* Function Health's system (beige / cream / midnight, light serif, thin strokes) with MIB yellow as the accent */
@@ -142,7 +146,7 @@ section{scroll-margin-top:100px}
 .post img{aspect-ratio:4/3;object-fit:cover;width:100%}
 .post div{padding:20px 22px 26px;display:flex;flex-direction:column;gap:10px}
 .post .tag{display:flex;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
-.post .tag b{color:var(--bronze)}
+.post .tag b{padding:4px 11px;border-radius:37px;background:#f6d438;color:#0f0f0f;letter-spacing:.06em}
 .post h3{font-family:var(--serif);font-size:20px;line-height:1.35}
 
 /* ---------- locations ---------- */
@@ -309,7 +313,7 @@ body{background:var(--beige);color:var(--midnight)}
 .tile .arrow{border-color:var(--stroke)}
 .tile:hover .arrow{background:var(--midnight);color:var(--beige);border-color:var(--midnight)}
 /* reviews */
-.score{background:radial-gradient(120% 80% at 50% 0%,#fff8dc 0%,#fdeeb0 55%,#f8dc6e 100%);color:var(--midnight);border:1px solid #efd98a}
+.score{background:radial-gradient(ellipse 560px 460px at 50% 0%,#f8dc6e 0%,#fbe9a2 40%,#fdf3cf 70%,#fff8e6 100%);color:var(--midnight);border:1px solid #efd98a}
 .score strong{font-weight:300}.score p{font-weight:300}
 .score .google{border-color:rgba(42,43,47,.2);background:rgba(254,249,239,.5)}
 .review,.post,.form{background:var(--cream);border-color:var(--stroke)}
@@ -565,7 +569,73 @@ main>section.block{padding-top:180px}
   .foot{margin-top:112px;padding-top:56px}
   .foot-grid{grid-template-columns:1fr;gap:32px}
   .foot img.logo-big{height:72px}
+  .theme-toggle{width:44px;height:44px}
 }
+
+/* ---------- theme toggle (V1–V3 look) ---------- */
+.theme-toggle{flex:none;width:60px;height:60px;border-radius:999px;display:grid;place-items:center;padding:0;border:1px solid rgba(15,15,15,.12);background:#fff;color:#0f0f0f;cursor:pointer;transition:background-color .2s,color .2s}
+.theme-toggle .material-symbols-rounded{font-size:22px}
+/* make room for the toggle so link labels don't wrap */
+@media (min-width:1101px){.nav{gap:24px}}
+
+/* ---------- dark mode ---------- */
+html[data-theme=dark]{--midnight:#f3f1ea;--cream:#1c1c1e;--stroke:rgba(255,255,255,.12);--muted:#b9b9bd;--bronze:#e0b43a;--yellow-10:rgba(246,212,56,.12);--line:rgba(255,255,255,.12);color-scheme:dark;background:#101011}
+html[data-theme=dark] body{background:#101011}
+html[data-theme=dark] .theme-toggle{background:#1f1f22;color:#f3f1ea;border-color:rgba(255,255,255,.14)}
+/* --midnight is now light text, so everything sitting on yellow needs explicit dark text */
+html[data-theme=dark] .btn-gold,html[data-theme=dark] .mib-version-switch-item[data-active],html[data-theme=dark] .nav:not(.solid) .mib-version-switch-item[data-active],html[data-theme=dark] .mega-cta,html[data-theme=dark] .mega-item:hover .mega-icon,html[data-theme=dark] .nav:not(.solid) .mega-item:hover .mega-icon,html[data-theme=dark] .seg button[aria-pressed=true],html[data-theme=dark] .hero .seg button[aria-pressed=true],html[data-theme=dark] .loc-tabs button[aria-selected=true]{color:#0f0f0f}
+/* major CTAs: V5 yellow */
+html[data-theme=dark] .btn-dark{background:var(--yellow);color:#0f0f0f}html[data-theme=dark] .btn-dark:hover{background:#f0c800}
+html[data-theme=dark] .tile:hover .arrow{background:var(--yellow);border-color:var(--yellow);color:#0f0f0f}
+/* nav + mega menu: dark glass in both states, white logo */
+html[data-theme=dark] .nav,html[data-theme=dark] .nav:not(.solid){background:rgba(24,24,26,.72)!important;color:#f3f1ea;border-color:rgba(255,255,255,.08)!important;box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+html[data-theme=dark] .nav:not(.solid) .logo-on-light{display:none}html[data-theme=dark] .nav:not(.solid) .logo-on-dark{display:block}
+html[data-theme=dark] .nav:not(.solid) .mib-version-switch{background:rgba(255,255,255,.08)!important}
+html[data-theme=dark] .nav:not(.solid) .mib-version-switch-item{color:#c8c8c8}html[data-theme=dark] .nav:not(.solid) .mib-version-switch-item:hover{color:#fff;background:rgba(255,255,255,.15)}
+html[data-theme=dark] .mega-surface,html[data-theme=dark] .nav:not(.solid) .mega-surface{background:rgba(24,24,26,.92)!important;border-color:rgba(255,255,255,.08)!important;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+html[data-theme=dark] .nav:not(.solid) .mega-item:hover,html[data-theme=dark] .nav:not(.solid) .mega-item:focus-visible{background:rgba(255,255,255,.06)}
+html[data-theme=dark] .nav:not(.solid) .mega-icon{color:var(--yellow);background:rgba(246,212,56,.1);border-color:rgba(246,212,56,.18)}
+html[data-theme=dark] .nav-links.open{background:rgba(24,24,26,.96);border-color:rgba(255,255,255,.08)}
+/* hero: night version of the photo, dark wash behind the copy */
+html[data-theme=dark] .hero{background:#0e0f12!important}
+html[data-theme=dark] .hero-bg img{filter:brightness(.38) saturate(.75)}
+html[data-theme=dark] .hero-bg img[data-for=commercial]{filter:blur(2px) brightness(.38) saturate(.7)}
+html[data-theme=dark] .hero .hero-bg::after{background:linear-gradient(90deg,rgba(14,15,18,.92) 0%,rgba(14,15,18,.7) 34%,rgba(14,15,18,0) 62%)}
+html[data-theme=dark] .hero[data-mode=commercial] .hero-bg::after{background:linear-gradient(90deg,rgba(14,15,18,.94) 0%,rgba(14,15,18,.78) 36%,rgba(14,15,18,.1) 66%)}
+html[data-theme=dark] .hero .partners::before{background:linear-gradient(180deg,rgba(16,16,17,0) 0%,rgba(16,16,17,.85) 45%,#101011 75%)!important}
+html[data-theme=dark] .hero .marquee-track img{filter:brightness(0) invert(1);opacity:.7}
+html[data-theme=dark] .hero .btn-ghost{border-color:rgba(255,255,255,.3)}html[data-theme=dark] .hero .btn-ghost:hover{border-color:#f3f1ea}
+html[data-theme=dark] .hero .seg{background:rgba(24,24,26,.72);border-color:rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+html[data-theme=dark] .hero .shield{opacity:.4}html[data-theme=dark] .hero[data-mode=commercial] .shield{opacity:0}
+/* dark mode reuses V3's night hero art */
+html[data-theme=dark] .hero-bg img{content:url(/static/landing/dark/v3-business-bg-night.webp);object-position:50% 100%;filter:none;scale:1}
+html[data-theme=dark] .hero-bg img[data-for=commercial]{filter:none}
+html[data-theme=dark] .hero-art .people[data-for=commercial]{content:url(/static/landing/v3-business-people.webp)}
+/* cards + panels */
+html[data-theme=dark] .bento .tile:hover{border-color:rgba(255,255,255,.2);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+html[data-theme=dark] .score{background:radial-gradient(90% 70% at 50% 0%,rgba(246,212,56,.22) 0%,rgba(246,212,56,.06) 45%,rgba(246,212,56,0) 75%),#1c1c1e;border-color:rgba(246,212,56,.18)}
+html[data-theme=dark] .score .google{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.04)}
+html[data-theme=dark] .careers{background:radial-gradient(70% 60% at 85% 100%,rgba(246,212,56,.1),transparent 70%),#1c1c1e}
+html[data-theme=dark] .talk{background:radial-gradient(80% 60% at 50% 100%,rgba(246,212,56,.14),transparent 70%),#1c1c1e}
+html[data-theme=dark] .loc-map iframe{filter:invert(.9) hue-rotate(180deg) saturate(.5) brightness(.95) contrast(.9)}
+html[data-theme=dark] .field input,html[data-theme=dark] .field select,html[data-theme=dark] .field textarea{background:#151517}
+html[data-theme=dark] .v5f{background:radial-gradient(ellipse 38% 55% at 18% 82%,rgba(246,216,72,.14),transparent 70%),radial-gradient(ellipse 34% 60% at 84% 76%,rgba(246,186,61,.1),transparent 70%),#161617}
+/* mobile: smaller bar toggle, light menu panel in light mode, theme row in menu */
+.nav-theme-li{display:none}
+@media (max-width:1100px){.nav-links.open .nav-theme-li{display:block}.nav-theme-row{display:flex;align-items:center;gap:10px;width:100%;margin-top:4px;padding:12px 16px;border:0;border-top:1px solid var(--stroke);background:none;color:inherit;font:400 20px var(--sans);text-align:left;cursor:pointer}.nav-theme-row .material-symbols-rounded{font-size:22px}html:not([data-theme=dark]) .nav-links.open{background:#fefaf0;border-color:var(--stroke);box-shadow:0 20px 40px rgba(42,43,47,.15)}html[data-theme=dark] .nav-theme-row{border-top-color:rgba(255,255,255,.1)}html[data-theme=dark] .nav-links.open{background:#141416}}
+@media (max-width:1100px){.hero-copy{text-align:center}.hero-copy .seg{margin-inline:auto}.hero-ctas{justify-content:center}}
+@media (max-width:720px){.theme-toggle{width:44px;height:44px}}
+.v5f-socials img[src$="social-messenger.svg"]{filter:invert(1)}
+@media (max-width:1100px){.hero-ctas{max-width:290px;gap:14px}.hero-ctas{margin-inline:auto}.hero-ctas .btn{min-height:52px;padding:0 18px}}
+/* mobile: All products below the tiles, centered section titles, compact reviews */
+@media (max-width:1100px){.block .head .btn-line[href="/static/personal"]{display:none}.products-all{display:flex!important;width:100%;margin-top:20px;justify-content:center}.head:has(#reviews-title){justify-content:center;text-align:center}#reviews-title{margin-inline:auto}.review{padding:20px 22px;gap:12px}.review blockquote{font-size:16px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.review-list{gap:14px}.reviews{gap:14px}}
+.products-all{display:none}
+/* mobile stats: 2 per row, compact */
+@media (max-width:1100px){.stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}.stats .stat{padding:20px 0!important;border-left:0!important}.stats .stat strong{font-size:38px!important;margin-bottom:6px}.stats .stat span{font-size:12.5px;line-height:1.5}}
+.locdd{display:none}@media (max-width:1100px){.loc-pills-mobile-hide{display:none!important}.locdd{--dd-bg:#fff;--dd-stroke:#d8d8d4;--dd-fg:#0f0f0f;--dd-muted:#4a4a4a;--dd-sel:rgba(246,212,56,.22);--dd-hi:rgba(15,15,15,.05);display:block;position:relative;width:100%;max-width:420px;margin:0 auto;text-align:left;z-index:20;font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}html[data-theme=dark] .locdd{--dd-bg:#1f1f1f;--dd-stroke:#3a3a3a;--dd-fg:#fff;--dd-muted:silver;--dd-sel:rgba(246,212,56,.16);--dd-hi:rgba(255,255,255,.06)}.locdd-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 14px;border:1px solid var(--dd-stroke);border-radius:10px;background:var(--dd-bg);color:var(--dd-fg);font:500 15px inherit;font-family:inherit;cursor:pointer;text-align:left}.locdd-btn:focus-visible,.locdd-panel:focus-visible{outline:2px solid #f6d438;outline-offset:2px}.locdd-chev{display:inline-flex;color:var(--dd-muted);transition:transform .15s}.locdd.is-open .locdd-chev{transform:rotate(180deg)}.locdd-panel{position:absolute;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;max-height:320px;overflow-y:auto;border:1px solid var(--dd-stroke);border-radius:16px;background:var(--dd-bg);box-shadow:0 16px 40px rgba(0,0,0,.18)}.locdd-panel[hidden]{display:none}.locdd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px;border-radius:10px;color:var(--dd-fg);font-size:14px;font-weight:600;cursor:pointer}.locdd-item.is-hi{background:var(--dd-hi)}.locdd-item[aria-selected=true]{background:var(--dd-sel)}.locdd-check{display:inline-flex;color:#b58a1f;visibility:hidden}html[data-theme=dark] .locdd-check{color:#f6d438}.locdd-item[aria-selected=true] .locdd-check{visibility:visible}}
+
+/* mobile: fixed-size glows so they stay round on tall narrow screens */
+@media (max-width:1100px){.v5f{background:radial-gradient(circle 220px at 18% 82%,rgba(246,216,72,.14),transparent 70%),radial-gradient(circle 200px at 84% 76%,rgba(246,186,61,.1),transparent 70%),#161617}.talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.2),transparent 70%),var(--midnight)}html[data-theme=dark] .talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.14),transparent 70%),#1c1c1e}html[data-theme=dark] .careers{background:radial-gradient(circle 260px at 85% 100%,rgba(246,212,56,.1),transparent 70%),#1c1c1e}}
 </style>
 </head>
 <body>
@@ -579,9 +649,11 @@ main>section.block{padding-top:180px}
     <li><a href="#about">About Us</a></li>
     <li><a href="#careers">Careers</a></li>
     <li><a href="#locations">Contact Us</a></li>
+    <li class="nav-theme-li"><button class="nav-theme-row" type="button"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span><span>Dark mode</span></button></li>
   </ul>
   <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item">V4</a><a href="/static/landing/v5" class="mib-version-switch-item" data-active="true" aria-current="page">V5</a></nav>
   <a class="btn btn-gold" href="#quote">Get a Quote</a>
+  <button class="theme-toggle" type="button" aria-label="Switch to dark theme"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span></button>
   <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
 </header>
 
@@ -599,7 +671,7 @@ main>section.block{padding-top:180px}
         <h1 id="hero-title">Insurance<br>for <em>All</em> Needs</h1>
         <div class="hero-ctas">
           <a class="btn btn-gold" href="#quote">Get a Quote</a>
-          <a class="btn btn-ghost" href="tel:+19056952080">+1 (905) 695-2080</a>
+          <a class="btn btn-ghost" href="tel:+19056952080">Call Us</a>
         </div>
       </div>
       <div class="hero-art">
@@ -629,6 +701,7 @@ main>section.block{padding-top:180px}
       <a class="tile t-condo" href="/static/insurance/condo"><h3>Condo</h3><p>Unit, Belongings, Renters</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/condo.webp" alt="" loading="lazy"></a>
       <a class="tile t-business" href="/static/insurance/commercial"><h3>Business</h3><p>Commercial Liability, Fleet</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/business.webp" alt="" loading="lazy"></a>
     </div>
+    <a class="btn btn-line products-all" href="/static/personal">All products</a>
   </section>
 
   <!-- reviews -->
@@ -849,6 +922,14 @@ document.querySelectorAll('.has-mega').forEach(li=>{
 });
 document.addEventListener('click',e=>{if(!e.target.closest('.has-mega'))document.querySelectorAll('.has-mega.open').forEach(x=>x.classList.remove('open'))});
 
+// theme toggle: moon in light mode, sun in dark mode
+const tt=document.querySelector('.theme-toggle'),root=document.documentElement;
+const themeRow=document.querySelector('.nav-theme-row');
+const paintToggle=()=>{const d=root.dataset.theme==='dark';themeRow.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');themeRow.firstElementChild.textContent=d?'light_mode':'dark_mode';themeRow.lastElementChild.textContent=d?'Light mode':'Dark mode';tt.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');tt.firstElementChild.textContent=d?'light_mode':'dark_mode'};
+tt.onclick=()=>{const t=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=t;try{localStorage.setItem('payload-theme',t);localStorage.setItem('mib-theme',t)}catch(e){}paintToggle()};
+paintToggle();
+themeRow.onclick=()=>tt.click();
+
 // mobile menu
 const tog=document.querySelector('.nav-toggle'),links=document.getElementById('nav-links');
 tog.onclick=()=>{const o=links.classList.toggle('open');tog.setAttribute('aria-expanded',o);tog.setAttribute('aria-label',o?'Close menu':'Open menu')};
@@ -870,6 +951,9 @@ if(box&&true){(async()=>{
   const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
   const bb=new T.Box3().setFromObject(g),size=bb.getSize(new T.Vector3),ctr=bb.getCenter(new T.Vector3),grp=new T.Group;g.position.sub(ctr);grp.add(g);grp.scale.setScalar(4/size.x);grp.updateMatrixWorld(true);
   const body=new T.MeshPhysicalMaterial({color:'#efe6d6',roughness:.55,transmission:.08,thickness:.4,ior:1.4,sheen:.4,sheenRoughness:.8,sheenColor:new T.Color('#fff6e0')});
+  // wordmark goes white in dark mode
+  const setBody=()=>body.color.set(document.documentElement.dataset.theme==='dark'?'#ffffff':'#efe6d6');setBody();
+  new MutationObserver(()=>{setBody();r.render(scene,cam)}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   let shield=null;g.traverse(o=>{if(o.isMesh){if(o.name.replace(/\W/g,'')==='Curve020')shield=o;else o.material=body}});
   const spin=new T.Group;
   if(shield){const geo=shield.geometry,pos=geo.attributes.position,v=new T.Vector3,ds=[];let lo=1/0,hi=-1/0;
@@ -898,6 +982,30 @@ if(box&&true){(async()=>{
   new IntersectionObserver(([e])=>{vis=e.isIntersecting;if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}},{threshold:.1}).observe(box);
   if(reduce)tick();
 })().catch(e=>console.warn('[v5 footer 3d]',e))}
+</script>
+<script>;(function(){if(typeof document==="undefined")return;
+// mobile: location pills become a mib-ui style dropdown; choosing an item clicks the matching pill so each page's own map logic runs
+var CHEV='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',CHECK='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',uid=0;
+function isOn(b){return b.classList.contains("is-active")||b.classList.contains("active")||b.getAttribute("aria-selected")==="true"||b.getAttribute("aria-pressed")==="true"}
+function lca(a){var n=a[0].parentElement;while(n&&!a.every(function(x){return n.contains(x)}))n=n.parentElement;return n}
+function wire(){var g=[].slice.call(document.querySelectorAll(".loc-tabs")).map(function(t){return[].slice.call(t.querySelectorAll("button"))});var ml=[].slice.call(document.querySelectorAll(".ml-loc-pill"));if(ml.length)g.push(ml);g.forEach(one)}
+function one(pills){if(pills.length<2)return;var box=pills[0].closest(".loc-tabs")||lca(pills);if(!box||box.classList.contains("loc-pills-mobile-hide"))return;
+var id="locdd"+(++uid),wrap=document.createElement("div");wrap.className="locdd";
+wrap.innerHTML='<button type="button" class="locdd-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="'+id+'"><span class="locdd-val"></span><span class="locdd-chev">'+CHEV+'</span></button><ul class="locdd-panel" role="listbox" id="'+id+'" tabindex="-1" hidden></ul>';
+var btn=wrap.firstChild,val=btn.firstChild,list=wrap.lastChild,cur=0,hi=0;
+pills.forEach(function(b,i){var li=document.createElement("li");li.className="locdd-item";li.setAttribute("role","option");li.id=id+"-"+i;li.innerHTML='<span>'+b.textContent.trim()+'</span><span class="locdd-check">'+CHECK+'</span>';li.addEventListener("click",function(){pick(i)});li.addEventListener("mousemove",function(){mark(i)});list.appendChild(li)});
+var items=[].slice.call(list.children);
+function sync(){var i=pills.findIndex(isOn);if(i>=0)cur=i;val.textContent=pills[cur].textContent.trim();items.forEach(function(li,j){li.setAttribute("aria-selected",j===cur?"true":"false")})}
+function mark(i){hi=i;items.forEach(function(li,j){li.classList.toggle("is-hi",j===i)});list.setAttribute("aria-activedescendant",items[i].id);items[i].scrollIntoView({block:"nearest"})}
+function open(o){list.hidden=!o;btn.setAttribute("aria-expanded",o);wrap.classList.toggle("is-open",o);if(o){mark(cur);list.focus()}}
+function pick(i){pills[i].click();cur=i;setTimeout(sync,50);sync();open(false);btn.focus()}
+btn.addEventListener("click",function(){open(list.hidden)});
+btn.addEventListener("keydown",function(e){if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();open(true)}});
+list.addEventListener("keydown",function(e){if(e.key==="ArrowDown"){e.preventDefault();mark(Math.min(hi+1,items.length-1))}else if(e.key==="ArrowUp"){e.preventDefault();mark(Math.max(hi-1,0))}else if(e.key==="Home"){e.preventDefault();mark(0)}else if(e.key==="End"){e.preventDefault();mark(items.length-1)}else if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(hi)}else if(e.key==="Escape"||e.key==="Tab"){open(false);if(e.key==="Escape")btn.focus()}});
+document.addEventListener("click",function(e){if(!wrap.contains(e.target))open(false)});
+pills.forEach(function(b){b.addEventListener("click",function(){setTimeout(sync,50)})});
+sync();box.parentNode.insertBefore(wrap,box);box.classList.add("loc-pills-mobile-hide")}
+var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState!=="loading")wire();else document.addEventListener("DOMContentLoaded",wire)})();
 </script>
 </body>
 </html>
