@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MIB Landing Exploration</title>
-<meta name="description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4 and V5 concepts.">
-<meta property="og:type" content="website"><meta property="og:site_name" content="My Insurance Broker"><meta property="og:title" content="MIB Landing Exploration"><meta property="og:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4 and V5 concepts."><meta property="og:url" content="https://codesuzyworld.github.io/static/landing/v4/"><meta property="og:image" content="https://codesuzyworld.github.io/static/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MIB Landing Exploration"><meta name="twitter:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4 and V5 concepts."><meta name="twitter:image" content="https://codesuzyworld.github.io/static/og-image.jpg">
+<meta name="description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4, V5 and V6 concepts.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="My Insurance Broker"><meta property="og:title" content="MIB Landing Exploration"><meta property="og:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4, V5 and V6 concepts."><meta property="og:url" content="https://codesuzyworld.github.io/static/landing/v4/"><meta property="og:image" content="https://codesuzyworld.github.io/static/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MIB Landing Exploration"><meta name="twitter:description" content="Design explorations for the My Insurance Broker landing page: V1, V2, V3, V4, V5 and V6 concepts."><meta name="twitter:image" content="https://codesuzyworld.github.io/static/og-image.jpg">
 <link rel="icon" href="/static/api/media/file/favicon.svg" type="image/svg+xml"><link rel="icon" href="/static/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -654,6 +654,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 
 /* phones: hero fits one screen */
 @media (max-width:720px){.hero{padding-top:84px!important;min-height:100svh!important;height:auto!important}.hero .wrap{align-items:start!important;grid-template-rows:auto 1fr}.hero-copy{padding-top:20px!important;margin-bottom:12px!important}.hero-art{min-height:0!important;height:calc(100svh - 84px - 260px)!important;max-height:380px}}
+/* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
 </style>
 <script>
 // before paint, so the page never flashes the wrong theme; same key as V1–V3
@@ -673,7 +674,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
     <li><a href="#locations">Contact Us</a></li>
     <li class="nav-theme-li"><button class="nav-theme-row" type="button"></button></li>
   </ul>
-  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav>
+  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item">V3</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav>
   <a class="btn btn-gold" href="#quote">Get a Quote</a>
   <button class="theme-toggle" type="button" aria-label="Switch to dark theme"></button>
   <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
@@ -851,7 +852,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
     <div class="sl-col navy sl-menu" aria-label="Main menu">
       <div class="sl-menu-mini" aria-hidden="true"><img src="/static/landing/v5-shield.svg" alt="" width="34" height="44"><span class="sl-menu-burger"><i></i></span><span class="sl-menu-label">Menu</span></div>
       <div class="sl-menu-body">
-      <div class="sl-brand"><a href="/static/landing/v4" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a><nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/landing/v2" class="mib-version-switch-item">V2</a><a href="/static/personal" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/v5" class="mib-version-switch-item">V5</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme"></button></div>
+      <div class="sl-brand"><a href="/static/landing/v4" aria-label="My Insurance Broker home"><img src="/static/brand/miblogo-dark.svg" alt="My Insurance Broker" width="112" height="48"></a><nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item">V3</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme"></button></div>
       <h2 class="sl-h1">Insurance<br>for <em>All</em> Needs</h2>
       <div class="sl-tiles">
         <a class="sl-tile t-a" href="/static/insurance/auto"><span>Auto</span><img src="auto.webp" alt=""></a>
