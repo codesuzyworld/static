@@ -784,7 +784,7 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 .v4-art{overflow:hidden}
 .v4-art>*{position:absolute;pointer-events:none}
 .v4-art .v4-bg{left:-5%;top:-5%;width:110%!important;height:110%!important;max-width:none;object-fit:cover;will-change:translate;translate:calc(var(--mx,0) * -12px) calc(var(--my,0) * -8px + var(--sy,0) * .3px)}
-.v4-wash{inset:0;background:linear-gradient(180deg,#fff 18.7%,rgba(255,255,255,.12) 75.3%),radial-gradient(56% 58% at 51% 98%,#ffdf12 0,rgba(255,227,48,.875) 12.5%,rgba(255,231,77,.75) 25%,rgba(255,239,136,.5) 50%,rgba(255,255,255,0) 100%)}
+.v4-wash{inset:0;background:radial-gradient(48% 46% at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,231,77,.25) 40%,rgba(255,231,77,0) 100%),linear-gradient(180deg,#fff 18.7%,rgba(255,255,255,.4) 75.3%),radial-gradient(56% 58% at 51% 98%,#ffdf12 0,rgba(255,227,48,.875) 12.5%,rgba(255,231,77,.75) 25%,rgba(255,239,136,.5) 50%,rgba(255,255,255,0) 100%)}
 /* family = parents + kids (Figma 7976:25802 / 7976:25807), feet sunk below the fold so the framing matches the single photo */
 .v4-fam{bottom:0;left:46.8%;width:min(78%,calc(100svh * .6 * 2516 / 1295));aspect-ratio:5642/3750;transform:translate(-50%,22.6%)}
 .v4-fam img{position:absolute;max-width:none;will-change:translate;animation:v4-in 1.1s cubic-bezier(.2,.8,.2,1) both}
@@ -795,8 +795,9 @@ html[data-theme=dark] .v4-wash{background:radial-gradient(56% 58% at 51% 98%,rgb
 @media (min-width:1101px){
   .v4-hero .ml-hero-v2 .ml-stage-art.v4-art{height:100%!important}
   .v4-hero .ml-hero-copy-v2{translate:0 -5svh}
+  .v4-hero .ml-hero-v2 .ml-stage{max-width:none} /* V3 caps the stage at 1920px; V4 bleeds edge to edge */
 }
-@media (max-width:1100px){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.12) 62%),radial-gradient(80% 58% at 51% 100%,#ffdf12 0,rgba(255,231,77,.75) 25%,rgba(255,239,136,.5) 50%,rgba(255,255,255,0) 100%)}html[data-theme=dark] .v4-wash{background:radial-gradient(80% 58% at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,239,136,.2) 50%,rgba(255,255,255,0) 100%),linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
+@media (max-width:1100px){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:radial-gradient(70% 46% at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,231,77,.25) 40%,rgba(255,231,77,0) 100%),linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.4) 62%),radial-gradient(80% 58% at 51% 100%,#ffdf12 0,rgba(255,231,77,.75) 25%,rgba(255,239,136,.5) 50%,rgba(255,255,255,0) 100%)}html[data-theme=dark] .v4-wash{background:radial-gradient(80% 58% at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,239,136,.2) 50%,rgba(255,255,255,0) 100%),linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
 @media (prefers-reduced-motion:reduce){.v4-bg,.v4-fam img{translate:none!important;animation:none}}
 </style>
 </head>
