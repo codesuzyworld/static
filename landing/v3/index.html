@@ -647,9 +647,9 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 
 /* small phones: hero = one screen, logo strip inside the fold */
 @media (max-width:430px){.hero{padding-top:84px!important;min-height:0!important;height:100svh!important;display:flex!important;flex-direction:column;overflow:hidden}.hero .wrap{flex:1 1 auto;min-height:0;display:flex!important;flex-direction:column}.hero-copy{flex:none}.hero .seg{margin-bottom:14px!important}.hero-art{flex:1 1 auto;min-height:0!important;height:auto!important;margin-top:10px}.hero .hero-art .people[data-for=personal],.hero .hero-art .people[data-for=commercial]{top:0!important;height:100%!important}.hero .partners{flex:none;margin-top:-48px!important;padding:44px 0 16px!important}}
-/* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
+/* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d58.css">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d62.css">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -735,7 +735,8 @@ html[data-theme=dark] :is(.tile,.bento .tile,.review,.post,.score,.stats,.v6-loc
 html[data-theme=dark] :is(.tile,.bento .tile,.review,.post,.score,.stats,.v6-loc .ml-hq):hover{box-shadow:0 0 0 1px rgba(255,255,255,.16),var(--gx) var(--gy) 36px 6px rgba(255,255,255,.13),0 18px 40px rgba(0,0,0,.4)}
 /* quote form: yellow glow outside the card; its brightest spot slides along the edge nearest the cursor */
 html .form{position:relative;transition:--fx .8s ease-out,--fy .8s ease-out}
-html:not([data-theme=dark]) .form{border-color:#fff;box-shadow:0 0 0 1.5px #fff,0 0 34px 8px #fff,0 0 70px 10px rgba(255,255,255,.8),0 8px 24px rgba(15,15,15,.05)}
+/* quote form sits next to the dark card: rim + a tight glow only, so no white haze spills onto it */
+html:not([data-theme=dark]) .form{border-color:#fff;box-shadow:0 0 0 1.5px #fff,0 0 12px 1px rgba(255,255,255,.8),0 0 0 0 rgba(255,255,255,0),0 8px 24px rgba(15,15,15,.05)}
 html[data-theme=dark] .form{border-color:rgba(255,255,255,.18);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 0 30px 4px rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.3)}
 .form::before{content:"";position:absolute;z-index:-1;inset:-28px;border-radius:calc(var(--r-lg) + 28px);pointer-events:none;background:radial-gradient(320px circle at var(--fx) var(--fy),rgba(246,212,56,.75),rgba(246,212,56,.25) 45%,rgba(246,212,56,0) 75%);filter:blur(18px);opacity:0;transition:opacity 1.4s ease}
 .form:hover::before{opacity:1}
@@ -747,6 +748,36 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 /* outline buttons (All products, Read more) get MIB yellow */
 .btn-line,html[data-theme=dark] .btn-line{background:var(--yellow);border-color:var(--yellow);color:#0f0f0f}
 .btn-line:hover,html[data-theme=dark] .btn-line:hover{background:#f0c800;border-color:#f0c800;color:#0f0f0f}
+/* hero people: brokers and family crossfade every 2s */
+.v6-hero .ml-v2-people-wrap{position:relative}
+.v6-hero .ml-v2-people{transition:opacity 1s ease}
+.v6-hero .ml-v2-people.v6-alt{position:absolute;inset:0}
+.v6-hero .ml-v2-people:not(.is-on){opacity:0}
+/* families: the people slot sits 2.75% left of centre (fits the brokers' pose); shift the family frames so they centre under the headline */
+.v6-hero .ml-v2-people.v6-alt{transform:translateX(4.6%) translateY(calc(var(--fam-base,0%) + var(--fam-lap,0%))) scale(1.22);transform-origin:50% 0}
+/* desktop hero: original V3 proportions (full-width art from the top), cut off at one screen height */
+@media (min-width:1101px){
+  .v6-hero .ml-hero-v2 .ml-stage{--ml-art-h:calc(100cqw * 1164 / 1728);aspect-ratio:auto!important;height:100vh;height:100svh;min-height:0;overflow:hidden}
+  .v6-hero .ml-hero-v2 .ml-stage-art{top:0!important;height:var(--ml-art-h)!important;width:100%;left:0}
+  .v6-hero .ml-hero-copy-v2{top:calc(var(--ml-art-h) * .1744)!important}
+}
+
+/* hero parallax (like V1): layers drift with the pointer, shapes bob gently */
+.v6-hero .ml-stage-art .ml-abs>.ml-w{will-change:translate;translate:calc(var(--d,0) * var(--mx,0) * 1px) calc(var(--d,0) * .6 * var(--my,0) * 1px)}
+@keyframes v6-bob{from{translate:0 0;rotate:0deg}to{translate:0 -16px;rotate:var(--rot,4deg)}}
+.v6-hero .ml-stage-art .ml-abs:not(:has(.ml-v2-people)) img{animation:v6-bob var(--bob,5.5s) ease-in-out infinite alternate}
+.v6-hero .ml-stage-art .ml-abs:nth-child(2n) img{--rot:-5deg;--bob:6.5s}
+.v6-hero .ml-stage-art .ml-abs:nth-child(3n) img{--rot:3deg;--bob:4.8s}
+@media (prefers-reduced-motion:reduce){.v6-hero .ml-stage-art .ml-abs img{animation:none!important}.v6-hero .ml-stage-art .ml-abs>.ml-w{translate:none}}
+.v6-hero .ml-stage-art .ml-abs:has(.ml-v2-people){z-index:4!important}
+/* laptops: same layout, family sits a little lower so heads clear the buttons */
+@media (min-width:1101px) and (max-height:960px){.v6-hero{--fam-lap:9%}}
+@media (min-width:1101px) and (max-height:800px){.v6-hero{--fam-lap:13%}}
+/* each family lifted so most heads sit where the brokers' do (measured from the cutouts) */
+/* V3 only: this close-up family shown smaller than V1 */
+.v6-hero .ml-v2-people.v6-alt[data-fam="1"]{transform:translateX(4.6%) translateY(-18%) scale(1.15)}
+.v6-hero .ml-v2-people:not(.v6-alt){transform:translateY(calc(var(--fam-lap,0%) * .8))}
+/* headline smaller on desktop */@media (min-width:1101px){.v6-hero .ml-hero-l1{font-size:clamp(44px,4.4vw,86px)!important}.v6-hero .ml-hero-l2{font-size:clamp(36px,3.65vw,70px)!important}}
 </style>
 </head>
 <body>
@@ -762,7 +793,7 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
     <li><a href="#locations">Contact Us</a></li>
     <li class="nav-theme-li"><button class="nav-theme-row" type="button"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span><span>Dark mode</span></button></li>
   </ul>
-  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item" data-active="true" aria-current="page">V3</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/v4" class="mib-version-switch-item">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav>
+  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item" data-active="true" aria-current="page">V3</a><a href="/static/landing/v4" class="mib-version-switch-item">V4</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/old-v4" class="mib-version-switch-item">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav>
   <a class="btn btn-gold" href="#quote">Get a Quote</a>
   <button class="theme-toggle" type="button" aria-label="Switch to dark theme"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span></button>
   <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
@@ -1115,6 +1146,39 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
   f.addEventListener('pointermove',e=>{const r=f.getBoundingClientRect(),c=v=>Math.min(1.05,Math.max(-.05,v));
     tx=c(.5+((e.clientX-r.left)/r.width-.5)*1.5);ty=c(.5+((e.clientY-r.top)/r.height-.5)*1.5);go()});
   f.addEventListener('pointerleave',()=>{tx=1;ty=0;go()});
+})();
+// hero: the family, then the brokers, crossfading every 2 seconds
+(()=>{
+  const a=document.querySelector('.v6-hero .ml-v2-people');if(!a)return;
+  a.parentElement.classList.add('ml-v2-people-wrap');
+  const fr=[1].map(n=>{const b=a.cloneNode();b.src='/static/landing/family-'+n+'.webp?v=16';b.dataset.fam=n;b.alt='A smiling family';b.classList.add('v6-alt');return b});
+  a.after(...fr);const all=[...fr,a];let i=0;all[0].classList.add('is-on');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  setInterval(()=>{all[i].classList.remove('is-on');i=(i+1)%all.length;all[i].classList.add('is-on')},2000);
+})();
+// hero parallax: each art layer drifts with the pointer by its own depth (people barely, shapes more, alternating directions)
+(()=>{
+  const sec=document.querySelector('.v6-hero .ml-hero-v2');if(!sec||matchMedia('(hover:none),(prefers-reduced-motion: reduce)').matches)return;
+  const D=[-26,30,-10,24,-20,32];
+  sec.querySelectorAll('.ml-stage-art .ml-abs').forEach((a,i)=>a.style.setProperty('--d',a.querySelector('.ml-v2-people')?-8:D[i%D.length]));
+  let tx=0,ty=0,x=0,y=0,raf=0;
+  const tick=()=>{x+=(tx-x)*.08;y+=(ty-y)*.08;sec.style.setProperty('--mx',x.toFixed(3));sec.style.setProperty('--my',y.toFixed(3));raf=Math.abs(tx-x)+Math.abs(ty-y)>.002?requestAnimationFrame(tick):0};
+  addEventListener('pointermove',e=>{if(scrollY>innerHeight)return;tx=e.clientX/innerWidth*2-1;ty=e.clientY/innerHeight*2-1;if(!raf)raf=requestAnimationFrame(tick)},{passive:true});
+})();
+// desktop: fit the family between the buttons and the bottom of the screen (heads just under the buttons, baby's chin at the fold), centred
+(()=>{
+  const im=document.querySelector('.v6-hero .v6-alt[data-fam="1"]'),btn=document.querySelector('.v6-hero .ml-btn-row');if(!im||!btn)return;
+  const BOX=[444,100,1555,1250],FW=2000,FH=1333; // family's opaque box inside its 2000x1333 frame
+  const fit=()=>{
+    if(innerWidth<1101){im.style.transform='';im.style.transformOrigin='';return}
+    im.style.transform='none';const r=im.getBoundingClientRect(),b=btn.getBoundingClientRect().bottom+scrollY-scrollY;
+    const top=b+34,SHOW=.84,bottom=innerHeight;
+    let s=(bottom-top)/((BOX[3]-BOX[1])/FH*r.height*SHOW);
+    s=Math.min(s,innerWidth*.4/((BOX[2]-BOX[0])/FW*r.width));const topA=bottom-s*(BOX[3]-BOX[1])/FH*r.height*SHOW;
+    const dx=innerWidth/2-(r.left+s*(FW/2)/FW*r.width),dy=topA-(r.top+s*BOX[1]/FH*r.height);
+    im.style.transformOrigin='0 0';im.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
+  };
+  addEventListener('resize',fit);addEventListener('load',fit);document.fonts&&document.fonts.ready.then(fit);fit();
 })();
 </script>
 </body>
