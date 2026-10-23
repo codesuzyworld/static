@@ -649,7 +649,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 @media (max-width:430px){.hero{padding-top:84px!important;min-height:0!important;height:100svh!important;display:flex!important;flex-direction:column;overflow:hidden}.hero .wrap{flex:1 1 auto;min-height:0;display:flex!important;flex-direction:column}.hero-copy{flex:none}.hero .seg{margin-bottom:14px!important}.hero-art{flex:1 1 auto;min-height:0!important;height:auto!important;margin-top:10px}.hero .hero-art .people[data-for=personal],.hero .hero-art .people[data-for=commercial]{top:0!important;height:100%!important}.hero .partners{flex:none;margin-top:-48px!important;padding:44px 0 16px!important}}
 /* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d62.css">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d64.css">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -781,6 +781,33 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 .v6-hero .ml-v2-people.v6-alt[data-rider]{transform:translateY(calc(var(--fam-lap,0%) * .8 - 16%))} /* riders share the brokers' frame */
 @media (min-width:1101px){.v6-hero .ml-hero-v2 .ml-stage{max-width:none}} /* the V2 stage caps at 1920px; bleed edge to edge on wider screens */
 @media (min-width:1101px){.v6-hero .ml-hero-copy-v2{translate:0 -5svh}} /* text sits higher under the nav */
+/* mega menu: V2's layout (narrow card under the hovered link, one-column list with icons on the right, featured card below) */
+.nav-links .has-mega{position:relative}
+html .nav .mega{left:0;right:auto;width:min(460px,92vw);top:calc(100% + 22px)}
+html .nav .mega-surface{display:flex!important;flex-direction:column;gap:16px!important;padding:16px!important;border-radius:28px}
+html .nav .mega-list{display:flex;flex-direction:column;gap:4px;padding:0}
+html .nav .mega-item{flex-direction:row-reverse;justify-content:space-between;gap:16px;padding:14px 16px;border-radius:18px}
+html .nav .mega-icon{width:48px;height:48px;border-radius:14px;font-size:28px;border:0!important;background:linear-gradient(135deg,rgba(246,186,61,.22),rgba(245,228,51,.22))!important}
+html .nav .mega-item:hover .mega-icon{background:linear-gradient(90deg,#f6ba3d,#f5e433)!important;color:#0f0f0f!important}
+html .nav .mega-text{gap:4px}
+html .nav .mega-text b{font-size:18px;font-weight:700;line-height:1.2}
+html .nav .mega-text small{font-size:13px;line-height:1.4}
+html .nav .mega-feat{min-height:260px;padding:24px;border-radius:22px}
+html .nav .mega-shade{background:linear-gradient(rgba(0,0,0,.1) 30%,rgba(0,0,0,.7))}
+html .nav .mega-copy{gap:8px}
+html .nav .mega-copy b{font-size:22px;font-weight:700;line-height:1.15}
+html .nav .mega-copy small{font-size:13px;opacity:1}
+html .nav .mega-cta{margin-top:4px;padding:10px 18px 10px 22px;font-size:13px;font-weight:700;background:linear-gradient(90deg,#f6ba3d,#f5e433);color:#0f0f0f!important}
+html:not([data-theme=dark]) .nav .mega-surface{background:#fff!important;border:1px solid #d8d8d4!important;box-shadow:0 30px 80px rgba(20,20,25,.18),0 8px 24px rgba(20,20,25,.08)!important}
+html:not([data-theme=dark]) .nav .mega-item{color:#0f0f0f}
+html:not([data-theme=dark]) .nav .mega-item:hover,html:not([data-theme=dark]) .nav .mega-item:focus-visible{background:rgba(15,15,15,.05)}
+html:not([data-theme=dark]) .nav .mega-text small{color:#4a4a4a}
+html:not([data-theme=dark]) .nav .mega-icon{color:#0f0f0f!important}
+html[data-theme=dark] .nav .mega-icon{color:var(--yellow)!important}
+html .nav .mega::before{inset:-26px 0 auto;height:26px} /* hover bridge across the gap */
+html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important} /* opaque so the hero text behind does not show through */
+.v6-hero .ml-v2-people.v6-alt[data-fam="1"]:not([data-fit]){opacity:0!important;transition:none!important} /* hidden until the fit script places it, then fades in */
+.v6-hero .ml-stage-art .ml-abs:has(.ml-v2-people)>.ml-w>.ml-w{animation:none} /* the scale-in skewed the fit measurement (snap); people fade in instead */
 </style>
 </head>
 <body>
@@ -1177,13 +1204,13 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
   const im=document.querySelector('.v6-hero .v6-alt[data-fam="1"]'),btn=document.querySelector('.v6-hero .ml-btn-row');if(!im||!btn)return;
   const BOX=[444,100,1555,1250],FW=2000,FH=1333; // family's opaque box inside its 2000x1333 frame
   const fit=()=>{
-    if(innerWidth<1101){im.style.transform='';im.style.transformOrigin='';return}
-    im.style.transform='none';const r=im.getBoundingClientRect(),b=btn.getBoundingClientRect().bottom+scrollY-scrollY;
+    if(innerWidth<1101){im.style.transform='';im.style.transformOrigin='';im.dataset.fit=1;return}
+    im.style.transform='none';const r=im.getBoundingClientRect(),cp=btn.offsetParent,b=cp.getBoundingClientRect().top+btn.offsetTop+btn.offsetHeight;
     const top=b+34,SHOW=.84,bottom=innerHeight;
     let s=(bottom-top)/((BOX[3]-BOX[1])/FH*r.height*SHOW);
     s=Math.min(s,innerWidth*.4/((BOX[2]-BOX[0])/FW*r.width));const topA=bottom-s*(BOX[3]-BOX[1])/FH*r.height*SHOW;
     const dx=innerWidth/2-(r.left+s*(FW/2)/FW*r.width),dy=topA-(r.top+s*BOX[1]/FH*r.height);
-    im.style.transformOrigin='0 0';im.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;
+    im.style.transformOrigin='0 0';im.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${s.toFixed(4)})`;if(!document.fonts||document.fonts.status==='loaded')im.dataset.fit=1;
   };
   addEventListener('resize',fit);addEventListener('load',fit);document.fonts&&document.fonts.ready.then(fit);fit();
 })();
