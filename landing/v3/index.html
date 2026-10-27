@@ -649,7 +649,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 @media (max-width:430px){.hero{padding-top:84px!important;min-height:0!important;height:100svh!important;display:flex!important;flex-direction:column;overflow:hidden}.hero .wrap{flex:1 1 auto;min-height:0;display:flex!important;flex-direction:column}.hero-copy{flex:none}.hero .seg{margin-bottom:14px!important}.hero-art{flex:1 1 auto;min-height:0!important;height:auto!important;margin-top:10px}.hero .hero-art .people[data-for=personal],.hero .hero-art .people[data-for=commercial]{top:0!important;height:100%!important}.hero .partners{flex:none;margin-top:-48px!important;padding:44px 0 16px!important}}
 /* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d64.css">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d65.css">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -808,6 +808,55 @@ html .nav .mega::before{inset:-26px 0 auto;height:26px} /* hover bridge across t
 html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important} /* opaque so the hero text behind does not show through */
 .v6-hero .ml-v2-people.v6-alt[data-fam="1"]:not([data-fit]){opacity:0!important;transition:none!important} /* hidden until the fit script places it, then fades in */
 .v6-hero .ml-stage-art .ml-abs:has(.ml-v2-people)>.ml-w>.ml-w{animation:none} /* the scale-in skewed the fit measurement (snap); people fade in instead */
+/* Product tile art: flat yellow/black icons (Home from Figma 8023:17025; Auto, Condo, Business drawn to match), Phantom-style playful motion:
+   main object drops in with squash/stretch (car drives in), accent pops with overshoot, then both idle; accent wiggles on hover */
+.tile .tile-anim{position:absolute;z-index:-1;filter:drop-shadow(0 18px 24px rgba(42,43,47,.18))}
+.tile .tile-anim img{position:absolute;left:auto;right:auto;top:auto;bottom:auto;margin:0;width:auto;height:auto;max-width:none;filter:none;translate:none;transition:none}
+.tile .ta-main{transform-origin:50% 100%;animation:ta-drop .8s .35s both,ta-breathe 4.8s ease-in-out 1.15s infinite}
+.tile .ta-s{position:absolute;transform-origin:50% 90%}
+.tile .tile-anim .ta-acc{left:0;top:0;width:100%;transform-origin:50% 85%;animation:ta-pop .7s .6s both,ta-float 4.8s ease-in-out 1.3s infinite}
+.tile .ta-shadow{position:absolute;left:4%;right:4%;bottom:-4%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(15,15,15,.28),rgba(15,15,15,0));animation:ta-shadow .8s .35s both}
+.js .tile:not(.in) .tile-anim *{animation-play-state:paused}
+.tile:hover .ta-s{animation:ta-wiggle .6s cubic-bezier(.34,1.56,.64,1)}
+/* Home 250x159 */
+.t-home .tile-anim{left:0;right:0;bottom:22px;margin:0 auto;height:190px;aspect-ratio:250/159}
+.t-home .tile-anim .ta-main{left:0;top:16.18%;width:66.81%}
+.t-home .ta-s{left:48.62%;top:0;width:51.37%;height:99.68%}
+/* Condo 245x170: building + key + twinkling sparkle */
+.t-condo .tile-anim{left:0;right:0;bottom:22px;margin:0 auto;height:190px;aspect-ratio:245/170}
+.t-condo .tile-anim .ta-main{left:0;top:0;width:51.4%}
+.t-condo .ta-s{left:49%;top:56%;width:48.2%;height:32.9%;rotate:-30deg}
+.t-condo .tile-anim .ta-spark{left:55.7%;top:15.2%;width:30.4%;animation:ta-pop .6s .9s both,ta-twinkle 3s ease-in-out 1.5s infinite}
+/* Auto 270x120: car drives in from the left, speed lines slide in and stay (currentColor so they flip with the theme); car gently rolls while idle, lines streak on hover */
+.t-auto .tile-anim{left:20px;right:20px;bottom:40px;aspect-ratio:270/120}
+.t-auto .tile-anim .ta-main{left:0;top:11.67%;width:82.2%;animation:ta-drive .9s .35s both,ta-cruise 4.8s ease-in-out 1.25s infinite}
+.t-auto .ta-speed{position:absolute;left:80%;top:30%;width:20%;height:42%}
+.t-auto .ta-speed i{position:absolute;left:0;height:12%;border-radius:99px;background:currentColor;transform-origin:0 50%;animation:ta-whoosh .7s cubic-bezier(.2,0,0,1) .35s both}
+.t-auto .ta-speed i:nth-child(1){top:0;width:100%}
+.t-auto .ta-speed i:nth-child(2){top:44%;width:70%;animation-delay:.47s}
+.t-auto .ta-speed i:nth-child(3){top:88%;width:85%;animation-delay:.59s}
+.t-auto:hover .ta-speed i{animation:ta-whoosh-h .9s cubic-bezier(.2,0,0,1) infinite both}
+.t-auto:hover .ta-speed i:nth-child(2){animation-delay:.12s}
+.t-auto:hover .ta-speed i:nth-child(3){animation-delay:.24s}
+@media (min-width:1101px){.t-auto .tile-anim{left:24px;right:24px;bottom:auto;top:calc(50% + 48px);translate:0 -50%}}
+/* Business 270x170 */
+.t-business .tile-anim{right:56px;bottom:22px;height:240px;aspect-ratio:270/170}
+.t-business .tile-anim .ta-main{left:0;top:2.35%;width:77%}
+.t-business .ta-s{left:63%;top:50.6%;width:37%;height:49.4%}
+@keyframes ta-drop{0%{opacity:0;transform:translateY(-55%) scale(.9,1.12);animation-timing-function:cubic-bezier(.5,0,1,1)}35%{opacity:1;transform:scale(1.14,.84);animation-timing-function:cubic-bezier(0,0,.3,1)}58%{transform:translateY(-7%) scale(.96,1.05);animation-timing-function:cubic-bezier(.5,0,1,1)}78%{transform:scale(1.04,.96);animation-timing-function:ease-out}to{transform:none}}
+@keyframes ta-drive{0%{opacity:0;transform:translateX(-70%) skewX(12deg);animation-timing-function:cubic-bezier(.2,0,0,1)}55%{opacity:1;transform:translateX(5%) skewX(-8deg) scale(1.03,.97);animation-timing-function:ease-in-out}78%{transform:translateX(-1.5%) skewX(3deg)}to{transform:none}}
+@keyframes ta-shadow{0%{opacity:0;transform:scaleX(.4)}35%{opacity:1;transform:scaleX(1.12)}58%{transform:scaleX(.9)}78%{transform:scaleX(1.03)}to{opacity:1;transform:none}}
+@keyframes ta-pop{0%{opacity:0;transform:scale(0) rotate(-25deg);animation-timing-function:cubic-bezier(.2,0,0,1)}55%{opacity:1;transform:scale(1.16) rotate(8deg);animation-timing-function:ease-in-out}78%{transform:scale(.95) rotate(-4deg);animation-timing-function:ease-in-out}to{transform:none}}
+@keyframes ta-whoosh{0%{opacity:0;transform:translateX(-30%) scaleX(.2)}to{opacity:.7;transform:none}}
+@keyframes ta-whoosh-h{0%{opacity:0;transform:translateX(-30%) scaleX(.2)}35%{opacity:.7;transform:scaleX(1)}to{opacity:0;transform:translateX(50%) scaleX(.35)}}
+@keyframes ta-cruise{25%{transform:translate(-1%,-1.2%) rotate(-.4deg)}50%{transform:translateX(-1.8%)}75%{transform:translate(-.8%,-.8%) rotate(.3deg)}}
+@keyframes ta-twinkle{50%{transform:scale(.85) rotate(20deg);opacity:.8}}
+@keyframes ta-breathe{50%{transform:scale(1.005,.992)}}
+@keyframes ta-float{50%{transform:translateY(-2%) rotate(1deg)}}
+@keyframes ta-wiggle{30%{transform:scale(1.08) rotate(-10deg)}55%{transform:scale(1.05) rotate(8deg)}80%{transform:rotate(-3deg)}}
+@media (max-width:1100px){.t-auto .tile-anim{left:auto;right:28px;bottom:28px;width:min(360px,50%)}}
+@media (max-width:720px){.t-home .tile-anim,.t-condo .tile-anim,.t-business .tile-anim{left:0;right:0;margin:0 auto;bottom:18px;height:160px}.t-auto .tile-anim{left:0;right:0;margin:0 auto;width:min(300px,85%);bottom:24px}}
+@media (prefers-reduced-motion:reduce){.tile-anim *{animation:none!important}}
 </style>
 </head>
 <body>
@@ -840,10 +889,10 @@ html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important
       <a class="btn btn-line" href="/static/personal">All products</a>
     </div>
     <div class="bento">
-      <a class="tile t-auto" href="/static/insurance/auto"><h3>Auto</h3><p>Daily Drivers, Second Cars, New Drivers</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/auto.webp" alt="" loading="lazy"></a>
-      <a class="tile t-home" href="/static/insurance/home"><h3>Home</h3><p>House, Contents and Liability</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/home.webp" alt="" loading="lazy"></a>
-      <a class="tile t-condo" href="/static/insurance/condo"><h3>Condo</h3><p>Unit, Belongings, Renters</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/condo.webp" alt="" loading="lazy"></a>
-      <a class="tile t-business" href="/static/insurance/commercial"><h3>Business</h3><p>Commercial Liability, Fleet</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/business.webp" alt="" loading="lazy"></a>
+      <a class="tile t-auto" href="/static/insurance/auto"><h3>Auto</h3><p>Daily Drivers, Second Cars, New Drivers</p><span class="arrow" aria-hidden="true">&rarr;</span><span class="tile-anim" aria-hidden="true"><span class="ta-shadow"></span><span class="ta-speed"><i></i><i></i><i></i></span><img class="ta-main" src="/static/landing/v3/icons/car.svg" alt=""></span></a>
+      <a class="tile t-home" href="/static/insurance/home"><h3>Home</h3><p>House, Contents and Liability</p><span class="arrow" aria-hidden="true">&rarr;</span><span class="tile-anim" aria-hidden="true"><span class="ta-shadow"></span><img class="ta-main" src="/static/landing/v3/icons/house.svg" alt=""><span class="ta-s"><img class="ta-acc" src="/static/landing/v3/icons/shield.svg" alt=""></span></span></a>
+      <a class="tile t-condo" href="/static/insurance/condo"><h3>Condo</h3><p>Unit, Belongings, Renters</p><span class="arrow" aria-hidden="true">&rarr;</span><span class="tile-anim" aria-hidden="true"><span class="ta-shadow"></span><img class="ta-main" src="/static/landing/v3/icons/condo.svg" alt=""><span class="ta-s"><img class="ta-acc" src="/static/landing/v3/icons/key.svg" alt=""></span><img class="ta-spark" src="/static/landing/v3/icons/sparkle.svg" alt=""></span></a>
+      <a class="tile t-business" href="/static/insurance/commercial"><h3>Business</h3><p>Commercial Liability, Fleet</p><span class="arrow" aria-hidden="true">&rarr;</span><span class="tile-anim" aria-hidden="true"><span class="ta-shadow"></span><img class="ta-main" src="/static/landing/v3/icons/store.svg" alt=""><span class="ta-s"><img class="ta-acc" src="/static/landing/v3/icons/briefcase.svg" alt=""></span></span></a>
     </div>
     <a class="btn btn-line products-all" href="/static/personal">All products</a>
   </section>

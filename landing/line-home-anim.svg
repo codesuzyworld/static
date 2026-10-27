@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="ia-home" width="216" height="154" viewBox="-14 -14 216 154" fill="none" aria-hidden="true">
+<style>
+.ia-home .s{fill:none;stroke:#B4AB4E;stroke-width:3.7;stroke-linecap:round;stroke-linejoin:round}
+.ia-home .d{stroke-dasharray:1;stroke-dashoffset:1;animation:home-draw .8s cubic-bezier(.65,0,.35,1) forwards}
+@keyframes home-draw{to{stroke-dashoffset:0}}
+.ia-home .fb{transform-box:fill-box}
+.ia-home .glow{animation:home-glowsoft 4s cubic-bezier(.45,0,.55,1) 1s infinite}
+:is(.ml-protect:hover,.ml-protect:focus-visible) .ia-home .glow{animation:home-glow 2s cubic-bezier(.45,0,.55,1) infinite}
+.ia-home .sh1{animation:home-float 4s cubic-bezier(.45,0,.55,1) 1s infinite}
+:is(.ml-protect:hover,.ml-protect:focus-visible) .ia-home .sh1{animation:home-lift 3.2s cubic-bezier(.45,0,.55,1) infinite}
+.ia-home .chk{animation:none}
+:is(.ml-protect:hover,.ml-protect:focus-visible) .ia-home .chk{animation:home-chk 4s cubic-bezier(.65,0,.35,1) infinite}
+.ia-home .glow{fill:#B4AB4E;opacity:0}@keyframes home-glowsoft{0%,100%{opacity:0}50%{opacity:.25}}@keyframes home-glow{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.6;transform:scale(1)}}
+@keyframes home-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}@keyframes home-floatbig{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes home-lift{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.03)}}
+@keyframes home-chk{0%{stroke-dashoffset:1}18%,80%{stroke-dashoffset:0}96%,100%{stroke-dashoffset:-1}}
+@media (prefers-reduced-motion:reduce){.ia-home *{animation:none!important}.ia-home .d,.ia-home .chk{stroke-dashoffset:0!important}.ia-home .glow{opacity:0!important}}
+</style>
+<mask id="ia-home-m" maskUnits="userSpaceOnUse" x="-30" y="-30" width="248" height="186"><rect x="-30" y="-30" width="248" height="186" fill="#fff"/><g class="fb sh1" style="transform-origin:50% 100%"><path d="M139 1Q120 18 93 22Q86 50 96 78Q110 106 139 120Q168 106 181 78Q191 50 184 22Q157 18 139 1Z" fill="#000" stroke="#000" stroke-width="6.7" stroke-linejoin="round"/></g></mask><g mask="url(#ia-home-m)"><path class="s d " pathLength="1" style="animation-delay:0.1s;" d="M0 66L13 67L44 38L76 71"/><path class="s d " pathLength="1" style="animation-delay:0s;" d="M0 66L44 25L91 70"/><path class="s d " pathLength="1" style="animation-delay:0.25s;" d="M76 71L93 70"/><path class="s d " pathLength="1" style="animation-delay:0.2s;" d="M44 25L92 26"/><path class="s d " pathLength="1" style="animation-delay:0.3s;" d="M14 68V125"/><path class="s d " pathLength="1" style="animation-delay:0.35s;" d="M76 71V125"/><path class="s d " pathLength="1" style="animation-delay:0.45s;" d="M34 124V86H56V124"/><g class="fb glow" style="transform-origin:50% 50%"><circle cx="46" cy="68" r="5"/></g><circle class="s d " pathLength="1" style="animation-delay:0.5s" cx="46" cy="68" r="6"/><path class="s d" pathLength="1" style="animation-delay:.05s;stroke-width:4" d="M2 125H139"/></g><g class="fb sh1" style="transform-origin:50% 100%"><path class="s d " pathLength="1" style="animation-delay:0.15s;" d="M139 1Q120 18 93 22Q86 50 96 78Q110 106 139 120Q168 106 181 78Q191 50 184 22Q157 18 139 1Z"/><path class="s d " pathLength="1" style="animation-delay:0.3s;" d="M139 13Q124 26 102 29Q96 52 104 75Q116 98 139 107Q162 98 174 75Q182 52 176 29Q154 26 139 13Z"/><path class="s chk" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:0" d="M123 62L135 72L159 48"/></g>
+</svg>
