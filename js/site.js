@@ -283,6 +283,21 @@
     field.addEventListener('pointerleave', function () { tx = 0; ty = 0; go() })
   }
 
+  // ---- V1 pinned headline ("Insurance for everyone"): fades from 15% to full as its track scrolls in
+  //      (same mapping as the React build: full after ~45% of the window height)
+  function pinFade() {
+    var pins = $$('.ml-pin-track .ml-pin')
+    if (!pins.length) return
+    function on() {
+      pins.forEach(function (el) {
+        var t = el.closest('.ml-pin-track').getBoundingClientRect().top
+        var k = Math.max(0, Math.min(1, (innerHeight - t) / (innerHeight * .45)))
+        el.style.opacity = reduce ? '1' : (.15 + .85 * k).toFixed(3)
+      })
+    }
+    window.addEventListener('scroll', on, { passive: true }); window.addEventListener('resize', on); on()
+  }
+
   // ---- V1-style nav gets data-scrolled once the page moves
   function navScrolled() {
     var h = document.querySelector('header.ml-nav')
@@ -320,7 +335,7 @@
   function init() {
     setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light')
     watch(document)
-    megas(); mobile(); locations(); tilt(); form(); floats(); depth(); navScrolled(); inlineIcons()
+    megas(); mobile(); locations(); tilt(); form(); floats(); depth(); navScrolled(); inlineIcons(); pinFade()
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 })()
