@@ -839,10 +839,12 @@ html .nav .mega-item:has(.mega-icon-3d){flex-direction:row;justify-content:flex-
 .mega-icon-3d img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18));transition:transform .35s cubic-bezier(.34,1.45,.64,1)}
 .mega-item:hover .mega-icon-3d img,.mega-item:focus-visible .mega-icon-3d img{transform:translateY(-3px) scale(1.08)}
 @media (prefers-reduced-motion:reduce){.mega-icon-3d img{transition:none}}
+/* mobile quote: the black card sits flush on top of the form card, square bottom, text centred */
+@media (max-width:1100px){.quote{gap:0!important}.talk{border-bottom-left-radius:0!important;border-bottom-right-radius:0!important;text-align:center;align-items:center;padding-bottom:64px!important}.talk p{margin-inline:auto}.talk .call{align-self:stretch;align-items:center!important}.quote>.form{margin-top:-28px;position:relative;z-index:1}}
 /* V4 reviews ring carousel */
 .v4-ring{position:relative;width:100%;perspective:1600px;perspective-origin:50% 40%;touch-action:pan-y;user-select:none;cursor:grab}
 .v4-ring:active{cursor:grabbing}.v4-ring-card{position:absolute;left:50%;top:50%;will-change:transform,opacity}
-.v4-ring-card .ml-review{width:100%;height:auto;transform:none!important}
+.v4-ring-card .ml-review{width:100%;max-width:none!important;margin:0!important;height:auto;transform:none!important} /* fill the slot so the centre card is truly centred */
 /* more breathing room between V4 sections (like old V2) */
 main>section.block{padding-top:240px}
 .v6-prod>.ml-v3-protect{padding-block:160px 40px}
@@ -858,6 +860,9 @@ main>section.block{padding-top:240px}
 @media (max-width:1100px){.v6-prod .v4-pin-track .ml-pin-hold{height:6vh!important}.v6-prod .ml-protect-row{margin-top:32px}.v6-prod>.ml-v3-protect{padding-top:64px!important}} /* mobile: title sits close to the cards */
 .v4-pin{opacity:calc(.15 + .85 * var(--p,1))}
 .v6-hero{position:relative;z-index:3} /* the pinned heading scrolls under the hero card */
+/* the heading starts tucked underneath the hero card and slides out from its bottom edge */
+.v6-prod>.ml-v3-protect{margin-top:-100px;padding-top:0!important}
+@media (max-width:1100px){.v6-prod>.ml-v3-protect{margin-top:-110px}.v6-prod .v4-pin-track .ml-pin-hold{height:22vh!important}}
 /* legacy V1 glow: a big yellow glow pinned mid-screen travels with you from the heading down to the cards, where it stops */
 .v6-prod>.ml-v3-protect{position:relative;overflow-x:clip;--gw:min(1500px,120vw);--gh:calc(var(--gw) / 1.6)}
 .v4-glow-track{position:absolute;top:0;left:0;right:0;bottom:calc(40px + 190px - var(--gh) / 2);z-index:0;pointer-events:none}
