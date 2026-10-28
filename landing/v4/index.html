@@ -1325,7 +1325,7 @@ if(host){(async()=>{
   const sun=new T.DirectionalLight('#fffaf2',1.9);sun.position.set(-7,11,12);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.radius=12;sun.shadow.blurSamples=16;
   Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:60});scene.add(sun);
   // the map lies in its own XY plane (z = up from the land), the whole board tilts back toward the viewer
-  const YAW=.32,board=new T.Group;board.rotation.set(-.85,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
+  const YAW=.32,board=new T.Group;board.rotation.set(-.55,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
   // soften the jagged coastline: three passes of corner cutting round off the zigzags without moving the overall outline
   const soften=pts=>{for(let n=0;n<4;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
   const shapes=RINGS.map(ring=>new T.Shape(soften(ring).map(([x,y])=>new T.Vector2(x,y))));
@@ -1371,7 +1371,7 @@ if(host){(async()=>{
   // the MIB shield, coloured like the footer logo
   const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
   let src=null;g.traverse(o=>{if(o.isMesh&&o.name.replace(/\W/g,'')==='Curve020')src=o});
-  const pivot=new T.Group,stand=new T.Group;stand.rotation.x=Math.PI/2;pivot.add(stand);board.add(pivot);
+  const pivot=new T.Group,stand=new T.Group;stand.rotation.x=Math.PI/2-.3;/* leans toward the viewer so it stays upright on screen with the flatter board */pivot.add(stand);board.add(pivot);
   if(src){const sg=src.geometry.clone().applyMatrix4(src.matrixWorld);sg.computeBoundingBox();const b=sg.boundingBox,sz=b.getSize(new T.Vector3),bc=b.getCenter(new T.Vector3);
     sg.translate(-bc.x,-b.min.y,-bc.z);const k=.42/sz.y;sg.scale(k,k,k);
     const pos=sg.attributes.position,v=new T.Vector3,ds=[];let lo=1/0,hi=-1/0;
@@ -1386,7 +1386,7 @@ if(host){(async()=>{
   const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:0,w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
     const et=Math.round(b.height*.4),eb=Math.round(b.height*.5);/* extra canvas above/below, same framing, so the map isn't hard-cut once the fade is gone */
     r.setSize(w,h+et+eb,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top-et+'px',width:w+'px',height:h+et+eb+'px'});cam.aspect=w/h;cam.setViewOffset(w,h,0,-et,w,h+et+eb);
-    const t=Math.tan(cam.fov*Math.PI/360),view=desk?6.6:8.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
+    const t=Math.tan(cam.fov*Math.PI/360),view=desk?7.4:9.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
     const f=FOCUS.clone().applyEuler(board.rotation),dx=desk&&bleed?view*.1:0;
     refD=dist;cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix();go()};
   // state: which office the shield is on, and whether a pill is being hovered (grow + spin)
