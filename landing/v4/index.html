@@ -1357,7 +1357,7 @@ if(host){(async()=>{
       nd.data[o]=(-dx/l*.5+.5)*255;nd.data[o+1]=(-dy/l*.5+.5)*255;nd.data[o+2]=(1/l*.5+.5)*255;nd.data[o+3]=255;const r=150+ht[i]*60;rd.data[o]=rd.data[o+1]=rd.data[o+2]=Math.max(0,Math.min(255,r));rd.data[o+3]=255}
     nx.putImageData(nd,0,0);rx.putImageData(rd,0,0);const mk=(c,srgb)=>{const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(3,40);t.anisotropy=8;if(srgb===false)t.colorSpace=T.NoColorSpace;return t};return{n:mk(nc,false),r:mk(rc,false)}})();
   const goldMat=new T.MeshStandardMaterial({color:'#b08c4e',roughness:.42,metalness:.85,normalMap:brush.n,normalScale:new T.Vector2(.9,.9),roughnessMap:brush.r,envMapIntensity:.8});
-  slab(.14,.16,-.24,baseMat);slab(.015,.18,-.075,goldMat);
+  slab(.4,.28,-.5,baseMat);slab(.015,.18,-.075,goldMat);
   const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.ShadowMaterial({opacity:.1}));floor.position.z=-.28;floor.receiveShadow=true;board.add(floor);
   const TOP=DEPTH+.14,at=i=>{const [x,y]=proj(...LL[i]);return new T.Vector3(x-c.x,y-c.y,TOP)};
   // small dot per office; the active office's dot pulses two glowing rings
