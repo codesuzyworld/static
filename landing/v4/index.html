@@ -144,6 +144,7 @@ section{scroll-margin-top:100px}
 .post{display:flex;flex-direction:column;text-decoration:none;border-radius:var(--r-lg);overflow:hidden;background:var(--paper);border:1px solid rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s}
 .post:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(15,15,15,.12)}
 .post img{aspect-ratio:4/3;object-fit:cover;width:100%}
+@media (max-width:700px){.post img{aspect-ratio:16/9}}/* phones: shorter news cards */
 .post div{padding:20px 22px 26px;display:flex;flex-direction:column;gap:10px}
 .post .tag{display:flex;justify-content:space-between;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
 .post .tag b{padding:4px 11px;border-radius:37px;background:#f6d438;color:#0f0f0f;letter-spacing:.06em}
@@ -647,9 +648,14 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 
 /* small phones: hero = one screen, logo strip inside the fold */
 @media (max-width:430px){.hero{padding-top:84px!important;min-height:0!important;height:100svh!important;display:flex!important;flex-direction:column;overflow:hidden}.hero .wrap{flex:1 1 auto;min-height:0;display:flex!important;flex-direction:column}.hero-copy{flex:none}.hero .seg{margin-bottom:14px!important}.hero-art{flex:1 1 auto;min-height:0!important;height:auto!important;margin-top:10px}.hero .hero-art .people[data-for=personal],.hero .hero-art .people[data-for=commercial]{top:0!important;height:100%!important}.hero .partners{flex:none;margin-top:-48px!important;padding:44px 0 16px!important}}
-/* version switch: only V1, V2 and V3 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"]):not([data-active]){display:none!important}
+/* version switch: only V2 and V4 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"],[href="/static/landing/v1"],[href="/static/landing/v3"]):not([data-active]){display:none!important}
+/* locations: 3D Ontario map on the left (replaces the Google map), office card under the pills */
+.v4-ont{position:relative;aspect-ratio:1/1;width:100%;max-width:620px;justify-self:center}
+.v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none;--fade:linear-gradient(to bottom,transparent 0,#000 18%,#000 72%,transparent 100%),linear-gradient(to right,transparent 0,#000 16%,#000 74%,transparent 100%);-webkit-mask-image:var(--fade);-webkit-mask-composite:source-in;mask-image:var(--fade);mask-composite:intersect}
+.v6-loc .ml-loc-copy .ml-v2-loc-card{margin-top:28px}
+@media (max-width:1100px){.v4-ont{max-width:440px;margin-inline:auto}}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d65.css?v=20261027c">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d65.css?v=20261028b">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -660,7 +666,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 :root{--midnight:#0f0f0f;--beige:#f2f2f0;--cream:#fff;--stroke:#e2e2de;--muted:#4a4a4a;--yellow-10:#fdf6d3}
 body{background:#f2f2f0}
 html:not([data-theme=dark]) .nav-links.open{background:#fff}
-.v6-hero.ml-v2,.v6-hero .ml-hero-v2,.v6-loc.ml-v2,.v6-loc .ml-v2-locations{background:transparent}
+.v6-hero.ml-v2,.v6-hero .ml-hero-v2,.v6-loc.ml-v2,.v6-loc .ml-v2-locations,.v6-rev.ml-v2,.v6-prod.ml-v3{background:transparent}
 /* V3 typography: medium-weight headings, tight tracking, 600 eyebrows */
 .h2{font-weight:500;letter-spacing:-.01em;line-height:1.25}
 h3{font-weight:500}
@@ -683,7 +689,7 @@ html:not([data-theme=dark]) .v6-hero .ml-v2-hero-card{background-color:#fafaf8}
 .review blockquote{font-size:17px;line-height:1.6;color:var(--muted)}
 .h2 em,.talk .h2 b{font-style:normal;font-weight:500;color:inherit}
 .stat strong{letter-spacing:-.03em}
-html[data-theme=dark] .v6-loc.ml-v2,html[data-theme=dark] .v6-loc .ml-v2-locations{background:transparent}
+html[data-theme=dark] .v6-loc.ml-v2,html[data-theme=dark] .v6-loc .ml-v2-locations,html[data-theme=dark] .v6-rev.ml-v2,html[data-theme=dark] .v6-prod.ml-v3{background:transparent}
 /* rating card: mostly white, a small yellow light at the top */
 html:not([data-theme=dark]) .score{background:radial-gradient(70% 38% at 50% 0%,rgba(246,212,56,.45) 0%,rgba(248,226,128,.18) 50%,rgba(255,255,255,0) 100%),#fff;border-color:var(--stroke)}
 /* About: photo and stats share one card */
@@ -703,6 +709,7 @@ html :is(.tile,.review,.post,.score,.stats,.v6-loc .ml-hq):hover,html[data-theme
 @keyframes v6-light{0%,100%{scale:1}50%{scale:1.18}}
 html[data-theme=dark] .tile::after,html[data-theme=dark] .review::after,html[data-theme=dark] .post::after,html[data-theme=dark] .score::after,html[data-theme=dark] .stats::after,html[data-theme=dark] .v6-loc .ml-hq::after{background:radial-gradient(420px 340px at var(--lx) var(--ly),rgba(246,212,56,.22),rgba(246,212,56,.06) 50%,rgba(246,212,56,0) 100%)}
 @media (prefers-reduced-motion:reduce){.tile:hover::after,.review:hover::after,.post:hover::after,.score:hover::after,.stats:hover::after,.v6-loc .ml-hq:hover::after{animation:none}}
+main{overflow-x:clip}/* the quote glow below reaches past the viewport */
 main>section#quote::before{left:calc(50% + min(640px,50vw)/2);top:50%;width:min(900px,90vw);height:95%;transform:translate(-50%,-50%)}
 html[data-theme=dark] .v6-hero.ml-v2,html[data-theme=dark] .v6-hero .ml-hero-v2{background:transparent}
 /* People that make MIB: yellow light in the card's top-right corner */
@@ -827,6 +834,17 @@ html[data-theme=dark] .v4-wash{background:radial-gradient(calc(56% * var(--gs)) 
 }
 @media (max-width:1100px){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:radial-gradient(calc(70% * var(--gs)) calc(46% * var(--gs)) at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,231,77,.25) 40%,rgba(255,231,77,0) 100%),linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.4) 62%),radial-gradient(calc(80% * var(--gs)) calc(58% * var(--gs)) at 51% 100%,#ffdf12 0,rgba(255,231,77,.75) 25%,rgba(255,239,136,.5) 50%,rgba(255,255,255,0) 100%)}html[data-theme=dark] .v4-wash{background:radial-gradient(calc(80% * var(--gs)) calc(58% * var(--gs)) at 51% 100%,rgba(255,223,18,.5) 0,rgba(255,239,136,.2) 50%,rgba(255,255,255,0) 100%),linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
 @media (prefers-reduced-motion:reduce){.v4-bg,.v4-fam img{translate:none!important;animation:none}}
+/* stacked hero (tablets + phones): exactly one screen tall, the autumn photo fills it, the family is anchored to the bottom and sized from the screen height; one long eased fade from solid at the top */
+@media (max-width:1100px){.v4-hero .ml-stage{position:relative;height:100svh!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
+  .v4-hero .ml-hero-copy{position:relative;z-index:2;translate:0 44px;flex:none!important}
+  .v4-hero .ml-v2-hero-clip{position:absolute!important;inset:0;height:auto!important;clip-path:inset(0 round 0 0 32px 32px)!important}
+  .v4-hero .ml-stage-art.v4-art{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;margin:0!important;overflow:hidden!important}
+  .v4-art .v4-bg{top:0!important;left:0!important;width:100%!important;height:100%!important;translate:none!important;object-position:50% 45%}
+  .v4-art .v4-wash{inset:0!important;height:100%!important}
+  .v4-fam{width:min(118%,calc(100svh * .85))}
+  html:not([data-theme=dark]) .v4-wash{background:radial-gradient(calc(70% * var(--gs)) calc(30% * var(--gs)) at 51% 100%,rgba(255,223,18,.3) 0,rgba(255,231,77,0) 100%),linear-gradient(180deg,#f2f2f0 0,rgba(242,242,240,.97) 11%,rgba(242,242,240,.9) 21%,rgba(242,242,240,.78) 30%,rgba(242,242,240,.62) 38%,rgba(242,242,240,.45) 46%,rgba(242,242,240,.29) 54%,rgba(242,242,240,.16) 62%,rgba(242,242,240,.07) 70%,rgba(242,242,240,.02) 78%,rgba(242,242,240,0) 86%)}
+  html[data-theme=dark] .v4-wash{background:radial-gradient(calc(80% * var(--gs)) calc(36% * var(--gs)) at 51% 100%,rgba(255,223,18,.3) 0,rgba(255,239,136,0) 100%),linear-gradient(180deg,#101011 0,rgba(16,16,17,.97) 11%,rgba(16,16,17,.9) 21%,rgba(16,16,17,.78) 30%,rgba(16,16,17,.62) 38%,rgba(16,16,17,.45) 46%,rgba(16,16,17,.29) 54%,rgba(16,16,17,.16) 62%,rgba(16,16,17,.07) 70%,rgba(16,16,17,.02) 78%,rgba(16,16,17,0) 86%)}}
+@media (max-width:700px){.v4-fam{width:min(165%,calc(100svh * .9))}.v4-art .v4-parents{left:22.65%;top:-9%}.v4-art .v4-kids{left:23.6%;z-index:2}}
 /* yellow glow grows out from the bottom on load (--gs scales every glow radius) */
 @property --gs{syntax:'<number>';inherits:false;initial-value:1}
 .v4-wash{animation:v4-glow 2.2s cubic-bezier(.2,.8,.2,1) .2s both}
@@ -847,7 +865,7 @@ html[data-theme=dark] .v4-wash{background:radial-gradient(calc(56% * var(--gs)) 
     <li><a href="#locations">Contact Us</a></li>
     <li class="nav-theme-li"><button class="nav-theme-row" type="button"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span><span>Dark mode</span></button></li>
   </ul>
-  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item">V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/old-v4" class="mib-version-switch-item">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav>
+  <nav class="mib-version-switch" aria-label="Design version"><a href="/static/landing/v1" class="mib-version-switch-item">Old V1</a><a href="/static/personal" class="mib-version-switch-item">V2</a><a href="/static/landing/v3" class="mib-version-switch-item">Old V3</a><a href="/static/landing/v4" class="mib-version-switch-item" data-active="true" aria-current="page">V4</a><a href="/static/landing/old-v2" class="mib-version-switch-item">Old V2</a><a href="/static/landing/old-v4" class="mib-version-switch-item">Old V4</a><a href="/static/landing/v5" class="mib-version-switch-item">Old V5</a></nav>
   <a class="btn btn-gold" href="#quote">Get a Quote</a>
   <button class="theme-toggle" type="button" aria-label="Switch to dark theme"><span class="material-symbols-rounded" aria-hidden="true">dark_mode</span></button>
   <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
@@ -857,49 +875,11 @@ html[data-theme=dark] .v4-wash{background:radial-gradient(calc(56% * var(--gs)) 
   <!-- hero -->
   <div class="ml-page ml-v2 v6-hero v4-hero"><section class="ml-hero ml-hero-v2" style="--ml-hero-inset:0%;--ml-hero-radius:0px;--ml-hero-p:0"><div class="ml-w ml-stage" style="aspect-ratio:1728 / 1164"><div class="ml-v2-hero-card"></div><div class="ml-v2-hero-clip"><div class="ml-w ml-stage-art v4-art"><img src="/static/landing/v4-hero-bg.webp" alt="" class="v4-bg"/><div class="v4-wash"></div><div class="v4-fam" role="img" aria-label="A family running through an autumn forest path"><img src="/static/landing/v4-parents.webp?v=20261027" alt="" class="v4-parents" fetchpriority="high"/><img src="/static/landing/v4-kids.webp" alt="" class="v4-kids" fetchpriority="high"/></div></div></div><div class="ml-hero-copy ml-hero-copy-v2"><div class="ml-w"><div class="ml-logos ml-logos-center"><div class="ml-logos-track"><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span aria-hidden="true" class="ml-logos-dup"><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-caa.svg" alt="CAA Insurance"/></span><span class="ml-logo-item"><img src="/static/landing/logo-intact.svg" alt="Intact Insurance"/></span></span></div></div></div><div class="ml-w ml-eyebrow-box"><p class="ml-eyebrow">BEST INSURANCE SOLUTIONS IN CANADA</p></div><h1 id="hero-title" class="ml-hero-h1 ml-center"><span class="ml-w ml-hero-l1"><span class="ml-sr">Insurance</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner">Insurance</span></span></span><span class="ml-w ml-hero-l2"><span class="ml-sr">made simple</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner">made</span> </span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner">simple</span></span></span></h1><div class="ml-w ml-btn-row ml-btn-row-center"><a href="#quote" class="ml-btn ml-btn-primary" tabindex="0">GET A QUOTE</a><a href="tel:+19056952080" class="ml-btn ml-btn-outline" tabindex="0">CALL US</a></div></div></div></section></div>
 
-  <!-- products -->
-  <section class="block wrap" aria-labelledby="products-title">
-    <div class="head">
-      <div><p class="eyebrow">Personal insurance</p><h2 class="h2" id="products-title">Insurance <em>for everyone</em></h2></div>
-      <a class="btn btn-line" href="/static/personal">All products</a>
-    </div>
-    <div class="bento">
-      <a class="tile t-auto" href="/static/insurance/auto"><h3>Auto</h3><p>Daily Drivers, Second Cars, New Drivers</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/auto.webp" alt="" loading="lazy"></a>
-      <a class="tile t-home" href="/static/insurance/home"><h3>Home</h3><p>House, Contents and Liability</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/home.webp" alt="" loading="lazy"></a>
-      <a class="tile t-condo" href="/static/insurance/condo"><h3>Condo</h3><p>Unit, Belongings, Renters</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/condo.webp" alt="" loading="lazy"></a>
-      <a class="tile t-business" href="/static/insurance/commercial"><h3>Business</h3><p>Commercial Liability, Fleet</p><span class="arrow" aria-hidden="true">&rarr;</span><img src="/static/landing/v4/business.webp" alt="" loading="lazy"></a>
-    </div>
-    <a class="btn btn-line products-all" href="/static/personal">All products</a>
-  </section>
+  <!-- products (V2 "What do you need to protect") -->
+  <div class="ml-page ml-v3 v6-prod"><section class="ml-sec ml-v3-protect"><h2 class="ml-h2 ml-h2-v3"><span class="ml-w"><span class="ml-sr">What Do You Need to Protect?</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">What</span>&nbsp;</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">Do</span>&nbsp;</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">You</span>&nbsp;</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">Need</span>&nbsp;</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">to</span>&nbsp;</span><span class="ml-word" aria-hidden="true"><span class="ml-word-inner" style="opacity: 0; transform: translateY(110%) rotate(4deg);" data-a-to="opacity: 1; transform: none;">Protect?</span></span></span></h2><div class="ml-w ml-protect-row"><div class="ml-w ml-protect-cell" style="opacity: 0; transform: translateY(48px) scale(0.94);" data-a-to="opacity: 1; transform: none;"><div class="ml-w ml-protect-tilt" style="transform: perspective(900px);" data-tilt=""><a href="/static/insurance/auto" class="ml-protect"><span class="ml-protect-art"><img loading="lazy" decoding="async" alt="" src="/static/landing/v4/auto.webp"></span><span class="ml-protect-text"><span class="ml-protect-title">Auto</span><span class="ml-protect-sub">Daily Drivers, Second Cars, New Drivers</span></span></a></div></div><div class="ml-w ml-protect-cell" style="opacity: 0; transform: translateY(48px) scale(0.94);" data-a-to="opacity: 1; transform: none;"><div class="ml-w ml-protect-tilt" style="transform: perspective(900px);" data-tilt=""><a href="/static/insurance/home" class="ml-protect"><span class="ml-protect-art"><img loading="lazy" decoding="async" alt="" src="/static/landing/v4/home.webp"></span><span class="ml-protect-text"><span class="ml-protect-title">Home</span><span class="ml-protect-sub">House, Contents and Liability</span></span></a></div></div><div class="ml-w ml-protect-cell" style="opacity: 0; transform: translateY(48px) scale(0.94);" data-a-to="opacity: 1; transform: none;"><div class="ml-w ml-protect-tilt" style="transform: perspective(900px);" data-tilt=""><a href="/static/insurance/condo" class="ml-protect"><span class="ml-protect-art"><img loading="lazy" decoding="async" alt="" src="/static/landing/v4/condo.webp"></span><span class="ml-protect-text"><span class="ml-protect-title">Condo</span><span class="ml-protect-sub">Unit, Belongings, Renters</span></span></a></div></div><div class="ml-w ml-protect-cell" style="opacity: 0; transform: translateY(48px) scale(0.94);" data-a-to="opacity: 1; transform: none;"><div class="ml-w ml-protect-tilt" style="transform: perspective(900px);" data-tilt=""><a href="/static/insurance/commercial" class="ml-protect"><span class="ml-protect-art"><img loading="lazy" decoding="async" alt="" src="/static/landing/v4/business-cafe.webp"></span><span class="ml-protect-text"><span class="ml-protect-title">Business</span><span class="ml-protect-sub">Commercial Liability, Fleet</span></span></a></div></div></div></section></div>
 
-  <!-- reviews -->
-  <section class="block wrap" aria-labelledby="reviews-title">
-    <div class="head"><h2 class="h2" id="reviews-title">MIB is <em>Trusted</em> by Canadians</h2></div>
-    <div class="reviews">
-      <div class="score">
-        <strong>4.5</strong>
-        <p>Trusted By 1000+<br>Customers</p>
-        <span class="google">Rated on <b>Google Reviews</b></span>
-      </div>
-      <ul class="review-list">
-        <li class="review">
-          <blockquote>We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</blockquote>
-          <div class="meta"><div class="stars" role="img" aria-label="5 out of 5 stars"><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg></div><div class="who"><img src="/static/landing/avatar.webp" alt="" width="40" height="40"><span><b>Zoia Tahir</b>from Markham</span></div></div>
-          <a class="more" href="#">Read more &rarr;</a>
-        </li>
-        <li class="review">
-          <blockquote>We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</blockquote>
-          <div class="meta"><div class="stars" role="img" aria-label="5 out of 5 stars"><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg></div><div class="who"><img src="/static/landing/avatar.webp" alt="" width="40" height="40"><span><b>Zoia Tahir</b>from Markham</span></div></div>
-          <a class="more" href="#">Read more &rarr;</a>
-        </li>
-        <li class="review">
-          <blockquote>We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</blockquote>
-          <div class="meta"><div class="stars" role="img" aria-label="5 out of 5 stars"><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg><svg class="st" aria-hidden="true"><use href="#star"/></svg></div><div class="who"><img src="/static/landing/avatar.webp" alt="" width="40" height="40"><span><b>Zoia Tahir</b>from Markham</span></div></div>
-          <a class="more" href="#">Read more &rarr;</a>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <!-- reviews (old V2 stacked cards) -->
+  <div class="ml-page ml-v2 v6-rev"><section class="ml-sec ml-v2-reviews"><div class="ml-v2-reviews-copy"><h2 class="ml-v2-trusted"><span class="ml-v2-trusted-l1"><div class="ml-w" style="opacity: 0; transform: translateY(30px);" data-a-to="opacity: 1; transform: none;"><strong>MIB</strong> is Trusted</div></span><span class="ml-v2-trusted-l2"><div class="ml-w" style="opacity: 0; transform: translateY(30px);" data-a-to="opacity: 1; transform: none;">by <span class="ml-inline-art ml-inline-maple"><div class="ml-w" style="opacity: 0; transform: scale(0.3);" data-a-to="opacity: 1; transform: none;"><div class="ml-w" data-float="6,6,4.5,0" style=""><img alt="" loading="lazy" decoding="async" src="/static/landing/maple.webp"></div></div></span> Canadians</div></span></h2></div><div class="ml-v2-reviews-stack" style="aspect-ratio: 744 / 600;"><div class="ml-abs" style="left: 33.3333%; top: 61.6667%; width: 50.9409%; height: 38.3333%; z-index: 1;"><div class="ml-w"><div class="ml-w" style="opacity: 0; transform: translateY(40px) scale(0.85) rotate(12deg);" data-a-to="opacity: 1; transform: none;"><article class="ml-review ml-review-sm"><div class="ml-review-stars" aria-label="5 out of 5 stars"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"></div><div class="ml-review-head"><div class="ml-review-person"><img loading="lazy" decoding="async" alt="" class="ml-review-avatar" src="/static/landing/avatar.webp"><div><p class="ml-review-name">Zoia Tahir</p><p class="ml-review-loc">from Markham</p></div></div><img loading="lazy" decoding="async" alt="Google Reviews" class="ml-review-google" src="/static/landing/google-reviews.webp"></div><p class="ml-review-body">We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</p><a href="#" class="ml-readmore">READ MORE<img loading="lazy" decoding="async" alt="" src="/static/landing/arrow-forward.svg"></a></article></div></div></div><div class="ml-abs" style="left: 41.3978%; top: 5%; width: 50.9409%; height: 38.3333%; z-index: 2;"><div class="ml-w"><div class="ml-w" style="opacity: 0; transform: translateY(40px) scale(0.85) rotate(-16deg);" data-a-to="opacity: 1; transform: none;"><article class="ml-review ml-review-sm"><div class="ml-review-stars" aria-label="5 out of 5 stars"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"></div><div class="ml-review-head"><div class="ml-review-person"><img loading="lazy" decoding="async" alt="" class="ml-review-avatar" src="/static/landing/avatar.webp"><div><p class="ml-review-name">Zoia Tahir</p><p class="ml-review-loc">from Markham</p></div></div><img loading="lazy" decoding="async" alt="Google Reviews" class="ml-review-google" src="/static/landing/google-reviews.webp"></div><p class="ml-review-body">We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</p><a href="#" class="ml-readmore">READ MORE<img loading="lazy" decoding="async" alt="" src="/static/landing/arrow-forward.svg"></a></article></div></div></div><div class="ml-abs" style="left: 18.2796%; top: 30.5%; width: 50.9409%; height: 38.3333%; z-index: 3;"><div class="ml-w"><div class="ml-w" style="opacity: 0; transform: translateY(40px) scale(0.85) rotate(-9deg);" data-a-to="opacity: 1; transform: none;"><article class="ml-review ml-review-sm"><div class="ml-review-stars" aria-label="5 out of 5 stars"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"><img loading="lazy" decoding="async" alt="" src="/static/landing/star.svg"></div><div class="ml-review-head"><div class="ml-review-person"><img loading="lazy" decoding="async" alt="" class="ml-review-avatar" src="/static/landing/avatar.webp"><div><p class="ml-review-name">Zoia Tahir</p><p class="ml-review-loc">from Markham</p></div></div><img loading="lazy" decoding="async" alt="Google Reviews" class="ml-review-google" src="/static/landing/google-reviews.webp"></div><p class="ml-review-body">We had a wonderful experience working with Zahin. He took the time to walk us through the entire process and helped get our new car insured on very short notice in time for delivery.</p><a href="#" class="ml-readmore">READ MORE<img loading="lazy" decoding="async" alt="" src="/static/landing/arrow-forward.svg"></a></article></div></div></div></div></section></div>
 
   <!-- news -->
   <section class="block wrap" aria-labelledby="news-title">
@@ -913,7 +893,7 @@ html[data-theme=dark] .v4-wash{background:radial-gradient(calc(56% * var(--gs)) 
   </section>
 
   <!-- locations -->
-  <div class="ml-page ml-v2 v6-loc"><section id="locations" class="ml-sec ml-v2-locations"><div class="ml-v2-loc-art"><div class="ml-w ml-v2-loc-blob"><div class="ml-w"><img src="/static/landing/v2-locations-blob.webp" alt="" class="ml-fill" loading="lazy" decoding="async"/></div></div><div class="ml-w ml-v2-loc-card"><div class="ml-hq ml-hq-stack"><div class="ml-hq-details ml-hq-fade"><div class="ml-hq-heading"><p class="ml-hq-kicker">My Insurance Broker</p><p class="ml-hq-name">Headquarters</p></div><div class="ml-hq-boxes"><div class="ml-hq-box"><p class="ml-hq-label">ADDRESS</p><p class="ml-hq-value">311-505 Highway 7 East, Thornhill, ON L3T 7T1</p></div><div class="ml-hq-box"><p class="ml-hq-label">OPERATION HOURS</p><p class="ml-hq-value">Weekday: 9AM - 5PM<br/>Saturday: Closed<br/>Sunday: Closed<br/></p></div></div><div class="ml-hq-box ml-hq-phones"><div class="ml-hq-phone"><p class="ml-hq-label">TOLL-FREE</p><a href="tel:+18554825001" class="ml-hq-value ml-hq-link">+1 (855) 482-5001</a></div><div class="ml-hq-phone"><p class="ml-hq-label">PHONE</p><a href="tel:+19056952080" class="ml-hq-value ml-hq-link">+1 (905) 695-2080</a></div><div class="ml-hq-phone"><p class="ml-hq-label">FAX</p><a href="tel:+19055786717" class="ml-hq-value ml-hq-link">+1 (905) 578-6717</a></div></div></div><div class="ml-hq-map"><iframe title="Map of Headquarters" src="https://maps.google.com/maps?q=My%20Insurance%20Broker%2C%20311-505%20Highway%207%20East%2C%20Thornhill%2C%20ON%20L3T%207T1&amp;z=15&amp;output=embed" referrerPolicy="no-referrer-when-downgrade" style="opacity:1;transition:opacity 0.6s ease;pointer-events:auto;z-index:1"></iframe></div></div></div></div><div class="ml-w ml-loc-copy"><h2 class="ml-h2-loc">Our Locations</h2><div class="ml-w ml-loc-pills"><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill is-active" tabindex="0">Headquarters</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Support Center</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">London</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">St.Thomas</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">CX Center</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Sudbury</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Brampton</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Oakville</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Mississauga</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Airdrie</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Hub &amp; Training Center</button></span></div></div></div></section></div>
+  <div class="ml-page ml-v2 v6-loc"><section id="locations" class="ml-sec ml-v2-locations"><div class="ml-v2-loc-art v4-ont" aria-hidden="true"></div><div class="ml-w ml-loc-copy"><h2 class="ml-h2-loc">Our Locations</h2><div class="ml-w ml-loc-pills"><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill is-active" tabindex="0">Headquarters</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Support Center</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">London</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">St.Thomas</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">CX Center</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Sudbury</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Brampton</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Oakville</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Mississauga</button></span></div><div class="ml-w ml-loc-pill-wrap"><span style="display:contents"><button type="button" class="ml-loc-pill" tabindex="0">Hub &amp; Training Center</button></span></div></div><div class="ml-w ml-v2-loc-card"><div class="ml-hq ml-hq-stack"><div class="ml-hq-details ml-hq-fade"><div class="ml-hq-heading"><p class="ml-hq-kicker">My Insurance Broker</p><p class="ml-hq-name">Headquarters</p></div><div class="ml-hq-boxes"><div class="ml-hq-box"><p class="ml-hq-label">ADDRESS</p><p class="ml-hq-value">311-505 Highway 7 East, Thornhill, ON L3T 7T1</p></div><div class="ml-hq-box"><p class="ml-hq-label">OPERATION HOURS</p><p class="ml-hq-value">Weekday: 9AM - 5PM<br/>Saturday: Closed<br/>Sunday: Closed<br/></p></div></div><div class="ml-hq-box ml-hq-phones"><div class="ml-hq-phone"><p class="ml-hq-label">TOLL-FREE</p><a href="tel:+18554825001" class="ml-hq-value ml-hq-link">+1 (855) 482-5001</a></div><div class="ml-hq-phone"><p class="ml-hq-label">PHONE</p><a href="tel:+19056952080" class="ml-hq-value ml-hq-link">+1 (905) 695-2080</a></div><div class="ml-hq-phone"><p class="ml-hq-label">FAX</p><a href="tel:+19055786717" class="ml-hq-value ml-hq-link">+1 (905) 578-6717</a></div></div></div></div></div></div></section></div>
 
   <!-- about -->
   <section class="block wrap" id="about" aria-labelledby="about-title">
@@ -1009,10 +989,9 @@ const OFFICES=[
  {label:"Brampton",name:"Brampton",address:"2250 Bovaird Dr East, Unit 205, Brampton, ON L6R 0W3",hours:["Weekday: 9AM - 5PM","Saturday: Closed","Sunday: Closed"],phones:[["PHONE","+1 (905) 497-2525"],["FAX","+1 (905) 497-2251"]]},
  {label:"Oakville",name:"Oakville",address:"2140 Winston Park Drive, Unit 205, Oakville, ON L6H 5V5",hours:["Weekday: 9AM - 5PM","Saturday: Closed","Sunday: Closed"],phones:[["PHONE","+1 (289) 965-1641"]]},
  {label:"Mississauga",name:"Mississauga",address:"3643 Cawthra Road, Mississauga, ON L5A 2Y4",hours:["Weekday: 9:30AM - 5PM","Saturday: Closed","Sunday: Closed"],phones:[["PHONE","+1 (905) 276-9200"]]},
- {label:"Airdrie",name:"Airdrie",address:"101-532 1 Avenue NE, Airdrie, AB T4B 1S1",hours:["Weekday: 9AM - 5PM","Saturday: Closed","Sunday: Closed"],phones:[["PHONE","+1 (403) 768-0690"]]},
  {label:"Hub & Training Center",name:"Hub & Training Centre",address:"50 West Wilmot Street, Unit 6, Richmond Hill, ON L4B 1M5",hours:["By Appointment Only"],phones:[["TOLL-FREE","+1 (855) 482-5001"],["PHONE","+1 (905) 695-2080"],["FAX","+1 (905) 695-8820"]]}
 ];
-const tabs=document.querySelector('.v6-loc .ml-loc-pills'),hq=document.querySelector('.v6-loc .ml-hq-details'),map=document.querySelector('.v6-loc .ml-hq-map iframe');
+const tabs=document.querySelector('.v6-loc .ml-loc-pills'),hq=document.querySelector('.v6-loc .ml-hq-details');
 const pills=[...tabs.querySelectorAll('.ml-loc-pill')];
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 // V2's location card markup, filled from V5's office list
@@ -1023,10 +1002,14 @@ function show(i){
     <div class="ml-hq-boxes"><div class="ml-hq-box"><p class="ml-hq-label">ADDRESS</p><p class="ml-hq-value">${esc(o.address)}</p></div>
     <div class="ml-hq-box"><p class="ml-hq-label">OPERATION HOURS</p><p class="ml-hq-value">${o.hours.map(esc).join('<br>')}</p></div></div>
     <div class="ml-hq-box ml-hq-phones">${o.phones.map(([l,v])=>`<div class="ml-hq-phone"><p class="ml-hq-label">${l}</p><a href="tel:${v.replace(/[^\d+]/g,'')}" class="ml-hq-value ml-hq-link">${v}</a></div>`).join('')}</div>`;
-  map.src='https://maps.google.com/maps?q='+encodeURIComponent(o.address)+'&z=15&output=embed';
-  map.title='Map of '+o.name;
+  cur=i;document.dispatchEvent(new CustomEvent('v4-loc',{detail:i}));
 }
-pills.forEach((b,i)=>b.onclick=()=>show(i));
+let cur=0;
+pills.forEach((b,i)=>{b.onclick=()=>show(i);
+  // hovering a pill shows that office (card + 3D shield); leaving settles the shield back to its normal size
+  const go=j=>document.dispatchEvent(new CustomEvent('v4-loc',{detail:j}));
+  b.addEventListener('pointerenter',()=>show(i));b.addEventListener('focus',()=>show(i));
+  b.addEventListener('pointerleave',()=>go(cur));b.addEventListener('blur',()=>go(cur))});
 show(0);
 
 
@@ -1246,6 +1229,101 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
   const set=()=>{const p=Math.min(scrollY/500,1);sec.style.setProperty('--ml-hero-inset',6*p+'%');if(scrollY<innerHeight*1.2)sec.style.setProperty('--sy',scrollY.toFixed(0))};
   addEventListener('scroll',set,{passive:true});set();
 })();
+</script>
+<script>// V2 products + old V2 reviews: entrance (data-a-to), floating shapes (data-float) and pointer depth (data-depth), same numbers as site.js
+;(function(){document.querySelectorAll('.v6-prod .ml-v3-protect,.v6-rev .ml-v2-reviews').forEach(sec=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,E='cubic-bezier(.22,1,.36,1)';
+const play=(el,d)=>{const to=el.getAttribute('data-a-to');el.removeAttribute('data-a-to');if(reduce){el.setAttribute('style',to);return}
+  el.style.transition='opacity .7s '+E+' '+d+'s, transform .9s '+E+' '+d+'s';void el.offsetWidth;el.style.opacity='1';el.style.transform='none'};
+const io=new IntersectionObserver(es=>{let i=0;es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);play(e.target,Math.min(i++*.07,.6))}})},{rootMargin:'0px 0px -6% 0px'});
+sec.querySelectorAll('[data-a-to]').forEach(el=>io.observe(el));
+if(reduce)return;
+sec.querySelectorAll('[data-float]').forEach(el=>{const f=el.dataset.float.split(',').map(Number);
+  el.animate([{transform:'none'},{transform:'translateY('+-f[0]+'px) rotate('+f[1]+'deg)'},{transform:'none'}],{duration:f[2]*1000,delay:f[3]*1000,iterations:Infinity,easing:'ease-in-out'})});
+const els=sec.querySelectorAll('[data-depth]');let tx=0,ty=0,x=0,y=0,raf=0;
+const tick=()=>{x+=(tx-x)*.12;y+=(ty-y)*.12;els.forEach(el=>{const d=+el.dataset.depth;el.style.transform='translate('+(d*x).toFixed(2)+'px,'+(d*y).toFixed(2)+'px)'});raf=Math.abs(tx-x)+Math.abs(ty-y)>.001?requestAnimationFrame(tick):0};
+const go=()=>{if(!raf)raf=requestAnimationFrame(tick)};
+sec.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=sec.getBoundingClientRect();tx=Math.max(-1,Math.min(1,(e.clientX-r.left)/r.width*2-1));ty=Math.max(-1,Math.min(1,(e.clientY-r.top)/r.height*2-1));go()});
+sec.addEventListener('pointerleave',()=>{tx=0;ty=0;go()});
+})})()</script>
+<script type="module">
+// locations: extruded 3D Ontario (outline from public boundary data, lon/lat projected at 47N) with a pin per office;
+// one MIB shield floats over the shown office, glides there and spins when a pill is hovered
+const host=document.querySelector('.v4-ont');
+if(host){(async()=>{
+  const [T,{GLTFLoader}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js')]);
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const RINGS=[[[3.725,3.959],[3.743,0.566],[3.699,0.442],[3.792,0.265],[3.789,0.111],[3.986,-0.188],[4.126,-0.488],[4.294,-0.663],[5.077,-0.848],[5.236,-0.973],[5.315,-1.123],[5.454,-1.21],[5.51,-1.194],[5.517,-1.11],[5.589,-1.135],[5.684,-1.409],[5.908,-1.544],[6.012,-1.479],[6.086,-1.486],[6.242,-1.628],[6.511,-1.476],[6.905,-1.358],[7.061,-1.364],[7.231,-1.436],[7.175,-1.683],[7.281,-1.799],[7.157,-1.928],[6.595,-2.189],[6.154,-2.616],[5.795,-2.773],[5.669,-2.783],[5.467,-2.929],[5.408,-2.908],[5.533,-2.823],[5.424,-2.871],[5.448,-2.789],[5.076,-2.879],[5.063,-2.921],[5.242,-2.848],[5.239,-2.91],[5.404,-2.821],[5.369,-2.966],[5.561,-2.882],[5.427,-3.052],[5.56,-3.057],[5.364,-3.144],[5.297,-3.12],[5.34,-3.046],[5.268,-3.089],[5.232,-3.046],[5.282,-3.031],[5.125,-3.058],[5.06,-2.997],[5.088,-2.981],[4.976,-2.959],[4.953,-2.976],[4.993,-2.999],[4.907,-2.983],[4.029,-3.174],[3.845,-3.357],[3.773,-3.353],[3.691,-3.435],[3.563,-3.68],[3.612,-3.756],[3.857,-3.812],[4.042,-3.733],[4.038,-3.918],[4.143,-4.09],[4.025,-4.16],[3.782,-4.123],[3.271,-4.21],[3.103,-4.388],[3.332,-4.459],[3.054,-4.427],[2.779,-4.334],[2.501,-4.349],[2.192,-4.602],[2.144,-4.744],[2.118,-4.743],[2.143,-4.679],[2.1,-4.74],[1.997,-4.747],[1.781,-4.876],[1.719,-4.968],[1.701,-5.087],[1.618,-4.965],[1.439,-5.018],[1.28,-4.93],[1.343,-4.687],[1.71,-4.687],[1.755,-4.646],[1.76,-4.502],[1.611,-4.453],[1.692,-4.366],[1.724,-4.101],[1.76,-4.027],[1.926,-3.928],[2.22,-3.654],[2.252,-3.512],[2.22,-2.916],[2.308,-2.781],[2.332,-2.653],[2.452,-2.562],[2.545,-2.383],[2.489,-2.027],[2.432,-2.018],[2.325,-1.848],[2.335,-1.807],[2.237,-1.784],[2.254,-1.735],[2.535,-1.751],[2.506,-1.843],[2.547,-1.896],[2.555,-1.998],[2.653,-2.04],[2.625,-2.089],[2.763,-2.036],[2.637,-2.242],[2.73,-2.191],[2.801,-2.209],[2.767,-2.405],[2.861,-2.298],[2.967,-2.274],[3.011,-2.388],[3.349,-2.532],[3.412,-2.443],[3.419,-2.317],[3.333,-2.248],[3.339,-2.18],[3.447,-2.134],[3.494,-2.232],[3.642,-2.248],[3.6,-2.213],[3.626,-2.121],[3.589,-2.134],[3.589,-2.196],[3.558,-2.182],[3.527,-2.064],[3.469,-2.055],[3.454,-1.987],[3.342,-1.877],[3.418,-1.852],[3.322,-1.763],[3.384,-1.686],[3.369,-1.617],[3.323,-1.588],[3.279,-1.624],[3.298,-1.66],[3.251,-1.659],[3.181,-1.564],[3.171,-1.617],[3.137,-1.393],[3.068,-1.431],[2.9,-1.079],[2.698,-1.044],[2.622,-1.074],[2.613,-0.982],[2.557,-1.042],[2.389,-1.025],[2.389,-0.98],[2.271,-1.054],[2.335,-1.003],[2.288,-0.985],[2.384,-0.958],[2.248,-0.981],[2.357,-0.94],[2.304,-0.877],[2.221,-0.932],[2.209,-0.987],[2.198,-0.937],[2.241,-0.896],[1.954,-0.883],[1.794,-0.834],[1.826,-0.81],[1.586,-0.836],[1.616,-0.782],[1.373,-0.828],[0.774,-0.704],[0.762,-0.665],[0.648,-0.674],[0.601,-0.625],[0.631,-0.496],[0.564,-0.448],[0.329,-0.518],[0.279,-0.434],[0.394,-0.304],[0.364,-0.242],[0.308,-0.301],[0.311,-0.175],[0.414,-0.167],[0.443,-0.117],[0.377,-0.061],[0.289,-0.056],[0.27,-0.098],[0.152,-0.018],[0.287,0.289],[0.256,0.361],[-0.019,0.611],[0.022,0.681],[0.006,0.717],[0.073,0.79],[0.047,0.855],[0.106,0.949],[-0.38,0.926],[-0.587,0.985],[-0.772,1.241],[-0.861,1.584],[-0.978,1.777],[-1.059,1.732],[-1.161,1.81],[-1.265,1.751],[-1.344,1.81],[-1.366,1.775],[-1.562,1.767],[-1.667,1.844],[-1.737,1.834],[-1.757,1.886],[-1.807,1.863],[-2.016,1.951],[-2.07,2.022],[-2.171,1.966],[-2.224,1.993],[-2.219,1.872],[-2.118,1.787],[-2.116,1.712],[-2.185,1.607],[-2.218,1.595],[-2.202,1.637],[-2.239,1.604],[-2.273,1.657],[-2.259,1.582],[-2.313,1.541],[-2.339,1.574],[-2.375,1.471],[-2.428,1.43],[-2.449,1.49],[-2.425,1.546],[-2.285,1.678],[-2.26,1.761],[-2.292,1.836],[-2.374,1.854],[-2.419,1.765],[-2.393,1.716],[-2.422,1.699],[-2.414,1.645],[-2.472,1.625],[-2.478,1.522],[-2.519,1.508],[-2.551,1.37],[-2.686,1.314],[-2.564,1.581],[-2.823,1.484],[-2.894,1.388],[-2.864,1.324],[-2.958,1.116],[-3.09,1.002],[-3.239,1.027],[-3.342,0.993],[-3.509,1.113],[-3.917,1.089],[-4.0,1.254],[-4.255,1.081],[-4.482,1.044],[-4.48,1.105],[-4.572,1.115],[-4.577,1.197],[-4.76,1.251],[-4.798,1.356],[-4.962,1.352],[-4.963,1.244],[-5.026,1.221],[-5.113,1.44],[-5.256,1.46],[-5.201,1.503],[-5.212,1.54],[-5.42,1.628],[-5.663,1.637],[-5.807,1.534],[-5.989,1.512],[-6.031,1.625],[-6.295,1.652],[-6.337,1.708],[-6.527,1.714],[-6.611,1.778],[-6.602,1.877],[-6.705,2.331],[-6.923,2.372],[-6.922,5.826],[-5.901,6.722],[-3.986,8.668],[-2.936,9.627],[-2.851,9.869],[-2.646,9.858],[-2.287,9.553],[-2.029,9.437],[-1.762,9.076],[-1.784,9.003],[-1.738,9.05],[-1.604,8.993],[-1.611,8.947],[-1.35,8.932],[-0.871,8.729],[-0.644,8.698],[-0.394,8.563],[-0.268,8.409],[-0.088,8.346],[-0.083,8.303],[-0.146,8.273],[-0.271,8.101],[-0.289,7.991],[-0.132,8.244],[-0.001,8.297],[0.273,8.242],[0.736,8.319],[0.866,8.259],[0.861,8.215],[0.954,8.224],[0.981,8.131],[0.966,8.229],[0.888,8.283],[1.241,8.197],[1.388,8.234],[1.435,8.172],[1.4,8.106],[1.443,8.153],[1.68,8.164],[1.828,8.064],[1.814,8.165],[1.878,8.103],[1.85,8.037],[1.861,7.931],[1.913,7.845],[1.745,7.362],[1.75,7.209],[1.786,7.119],[1.88,7.068],[1.957,6.799],[1.898,6.604],[1.968,6.274],[1.875,6.212],[1.84,5.961],[1.977,5.88],[2.1,5.682],[2.347,5.456],[2.351,5.352],[2.402,5.302],[2.167,5.254],[2.125,5.187],[2.211,5.239],[2.386,5.233],[2.487,5.101],[2.736,5.008],[2.796,4.895],[2.854,4.88],[3.001,4.713],[3.059,4.524],[3.112,4.464],[3.121,4.364],[2.965,4.278],[2.718,4.028],[2.774,4.05],[2.766,4.008],[2.822,4.116],[2.936,4.156],[3.142,4.339],[3.412,4.255]],[[1.447,-1.031],[1.494,-1.008],[1.472,-1.08],[1.529,-1.156],[1.642,-1.15],[1.678,-1.214],[1.699,-1.151],[1.646,-1.098],[1.842,-1.008],[1.932,-1.162],[2.013,-1.035],[2.095,-1.022],[2.122,-1.051],[2.109,-1.108],[2.169,-1.12],[2.15,-1.215],[2.182,-1.268],[2.262,-1.095],[2.281,-1.139],[2.246,-1.202],[2.328,-1.2],[2.237,-1.394],[2.139,-1.479],[2.05,-1.44],[2.116,-1.423],[2.209,-1.299],[2.001,-1.441],[1.576,-1.207],[1.219,-1.126],[1.237,-1.035],[1.302,-1.081],[1.326,-1.039],[1.375,-1.07]]];
+  const K=Math.cos(47*Math.PI/180),proj=(lat,lon)=>[(lon+85)*K,lat-47];
+  // same order as OFFICES
+  const LL=[[43.842,-79.383],[43.841,-79.387],[42.952,-81.33],[42.778,-81.19],[43.226,-79.76],[46.476,-80.99],[43.752,-79.70],[43.505,-79.73],[43.593,-79.62],[43.848,-79.42]];
+  const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputColorSpace=T.SRGBColorSpace;r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;
+  const scene=new T.Scene(),cam=new T.PerspectiveCamera(30,1,.1,200);
+  scene.add(new T.HemisphereLight('#ffffff','#efe7d2',2.1));
+  const sun=new T.DirectionalLight('#fff8e8',1.1);sun.position.set(-6,9,14);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.radius=6;
+  Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:60});scene.add(sun);
+  // the map lies in its own XY plane (z = up from the land), the whole board tilts back toward the viewer
+  const YAW=.32,board=new T.Group;board.rotation.set(-.85,0,YAW);scene.add(board);
+  const shapes=RINGS.map(ring=>new T.Shape(ring.map(([x,y])=>new T.Vector2(x,y))));
+  const DEPTH=.42,geo=new T.ExtrudeGeometry(shapes,{depth:DEPTH,bevelEnabled:true,bevelThickness:.06,bevelSize:.05,bevelSegments:3,curveSegments:1});
+  geo.computeBoundingBox();const c=geo.boundingBox.getCenter(new T.Vector3);geo.translate(-c.x,-c.y,0);
+  const land=new T.MeshStandardMaterial({color:'#fcf8ec',roughness:.95,metalness:0});
+  const ont=new T.Mesh(geo,land);ont.castShadow=true;ont.receiveShadow=true;board.add(ont);
+  const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.ShadowMaterial({opacity:.1}));floor.position.z=-.01;floor.receiveShadow=true;board.add(floor);
+  const TOP=DEPTH+.06,at=i=>{const [x,y]=proj(...LL[i]);return new T.Vector3(x-c.x,y-c.y,TOP)};
+  // small dot per office; the active office's dot pulses two glowing rings
+  const dotGeo=new T.CylinderGeometry(.06,.06,.04,24),dotMat=new T.MeshStandardMaterial({color:'#f2c94c',roughness:.5,emissive:'#f6d438',emissiveIntensity:.35});
+  const ringGeo=new T.RingGeometry(.07,.095,48),rings=[];
+  LL.forEach((ll,i)=>{if(!ll)return;const d=new T.Mesh(dotGeo,dotMat);d.rotation.x=Math.PI/2;d.position.copy(at(i)).setZ(TOP+.02);board.add(d);
+    for(let k=0;k<2;k++){const m=new T.Mesh(ringGeo,new T.MeshBasicMaterial({color:'#f2b81f',transparent:true,depthWrite:false}));m.position.copy(at(i)).setZ(TOP+.005);m.userData.ph=k/2;m.userData.i=i;board.add(m);rings.push(m)}});
+  // dark mode: a warm charcoal board
+  const setTheme=()=>{const dk=document.documentElement.dataset.theme==='dark';land.color.set(dk?'#3a3830':'#fcf8ec');floor.material.opacity=dk?.3:.1};setTheme();
+  new MutationObserver(()=>{setTheme();go()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  // the MIB shield, coloured like the footer logo
+  const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
+  let src=null;g.traverse(o=>{if(o.isMesh&&o.name.replace(/\W/g,'')==='Curve020')src=o});
+  const pivot=new T.Group,stand=new T.Group;stand.rotation.x=Math.PI/2;pivot.add(stand);board.add(pivot);
+  if(src){const sg=src.geometry.clone().applyMatrix4(src.matrixWorld);sg.computeBoundingBox();const b=sg.boundingBox,sz=b.getSize(new T.Vector3),bc=b.getCenter(new T.Vector3);
+    sg.translate(-bc.x,-b.min.y,-bc.z);const k=.42/sz.y;sg.scale(k,k,k);
+    const pos=sg.attributes.position,v=new T.Vector3,ds=[];let lo=1/0,hi=-1/0;
+    for(let i=0;i<pos.count;i++){v.fromBufferAttribute(pos,i);const d=v.x-v.y;ds.push(d);lo=Math.min(lo,d);hi=Math.max(hi,d)}
+    const stops=['#c98a0e','#edb92a','#f7ee7a'].map(x=>new T.Color(x)),col=new Float32Array(3*pos.count),cc=new T.Color;
+    ds.forEach((d,i)=>{const t=(d-lo)/(hi-lo||1);t<.5?cc.lerpColors(stops[0],stops[1],t/.5):cc.lerpColors(stops[1],stops[2],(t-.5)/.5);col.set([cc.r,cc.g,cc.b],3*i)});
+    sg.setAttribute('color',new T.BufferAttribute(col,3));
+    const m=new T.Mesh(sg,new T.MeshStandardMaterial({vertexColors:true,roughness:.4,metalness:.15}));m.castShadow=true;stand.add(m)}
+  host.appendChild(r.domElement);
+  // zoomed on the offices (Sudbury down to London); on desktop the canvas bleeds to the window's left edge like the old picture
+  const [fx,fy]=proj(45.5,-80.4),FOCUS=new T.Vector3(fx-c.x,fy-c.y,0);
+  const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=desk?Math.max(0,b.left):0,extra=desk?90:0,w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
+    r.setSize(w,h,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top+'px',width:w+'px',height:h+'px'});cam.aspect=w/h;
+    const t=Math.tan(cam.fov*Math.PI/360),view=desk?6.6:8.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
+    const f=FOCUS.clone().applyEuler(board.rotation),dx=bleed?view*.1:0;
+    refD=dist;cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix();go()};
+  // state: which office the shield is on, and whether a pill is being hovered (grow + spin)
+  let target=0,spinTo=0,spin=0,refD=1;const wp=new T.Vector3;
+  const place=i=>{if(!LL[i]){pivot.visible=false;return}pivot.visible=true;return at(i)};
+  let goal=place(0);pivot.position.copy(goal);
+  document.addEventListener('v4-loc',e=>{const i=e.detail,hover=document.querySelector('.v6-loc .ml-loc-pill:hover,.v6-loc .ml-loc-pill:focus-visible');
+    goal=place(i)||goal;if(i!==target&&hover)spinTo+=2*Math.PI;target=i;if(reduce&&goal)pivot.position.copy(goal);go()});
+  addEventListener('resize',fit);
+  let raf=0,vis=false;const clock=new T.Clock;
+  function go(){if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}}
+  function tick(){raf=0;const dt=Math.min(clock.getDelta(),.05),e=1-Math.pow(.001,dt);
+    if(goal)pivot.position.lerp(goal,reduce?1:e*1.6>1?1:e*1.6);
+    spin+=(spinTo-spin)*(reduce?1:Math.min(1,dt*3.2));
+    const tt=clock.elapsedTime;stand.rotation.y=spin+(reduce?0:.25*Math.sin(tt*.9));
+    // same on-screen size wherever it stands: undo perspective shrink/grow
+    pivot.getWorldPosition(wp);pivot.scale.setScalar(wp.distanceTo(cam.position)/refD);
+    // the shield hovers above its dot instead of sitting in it
+    stand.position.z=.28+(reduce?0:.06*Math.sin(tt*1.6));
+    rings.forEach(m=>{m.visible=m.userData.i===target;const p=reduce?.35:(tt*.55+m.userData.ph)%1;m.scale.setScalar(1+p*2.4);m.material.opacity=.6*(1-p)});
+    
+    r.render(scene,cam);
+    const moving=!reduce||Math.abs(spinTo-spin)>.001||(goal&&pivot.position.distanceTo(goal)>.001);
+    if(vis&&moving)raf=requestAnimationFrame(tick)}
+  new IntersectionObserver(([en])=>{vis=en.isIntersecting;go()}).observe(host);
+  new ResizeObserver(fit).observe(host);fit();
+})()}
 </script>
 </body>
 </html>
