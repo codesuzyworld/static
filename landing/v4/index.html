@@ -839,6 +839,13 @@ html .nav .mega-item:has(.mega-icon-3d){flex-direction:row;justify-content:flex-
 .mega-icon-3d img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18));transition:transform .35s cubic-bezier(.34,1.45,.64,1)}
 .mega-item:hover .mega-icon-3d img,.mega-item:focus-visible .mega-icon-3d img{transform:translateY(-3px) scale(1.08)}
 @media (prefers-reduced-motion:reduce){.mega-icon-3d img{transition:none}}
+/* V4 reviews ring carousel */
+.v4-drum-view{position:relative;width:100%;perspective:1800px;perspective-origin:50% 50%}
+.v4-drum{position:absolute;inset:0;transform-style:preserve-3d;transition:opacity .4s}
+.v4-drum-face{position:absolute!important;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;aspect-ratio:auto!important}
+.v4-ring{position:relative;width:100%;perspective:1600px;perspective-origin:50% 40%;touch-action:pan-y;user-select:none;cursor:grab}
+.v4-ring:active{cursor:grabbing}.v4-ring-card{position:absolute;left:50%;top:50%;will-change:transform,opacity}
+.v4-ring-card .ml-review{width:100%;height:auto;transform:none!important}
 /* more breathing room between V4 sections (like old V2) */
 main>section.block{padding-top:240px}
 .v6-prod>.ml-v3-protect{padding-block:160px 40px}
@@ -884,7 +891,7 @@ html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 18.7%,r
 /* stacked hero (tablets + phones): exactly one screen tall, the autumn photo fills it, the family is anchored to the bottom and sized from the screen height; one long eased fade from solid at the top */
 @media (max-width:1100px){.v4-hero .ml-stage{position:relative;height:100svh!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
   .v4-hero .ml-hero-copy{position:relative;z-index:2;translate:0 44px;flex:none!important}
-  .v4-hero .ml-v2-hero-clip{position:absolute!important;inset:0;height:auto!important;clip-path:inset(0 round 0 0 32px 32px)!important}
+  .v4-hero .ml-v2-hero-clip{position:absolute!important;inset:0;height:auto!important;clip-path:inset(0 round 0 0 min(32px,var(--ml-hero-radius,0px)) min(32px,var(--ml-hero-radius,0px)))!important}
   .v4-hero .ml-stage-art.v4-art{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;margin:0!important;overflow:hidden!important}
   .v4-art .v4-bg{top:0!important;left:0!important;width:100%!important;height:100%!important;translate:none!important;object-position:50% 45%}
   .v4-art .v4-wash{inset:0!important;height:100%!important}
@@ -1415,16 +1422,50 @@ if(host){(async()=>{
 </script>
 <script>/* Protect heading: --p goes 0 -> 1 as its section scrolls up into view */(function(){var pin=document.querySelector('.v4-pin');if(!pin)return;var track=pin.parentElement,raf=0;var glow=document.querySelector('.v4-glow'),row=document.querySelector('.v6-prod .ml-protect-row');
 function f(){raf=0;var r=track.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/(innerHeight*.75)));pin.style.setProperty('--p',p.toFixed(3));if(glow&&row){var c=row.getBoundingClientRect(),g=1-Math.min(1,Math.max(0,((c.top+c.bottom)/2-innerHeight/2)/(innerHeight*.9)));glow.style.setProperty('--g',(g*g).toFixed(3))}}addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);f()})()</script>
-<script>/* V4 mobile reviews: side cards shrink more than the shared coverflow, and the row auto-cycles (pauses for 6s after a touch) */(function(){var mq=matchMedia('(max-width:1100px)'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function go(){var row=document.querySelector('.v6-rev .ml-v2-reviews-stack');if(!row){setTimeout(go,300);return}
-var cs=function(){return[].filter.call(row.children,function(c){return c.classList.contains('ml-abs')})};
-function paint(){var r=row.getBoundingClientRect(),mid=r.left+r.width/2;cs().forEach(function(c){var b=c.getBoundingClientRect(),d=Math.min(Math.abs(b.left+b.width/2-mid)/b.width,1);c.style.transform=mq.matches?'scale('+(1-.12*d)+')':'';c.style.transition='transform .25s ease'})}
-function centre(){if(!mq.matches)return;var c=cs(),m=c[Math.floor(c.length/2)];if(m)row.scrollLeft=m.offsetLeft-(row.clientWidth-m.offsetWidth)/2;paint()}/* start on the middle card */
-row.addEventListener('scroll',function(){requestAnimationFrame(paint)},{passive:true});addEventListener('resize',paint);setTimeout(centre,100);addEventListener('load',function(){setTimeout(centre,200)});
-var hold=0;['pointerdown','touchstart','wheel'].forEach(function(e){row.addEventListener(e,function(){hold=Date.now()},{passive:true})});
-if(reduce)return;setInterval(function(){if(!mq.matches||Date.now()-hold<6000||document.hidden)return;var r=row.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
-var c=cs(),mid=row.scrollLeft+row.clientWidth/2,i=0;c.forEach(function(x,k){if(Math.abs(x.offsetLeft+x.offsetWidth/2-mid)<Math.abs(c[i].offsetLeft+c[i].offsetWidth/2-mid))i=k});
-var n=c[(i+1)%c.length];row.scrollTo({left:n.offsetLeft-(row.clientWidth-n.offsetWidth)/2,behavior:'smooth'})},3500)}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()})()</script>
+<script>/* V4 reviews: 3D ring carousel that loops forever. Desktop: one full spin when it first scrolls into view, then settles centred. Mobile: starts centred. Drag/swipe to turn; pauses on hover and for 6s after a touch. */
+(function(){var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,desk=matchMedia('(min-width:1101px)');
+function build(){var stack=document.querySelector('.v6-rev .ml-v2-reviews-stack');if(!stack)return setTimeout(build,300);
+  if(desk.matches)return spinIn(stack);/* desktop keeps the original overlapping stack; shortcut: layout is picked at load, a resize across 1100px needs a reload */
+  var src=[].map.call(stack.querySelectorAll('article.ml-review'),function(a){return a});if(!src.length)return;
+  var cards=[];for(var k=0;cards.length<6;k++){var a=src[k%src.length].cloneNode(true);a.removeAttribute('style');if(k>=src.length)a.setAttribute('aria-hidden','true');cards.push(a)}
+  var ring=document.createElement('div');ring.className='v4-ring';ring.setAttribute('aria-roledescription','carousel');
+  cards.forEach(function(c){var w=document.createElement('div');w.className='v4-ring-card';w.appendChild(c);ring.appendChild(w)});
+  stack.replaceWith(ring);/* the shared stack/coverflow code no longer matches this element */
+  var N=cards.length,step=2*Math.PI/N,cur=0,goal=0,R=0,hold=0,hover=false,spun=reduce||!desk.matches;
+  var els=[].slice.call(ring.children);
+  function size(){var w=ring.clientWidth,cw=Math.min(420,w*(desk.matches?.62:.8));els.forEach(function(e){e.style.width=cw+'px'});R=cw*(desk.matches?1.05:.95);
+    ring.style.height=Math.max.apply(null,els.map(function(e){return e.offsetHeight}))+40+'px'}
+  function paint(){els.forEach(function(e,i){var t=i*step-cur,c=Math.cos(t),x=Math.sin(t)*R,z=(c-1)*R;
+    e.style.transform='translate(-50%,-50%) translate3d('+x.toFixed(1)+'px,0,'+z.toFixed(1)+'px) rotateY('+(t*57.3).toFixed(1)+'deg)';
+    e.style.opacity=Math.max(0,(c+.35)/1.35).toFixed(3);e.style.zIndex=Math.round(c*100)+100;e.style.pointerEvents=c>.9?'auto':'none'})}
+  var raf=0;function tick(){raf=0;var d=goal-cur;cur+=d*(spinning?.045:.12);if(Math.abs(d)<.0005){cur=goal;spinning=false}paint();if(cur!==goal)raf=requestAnimationFrame(tick)}
+  function to(g){goal=g;if(!raf)raf=requestAnimationFrame(tick)}var spinning=false;
+  size();paint();addEventListener('resize',function(){size();paint()});
+  /* desktop entrance: one full turn, easing into the centre card */
+  new IntersectionObserver(function(es,io){if(!es[0].isIntersecting)return;io.disconnect();if(!spun){spun=true;cur=goal-2*Math.PI;spinning=true;to(goal)}},{threshold:.35}).observe(ring);
+  /* drag / swipe */
+  var sx=null;ring.addEventListener('pointerdown',function(e){sx=e.clientX;hold=Date.now()});
+  addEventListener('pointerup',function(e){if(sx===null)return;var dx=e.clientX-sx;sx=null;if(Math.abs(dx)>30)to(Math.round(goal/step+(dx<0?1:-1))*step);hold=Date.now()});
+  ring.addEventListener('mouseenter',function(){hover=true});ring.addEventListener('mouseleave',function(){hover=false});
+  if(reduce)return;setInterval(function(){if(hover||spinning||Date.now()-hold<6000||document.hidden)return;var r=ring.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;to(goal+step)},3500)}
+/* desktop: the original 3-card stack moves as ONE group on a vertical 3D ring (4 faces, each a copy of the stack).
+   Scrolled into view: one full spin, settles on the front face; then rolls up one face every 3.5s, forever. Pauses on hover/offscreen. */
+function spinIn(stack){
+  stack.querySelectorAll('[data-a-to]').forEach(function(el){el.setAttribute('style',el.getAttribute('data-a-to'));el.removeAttribute('data-a-to')});/* the ring is the entrance */
+  var view=document.createElement('div');view.className='v4-drum-view';view.style.aspectRatio=stack.style.aspectRatio;
+  var drum=document.createElement('div');drum.className='v4-drum';view.appendChild(drum);stack.replaceWith(view);
+  var faces=[stack];for(var i=1;i<4;i++){var c=stack.cloneNode(true);c.setAttribute('aria-hidden','true');c.inert=true;faces.push(c)}
+  faces.forEach(function(f){f.classList.add('v4-drum-face');drum.appendChild(f)});
+  var ang=0;function lay(){var r=view.offsetHeight/2;faces.forEach(function(f,i){f.style.transform='rotateX('+(i*-90)+'deg) translateZ('+r+'px)'});drum.style.transformOrigin='50% 50% '+(-r)+'px';drum.style.transform='translateZ('+r+'px)'}
+  /* drum rotates around its centre: pivot at the stack's middle, faces pushed out by r */
+  function lay2(){var r=view.offsetHeight/2;faces.forEach(function(f,i){f.style.transform='rotateX('+(i*90)+'deg) translateZ('+r+'px)'});drum.style.transform='translateZ('+(-r)+'px) rotateX('+ang+'deg)'}
+  lay2();addEventListener('resize',lay2);
+  function turn(to,dur){ang=to;drum.style.transition='transform '+dur+'ms cubic-bezier(.22,1,.36,1)';lay2()}
+  if(reduce)return;var hover=false,iv=0;view.addEventListener('mouseenter',function(){hover=true});view.addEventListener('mouseleave',function(){hover=false});
+  drum.style.opacity=0;
+  new IntersectionObserver(function(es){var on=es[0].isIntersecting;
+    if(on&&!view.dataset.in){view.dataset.in=1;ang=360;drum.style.transition='none';lay2();void drum.offsetWidth;drum.style.opacity='';turn(0,1800)}
+    clearInterval(iv);if(on)iv=setInterval(function(){if(!hover&&!document.hidden)turn(ang-90,1100)},3500)},{threshold:.35}).observe(view)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
 </body>
 </html>
