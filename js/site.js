@@ -63,7 +63,7 @@
     try { localStorage.setItem('payload-theme', t); localStorage.setItem('mib-theme', t) } catch (e) {}
     var icon = tpl('theme-icon', t)
     $$('[data-theme-toggle]').forEach(function (b) {
-      if (icon) b.innerHTML = icon.innerHTML
+      if (icon) { b.innerHTML = icon.innerHTML; watch(b) } // the dark icon starts hidden and fades in via data-a-to
       b.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')
     })
   }
