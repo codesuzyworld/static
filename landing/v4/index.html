@@ -1316,7 +1316,7 @@ if(host){(async()=>{
   geo=toCreasedNormals(geo,Math.PI/5);
   geo.computeBoundingBox();const c=geo.boundingBox.getCenter(new T.Vector3);geo.translate(-c.x,-c.y,0);
   // ivory, softly glossy, like the product icons' walls
-  const land=new T.MeshPhysicalMaterial({color:'#c4b08a',roughness:.55,metalness:0,clearcoat:.35,clearcoatRoughness:.4,sheen:.3,sheenRoughness:.6,sheenColor:'#fff6e0'});
+  const land=new T.MeshPhysicalMaterial({color:'#d4c6aa',roughness:.55,metalness:0,clearcoat:.35,clearcoatRoughness:.4,sheen:.3,sheenRoughness:.6,sheenColor:'#fff6e0'});
   const ont=new T.Mesh(geo,land);ont.castShadow=true;ont.receiveShadow=true;board.add(ont);
   // the icons' plinth: a charcoal slab under the outline with a thin gold rim on its top edge
   const slab=(depth,size,z,mat)=>{let g=new T.ExtrudeGeometry(shapes,{depth,bevelEnabled:true,bevelThickness:.03,bevelSize:size,bevelSegments:4,curveSegments:1});g=toCreasedNormals(g,Math.PI/5);g.translate(-c.x,-c.y,z);const m=new T.Mesh(g,mat);m.castShadow=m.receiveShadow=true;board.add(m);return m};
@@ -1331,7 +1331,7 @@ if(host){(async()=>{
   LL.forEach((ll,i)=>{if(!ll)return;const d=new T.Mesh(dotGeo,dotMat);d.rotation.x=Math.PI/2;d.position.copy(at(i)).setZ(TOP+.02);board.add(d);dots.push(d);
     for(let k=0;k<2;k++){const m=new T.Mesh(ringGeo,new T.MeshBasicMaterial({color:'#c99a3a',transparent:true,depthWrite:false}));m.position.copy(at(i)).setZ(TOP+.005);m.userData.ph=k/2;m.userData.i=i;board.add(m);rings.push(m)}});
   // dark mode: a warm charcoal board
-  const setTheme=()=>{const dk=document.documentElement.dataset.theme==='dark';land.color.set(dk?'#b3a07c':'#c4b08a');floor.material.opacity=dk?.24:.07};setTheme();
+  const setTheme=()=>{const dk=document.documentElement.dataset.theme==='dark';land.color.set(dk?'#c4b593':'#d4c6aa');floor.material.opacity=dk?.24:.07};setTheme();
   new MutationObserver(()=>{setTheme();go()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   // the MIB shield, coloured like the footer logo
   const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
