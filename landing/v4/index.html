@@ -1325,7 +1325,7 @@ if(host){(async()=>{
   const sun=new T.DirectionalLight('#fffaf2',1.9);sun.position.set(-7,11,12);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.radius=12;sun.shadow.blurSamples=16;
   Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:60});scene.add(sun);
   // the map lies in its own XY plane (z = up from the land), the whole board tilts back toward the viewer
-  const YAW=.32,board=new T.Group;board.rotation.set(-.55,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
+  const YAW=.32,board=new T.Group;board.rotation.set(-.85,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
   // soften the jagged coastline: three passes of corner cutting round off the zigzags without moving the overall outline
   const soften=pts=>{for(let n=0;n<4;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
   const shapes=RINGS.map(ring=>new T.Shape(soften(ring).map(([x,y])=>new T.Vector2(x,y))));
@@ -1371,7 +1371,7 @@ if(host){(async()=>{
   // the MIB shield, coloured like the footer logo
   const g=(await new GLTFLoader().loadAsync('/static/landing/mib-logo-3d.glb')).scene;g.updateMatrixWorld(true);
   let src=null;g.traverse(o=>{if(o.isMesh&&o.name.replace(/\W/g,'')==='Curve020')src=o});
-  const pivot=new T.Group,stand=new T.Group;stand.rotation.x=Math.PI/2-.3;/* leans toward the viewer so it stays upright on screen with the flatter board */pivot.add(stand);board.add(pivot);
+  const pivot=new T.Group,stand=new T.Group;stand.rotation.x=Math.PI/2;pivot.add(stand);board.add(pivot);
   if(src){const sg=src.geometry.clone().applyMatrix4(src.matrixWorld);sg.computeBoundingBox();const b=sg.boundingBox,sz=b.getSize(new T.Vector3),bc=b.getCenter(new T.Vector3);
     sg.translate(-bc.x,-b.min.y,-bc.z);const k=.42/sz.y;sg.scale(k,k,k);
     const pos=sg.attributes.position,v=new T.Vector3,ds=[];let lo=1/0,hi=-1/0;
