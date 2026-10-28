@@ -840,9 +840,6 @@ html .nav .mega-item:has(.mega-icon-3d){flex-direction:row;justify-content:flex-
 .mega-item:hover .mega-icon-3d img,.mega-item:focus-visible .mega-icon-3d img{transform:translateY(-3px) scale(1.08)}
 @media (prefers-reduced-motion:reduce){.mega-icon-3d img{transition:none}}
 /* V4 reviews ring carousel */
-.v4-drum-view{position:relative;width:100%;perspective:1800px;perspective-origin:50% 50%}
-.v4-drum{position:absolute;inset:0;transform-style:preserve-3d;transition:opacity .4s}
-.v4-drum-face{position:absolute!important;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;aspect-ratio:auto!important}
 .v4-ring{position:relative;width:100%;perspective:1600px;perspective-origin:50% 40%;touch-action:pan-y;user-select:none;cursor:grab}
 .v4-ring:active{cursor:grabbing}.v4-ring-card{position:absolute;left:50%;top:50%;will-change:transform,opacity}
 .v4-ring-card .ml-review{width:100%;height:auto;transform:none!important}
@@ -1448,24 +1445,39 @@ function build(){var stack=document.querySelector('.v6-rev .ml-v2-reviews-stack'
   addEventListener('pointerup',function(e){if(sx===null)return;var dx=e.clientX-sx;sx=null;if(Math.abs(dx)>30)to(Math.round(goal/step+(dx<0?1:-1))*step);hold=Date.now()});
   ring.addEventListener('mouseenter',function(){hover=true});ring.addEventListener('mouseleave',function(){hover=false});
   if(reduce)return;setInterval(function(){if(hover||spinning||Date.now()-hold<6000||document.hidden)return;var r=ring.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;to(goal+step)},3500)}
-/* desktop: the original 3-card stack moves as ONE group on a vertical 3D ring (4 faces, each a copy of the stack).
-   Scrolled into view: one full spin, settles on the front face; then rolls up one face every 3.5s, forever. Pauses on hover/offscreen. */
+/* desktop: original stack laid on a CSS 3D cylinder (rotateX around a horizontal axis). Top card tilts back, middle faces you, bottom tilts forward.
+   Each step the cards scroll down one notch along a smooth curve through the zigzag; the bottom card goes round the back and scrolls back in at the top.
+   p = position on the cylinder: 0 top, 1 middle, 2 bottom, 2..3 behind (wraps to 0). Entrance: cards scroll in from above. */
 function spinIn(stack){
-  stack.querySelectorAll('[data-a-to]').forEach(function(el){el.setAttribute('style',el.getAttribute('data-a-to'));el.removeAttribute('data-a-to')});/* the ring is the entrance */
-  var view=document.createElement('div');view.className='v4-drum-view';view.style.aspectRatio=stack.style.aspectRatio;
-  var drum=document.createElement('div');drum.className='v4-drum';view.appendChild(drum);stack.replaceWith(view);
-  var faces=[stack];for(var i=1;i<4;i++){var c=stack.cloneNode(true);c.setAttribute('aria-hidden','true');c.inert=true;faces.push(c)}
-  faces.forEach(function(f){f.classList.add('v4-drum-face');drum.appendChild(f)});
-  var ang=0;function lay(){var r=view.offsetHeight/2;faces.forEach(function(f,i){f.style.transform='rotateX('+(i*-90)+'deg) translateZ('+r+'px)'});drum.style.transformOrigin='50% 50% '+(-r)+'px';drum.style.transform='translateZ('+r+'px)'}
-  /* drum rotates around its centre: pivot at the stack's middle, faces pushed out by r */
-  function lay2(){var r=view.offsetHeight/2;faces.forEach(function(f,i){f.style.transform='rotateX('+(i*90)+'deg) translateZ('+r+'px)'});drum.style.transform='translateZ('+(-r)+'px) rotateX('+ang+'deg)'}
-  lay2();addEventListener('resize',lay2);
-  function turn(to,dur){ang=to;drum.style.transition='transform '+dur+'ms cubic-bezier(.22,1,.36,1)';lay2()}
-  if(reduce)return;var hover=false,iv=0;view.addEventListener('mouseenter',function(){hover=true});view.addEventListener('mouseleave',function(){hover=false});
-  drum.style.opacity=0;
+  stack.querySelectorAll('[data-a-to]').forEach(function(el){el.setAttribute('style',el.getAttribute('data-a-to'));el.removeAttribute('data-a-to')});
+  var cards=[].slice.call(stack.querySelectorAll(':scope>.ml-abs'));if(cards.length<2)return;
+  var sl=cards.map(function(c){return{x:parseFloat(c.style.left),y:parseFloat(c.style.top),z:+c.style.zIndex}}).sort(function(a,b){return a.y-b.y});/* top -> bottom */
+  var p=cards.map(function(c){var y=parseFloat(c.style.top);return sl.findIndex(function(s){return s.y===y})}),tgt=p.slice(),from=p.slice(),t0=p.map(function(){return-1});
+  var TILT=16,DUR=1100,lerp=function(a,b,t){return a+(b-a)*t};
+  /* each card gets its own perspective (below), so tilted cards layer by z-index instead of slicing through each other */
+  function draw(c,q){q=((q%3)+3)%3;var x,y,th,back=q>2;
+    var k=Math.floor(q),f=q-k,P=function(j){return sl[((j%3)+3)%3]},cr=function(a,b,c,d){return .5*(2*b+(c-a)*f+(2*a-5*b+4*c-d)*f*f+(3*b-a-3*c+d)*f*f*f)};
+    x=cr(P(k-1).x,P(k).x,P(k+1).x,P(k+2).x);y=cr(P(k-1).y,P(k).y,P(k+1).y,P(k+2).y);/* smooth closed curve through the 3 spots */
+    th=back?-TILT-(360-2*TILT)*(q-2):TILT-TILT*q
+    var r=th*Math.PI/180,depth=(Math.cos(r)-1)*260;
+    c.style.left=x+'%';c.style.top=y+'%';
+    c.style.transform='perspective(1500px) translateZ('+depth.toFixed(1)+'px) rotateX('+th.toFixed(1)+'deg)';
+    c.style.opacity=Math.max(0,Math.min(1,(Math.cos(r)-.15)/.5)).toFixed(3);
+    c.style.zIndex=back?0:Math.round(100+Math.cos(r)*50+(q>.5&&q<1.5?20:0));
+    c.style.filter='brightness('+(1-.05*Math.abs(Math.sin(r))).toFixed(3)+')'}
+  cards.forEach(function(c,i){c.style.transformOrigin='50% 50%';c.style.willChange='transform,opacity';draw(c,p[i])});
+  var raf=0;function tick(now){raf=0;var moving=false;
+    cards.forEach(function(c,i){if(t0[i]<0){draw(c,p[i]);return}var t=Math.min(1,Math.max(0,(now-t0[i])/DUR)),e=-(Math.cos(Math.PI*t)-1)/2;
+      p[i]=lerp(from[i],tgt[i],e);draw(c,p[i]);if(t<1)moving=true;else t0[i]=-1});
+    if(moving)raf=requestAnimationFrame(tick)}
+  function move(i,to,delay){from[i]=p[i];tgt[i]=to;t0[i]=performance.now()+delay;if(!raf)raf=requestAnimationFrame(tick)}
+  if(reduce)return;var hover=false,iv=0;stack.addEventListener('mouseenter',function(){hover=true});stack.addEventListener('mouseleave',function(){hover=false});
+  var rest=p.slice();cards.forEach(function(c,i){p[i]=2.6;draw(c,2.6)});/* hidden behind the cylinder until it scrolls in */
+  function order(){var m=function(v){return((v%3)+3)%3};return cards.map(function(c,i){return i}).sort(function(a,b){return m(tgt[b])-m(tgt[a])})}/* bottom card first */
+  function step(){if(hover||document.hidden||t0.some(function(v){return v>=0}))return;order().forEach(function(i,k){move(i,tgt[i]+1,k*140)})}
   new IntersectionObserver(function(es){var on=es[0].isIntersecting;
-    if(on&&!view.dataset.in){view.dataset.in=1;ang=360;drum.style.transition='none';lay2();void drum.offsetWidth;drum.style.opacity='';turn(0,1800)}
-    clearInterval(iv);if(on)iv=setInterval(function(){if(!hover&&!document.hidden)turn(ang-90,1100)},3500)},{threshold:.35}).observe(view)}
+    if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*160)})/* scroll in from above */}
+    clearInterval(iv);if(on)iv=setInterval(step,3500)},{threshold:.35}).observe(stack)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
 </body>
 </html>
