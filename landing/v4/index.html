@@ -1386,7 +1386,7 @@ if(host){(async()=>{
   const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:0,w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
     const et=Math.round(b.height*.4),eb=Math.round(b.height*.5);/* extra canvas above/below, same framing, so the map isn't hard-cut once the fade is gone */
     r.setSize(w,h+et+eb,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top-et+'px',width:w+'px',height:h+et+eb+'px'});cam.aspect=w/h;cam.setViewOffset(w,h,0,-et,w,h+et+eb);
-    const t=Math.tan(cam.fov*Math.PI/360),view=desk?7.4:9.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
+    const t=Math.tan(cam.fov*Math.PI/360),view=desk?8.2:10.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
     const f=FOCUS.clone().applyEuler(board.rotation),dx=desk&&bleed?view*.1:0;
     refD=dist;cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix();go()};
   // state: which office the shield is on, and whether a pill is being hovered (grow + spin)
