@@ -1309,24 +1309,38 @@ if(host){(async()=>{
   // the map lies in its own XY plane (z = up from the land), the whole board tilts back toward the viewer
   const YAW=.32,board=new T.Group;board.rotation.set(-.85,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
   // soften the jagged coastline: three passes of corner cutting round off the zigzags without moving the overall outline
-  const soften=pts=>{for(let n=0;n<3;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
+  const soften=pts=>{for(let n=0;n<4;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
   const shapes=RINGS.map(ring=>new T.Shape(soften(ring).map(([x,y])=>new T.Vector2(x,y))));
   const DEPTH=.42;let geo=new T.ExtrudeGeometry(shapes,{depth:DEPTH,bevelEnabled:true,bevelThickness:.14,bevelSize:.1,bevelSegments:12,curveSegments:1});
   // smooth normals across the bevel steps (one rounded edge, not facets); sharper corners stay crisp
-  geo=toCreasedNormals(geo,Math.PI/5);
+  geo=toCreasedNormals(geo,Math.PI*.45);
   geo.computeBoundingBox();const c=geo.boundingBox.getCenter(new T.Vector3);geo.translate(-c.x,-c.y,0);
   // ivory, softly glossy, like the product icons' walls
-  const land=new T.MeshPhysicalMaterial({color:'#d4c6aa',roughness:.55,metalness:0,clearcoat:.35,clearcoatRoughness:.4,sheen:.3,sheenRoughness:.6,sheenColor:'#fff6e0'});
+  // fine matte plaster grain for the land: layered smooth noise -> normal map (subtle, like the icons' walls)
+  const plaster=(()=>{const N=256,ht=new Float32Array(N*N);for(const [s,w] of [[4,1],[16,.5],[64,.25]]){const g=new Float32Array(s*s).map(()=>Math.random());
+      for(let y=0;y<N;y++)for(let x=0;x<N;x++){const fx=x/N*s,fy=y/N*s,x0=fx|0,y0=fy|0,tx=fx-x0,ty=fy-y0,sx=tx*tx*(3-2*tx),sy=ty*ty*(3-2*ty),G=(i,j)=>g[((j%s)*s)+(i%s)];
+        ht[y*N+x]+=w*((G(x0,y0)*(1-sx)+G(x0+1,y0)*sx)*(1-sy)+(G(x0,y0+1)*(1-sx)+G(x0+1,y0+1)*sx)*sy)}}
+    const c=document.createElement('canvas');c.width=c.height=N;const cx=c.getContext('2d'),d=cx.createImageData(N,N),K=6;
+    for(let y=0;y<N;y++)for(let x=0;x<N;x++){const dx=(ht[y*N+(x+1)%N]-ht[y*N+(x+N-1)%N])*K,dy=(ht[((y+1)%N)*N+x]-ht[((y+N-1)%N)*N+x])*K,l=Math.hypot(dx,dy,1),o=(y*N+x)*4;d.data[o]=(-dx/l*.5+.5)*255;d.data[o+1]=(-dy/l*.5+.5)*255;d.data[o+2]=(1/l*.5+.5)*255;d.data[o+3]=255}
+    cx.putImageData(d,0,0);const t=new T.CanvasTexture(c);t.colorSpace=T.NoColorSpace;t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(1.6,1.6);t.anisotropy=8;return t})();
+  const land=new T.MeshPhysicalMaterial({normalMap:plaster,normalScale:new T.Vector2(.35,.35),color:'#d4c6aa',roughness:.55,metalness:0,clearcoat:.35,clearcoatRoughness:.4,sheen:.3,sheenRoughness:.6,sheenColor:'#fff6e0'});
   const ont=new T.Mesh(geo,land);ont.castShadow=true;ont.receiveShadow=true;board.add(ont);
   // the icons' plinth: a charcoal slab under the outline with a thin gold rim on its top edge
-  const slab=(depth,size,z,mat)=>{let g=new T.ExtrudeGeometry(shapes,{depth,bevelEnabled:true,bevelThickness:.03,bevelSize:size,bevelSegments:4,curveSegments:1});g=toCreasedNormals(g,Math.PI/5);g.translate(-c.x,-c.y,z);const m=new T.Mesh(g,mat);m.castShadow=m.receiveShadow=true;board.add(m);return m};
+  const slab=(depth,size,z,mat)=>{let g=new T.ExtrudeGeometry(shapes,{depth,bevelEnabled:true,bevelThickness:.03,bevelSize:size,bevelSegments:4,curveSegments:1});g=toCreasedNormals(g,Math.PI*.45);g.translate(-c.x,-c.y,z);const m=new T.Mesh(g,mat);m.castShadow=m.receiveShadow=true;board.add(m);return m};
   const baseMat=new T.MeshPhysicalMaterial({color:'#2b2b2e',roughness:.45,clearcoat:.5,clearcoatRoughness:.3});
-  const goldMat=new T.MeshStandardMaterial({color:'#d9b25c',roughness:.3,metalness:.85});
+  // brushed satin gold: fine streak noise drives bump + roughness so reflections break up instead of mirroring
+  // brushed gold: a height field of fine streaks (along the rim) turned into a normal map, plus matching roughness variation
+  const brush=(()=>{const N=512,ht=new Float32Array(N*N);for(let k=0;k<5000;k++){const y=Math.random()*N|0,x0=Math.random()*N|0,L=40+Math.random()*260,a=(Math.random()-.5)*.9;for(let i=0;i<L;i++){const x=(x0+i)%N;ht[y*N+x]+=a;ht[((y+1)%N)*N+x]+=a*.4}}
+    const nc=document.createElement('canvas'),rc=document.createElement('canvas');nc.width=nc.height=rc.width=rc.height=N;const nx=nc.getContext('2d'),rx=rc.getContext('2d'),nd=nx.createImageData(N,N),rd=rx.createImageData(N,N);
+    for(let y=0;y<N;y++)for(let x=0;x<N;x++){const i=y*N+x,dx=ht[y*N+(x+1)%N]-ht[y*N+(x+N-1)%N],dy=ht[((y+1)%N)*N+x]-ht[((y+N-1)%N)*N+x],l=Math.hypot(dx,dy,1),o=i*4;
+      nd.data[o]=(-dx/l*.5+.5)*255;nd.data[o+1]=(-dy/l*.5+.5)*255;nd.data[o+2]=(1/l*.5+.5)*255;nd.data[o+3]=255;const r=150+ht[i]*60;rd.data[o]=rd.data[o+1]=rd.data[o+2]=Math.max(0,Math.min(255,r));rd.data[o+3]=255}
+    nx.putImageData(nd,0,0);rx.putImageData(rd,0,0);const mk=(c,srgb)=>{const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(3,40);t.anisotropy=8;if(srgb===false)t.colorSpace=T.NoColorSpace;return t};return{n:mk(nc,false),r:mk(rc,false)}})();
+  const goldMat=new T.MeshStandardMaterial({color:'#b08c4e',roughness:.42,metalness:.85,normalMap:brush.n,normalScale:new T.Vector2(.9,.9),roughnessMap:brush.r,envMapIntensity:.8});
   slab(.14,.16,-.24,baseMat);slab(.015,.18,-.075,goldMat);
   const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.ShadowMaterial({opacity:.1}));floor.position.z=-.28;floor.receiveShadow=true;board.add(floor);
   const TOP=DEPTH+.14,at=i=>{const [x,y]=proj(...LL[i]);return new T.Vector3(x-c.x,y-c.y,TOP)};
   // small dot per office; the active office's dot pulses two glowing rings
-  const dotGeo=new T.CylinderGeometry(.06,.06,.04,24),dotMat=new T.MeshStandardMaterial({color:'#c99d42',roughness:.35,metalness:.7,emissive:'#8a6516',emissiveIntensity:.35});/* gold, same as the plinth rim */
+  const dotGeo=new T.CylinderGeometry(.06,.06,.04,24),dotMat=new T.MeshStandardMaterial({color:'#b8924c',roughness:.5,metalness:.75,emissive:'#5e4512',emissiveIntensity:.3,normalMap:brush.n,normalScale:new T.Vector2(.5,.5)});/* gold, same as the plinth rim */
   const ringGeo=new T.RingGeometry(.07,.095,48),rings=[],dots=[];
   LL.forEach((ll,i)=>{if(!ll)return;const d=new T.Mesh(dotGeo,dotMat);d.rotation.x=Math.PI/2;d.position.copy(at(i)).setZ(TOP+.02);board.add(d);dots.push(d);
     for(let k=0;k<2;k++){const m=new T.Mesh(ringGeo,new T.MeshBasicMaterial({color:'#c99a3a',transparent:true,depthWrite:false}));m.position.copy(at(i)).setZ(TOP+.005);m.userData.ph=k/2;m.userData.i=i;board.add(m);rings.push(m)}});
@@ -1359,21 +1373,22 @@ if(host){(async()=>{
   const place=i=>{if(!LL[i]){pivot.visible=false;return}pivot.visible=true;return at(i)};
   let goal=place(0);pivot.position.copy(goal);
   document.addEventListener('v4-loc',e=>{const i=e.detail,hover=document.querySelector('.v6-loc .ml-loc-pill:hover,.v6-loc .ml-loc-pill:focus-visible');
-    goal=place(i)||goal;if(i!==target&&hover)spinTo+=2*Math.PI;target=i;if(reduce&&goal)pivot.position.copy(goal);go()});
+    const g=place(i);if(g&&i!==target){goal=g;pivot.position.copy(g);born=clock.elapsedTime}target=i;go()});/* shield appears at the new office instead of gliding there */
   addEventListener('resize',fit);
-  let raf=0,vis=false;const clock=new T.Clock;
+  let raf=0,vis=false,born=-9;const clock=new T.Clock;
   function go(){if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}}
   function tick(){raf=0;const dt=Math.min(clock.getDelta(),.05),e=1-Math.pow(.001,dt);
     if(goal)pivot.position.lerp(goal,reduce?1:e*1.6>1?1:e*1.6);
     spin+=(spinTo-spin)*(reduce?1:Math.min(1,dt*3.2));
-    const tt=clock.elapsedTime;stand.rotation.y=spin+(reduce?0:.25*Math.sin(tt*.9));
+    const tt=clock.elapsedTime,bp=reduce?1:Math.min(1,(tt-born)/.9),be=1-Math.pow(1-bp,3);/* spin-in: grows from nothing while turning 1.5 times */
+    stand.rotation.y=spin+(reduce?0:.25*Math.sin(tt*.9))-(1-be)*3*Math.PI;
     // same on-screen size wherever it stands: undo perspective shrink/grow
     // entrance (once, when the map scrolls into view): the board rises and tilts into place, pins pop in one by one, then the shield drops in
     if(seen&&t0<0)t0=tt;const ip=reduce?1:t0<0?0:Math.min(1,(tt-t0)/2),ez=1-Math.pow(1-Math.min(1,ip/.65),3),pop=x=>{x=Math.min(1,Math.max(0,x))-1;return 1+2.7*x*x*x+1.7*x*x};
     intro.visible=ip>0;intro.position.set(0,-1.6*(1-ez),-2.4*(1-ez));intro.rotation.x=-.45*(1-ez);intro.scale.setScalar(.9+.1*ez);
     dots.forEach((d,i)=>d.scale.setScalar(Math.max(1e-3,pop((ip-.4-i*.035)/.2))));
     const sk=Math.min(1,Math.max(0,(ip-.72)/.28)),sd=1-Math.pow(1-sk,3);
-    pivot.getWorldPosition(wp);pivot.scale.setScalar(Math.max(1e-3,sd)*wp.distanceTo(cam.position)/refD);
+    pivot.getWorldPosition(wp);pivot.scale.setScalar(Math.max(1e-3,sd*(bp<1?Math.max(.001,be+.12*Math.sin(bp*Math.PI)):1))*wp.distanceTo(cam.position)/refD);
     // the shield hovers above its dot instead of sitting in it
     stand.position.z=.28+(reduce?0:.06*Math.sin(tt*1.6))+1.2*(1-sd);
     rings.forEach(m=>{m.visible=m.userData.i===target&&ip>.9;const p=reduce?.35:(tt*.55+m.userData.ph)%1;m.scale.setScalar(1+p*2.4);m.material.opacity=.6*(1-p)});
