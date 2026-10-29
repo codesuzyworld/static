@@ -1403,7 +1403,7 @@ if(host){(async()=>{
   // zoomed on the offices (Sudbury down to London); on desktop the canvas bleeds to the window's left edge like the old picture
   const FULL=new URLSearchParams(location.search).get('map')==='full';/* ?map=full: preview with the whole province in frame */
   const [fx,fy]=proj(45.5,-80.4),FOCUS=FULL?new T.Vector3(0,0,0):new T.Vector3(fx-c.x,fy-c.y,0);
-  const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:0,w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
+  const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:Math.max(0,document.documentElement.clientWidth-b.right),w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
     const et=Math.round(b.height*.4),eb=Math.round(b.height*.5);/* extra canvas above/below, same framing, so the map isn't hard-cut once the fade is gone */
     r.setSize(w,h+et+eb,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top-et+'px',width:w+'px',height:h+et+eb+'px'});cam.aspect=w/h;cam.setViewOffset(w,h,0,-et,w,h+et+eb);
     const t=Math.tan(cam.fov*Math.PI/360),view=FULL?(desk?18:18):desk?8.2:6.8,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
