@@ -1,20 +1,20 @@
 /* icon-switch.js: demo arrows at the screen edges of the "What do you need to protect" cards (V1 + V2).
-   Each arrow moves every card to the previous / next icon style (3D, line, flat, glass, solid, mono, deco), one card after another.
+   Each arrow moves every card to the previous / next icon style (3D, line, flat, glass, mono); the solid and deco sets are parked in /versioning/icons, one card after another.
    Cards are matched by kind (auto, home, condo, business), so any card order works; rows with other cards are left alone. */
 ;(function () {
   if (window.__iconSwitch) return
   window.__iconSwitch = 1
   var STYLES = {
-    auto: ['/static/landing/v4/auto.webp', '/static/landing/line-auto-anim.svg', '/static/landing/v3/icons/car.svg', '/static/landing/v4/glass/auto.svg', '/static/landing/v4/solid/auto.svg', '/static/landing/v4/mono/auto.svg', '/static/landing/v4/deco/auto.svg'],
-    home: ['/static/landing/v4/home.webp', '/static/landing/line-home-anim.svg', '/static/landing/v3/icons/house.svg', '/static/landing/v4/glass/home.svg', '/static/landing/v4/solid/home.svg', '/static/landing/v4/mono/home.svg', '/static/landing/v4/deco/home.svg'],
-    condo: ['/static/landing/v4/condo.webp', '/static/landing/line-condo-anim.svg', '/static/landing/v3/icons/condo.svg', '/static/landing/v4/glass/condo.svg', '/static/landing/v4/solid/condo.svg', '/static/landing/v4/mono/condo.svg', '/static/landing/v4/deco/condo.svg'],
-    business: ['/static/landing/v4/business-cafe.webp', '/static/landing/line-business-anim.svg', '/static/landing/v3/icons/store.svg', '/static/landing/v4/glass/business.svg', '/static/landing/v4/solid/business.svg', '/static/landing/v4/mono/business.svg', '/static/landing/v4/deco/business.svg']
+    auto: ['/static/landing/v4/auto.webp', '/static/landing/line-auto-anim.svg', '/static/landing/v3/icons/car.svg', '/static/landing/v4/glass/auto.svg', '/static/landing/v4/mono/auto.svg'],
+    home: ['/static/landing/v4/home.webp', '/static/landing/line-home-anim.svg', '/static/landing/v3/icons/house.svg', '/static/landing/v4/glass/home.svg', '/static/landing/v4/mono/home.svg'],
+    condo: ['/static/landing/v4/condo.webp', '/static/landing/line-condo-anim.svg', '/static/landing/v3/icons/condo.svg', '/static/landing/v4/glass/condo.svg', '/static/landing/v4/mono/condo.svg'],
+    business: ['/static/landing/v4/business-cafe.webp', '/static/landing/line-business-anim.svg', '/static/landing/v3/icons/store.svg', '/static/landing/v4/glass/business.svg', '/static/landing/v4/mono/business.svg']
   }
   var ALIAS = { car: 'auto', house: 'home', store: 'business', cafe: 'business' }
   // V3's flat icons are a small layered build (shadow, speed lines, accessory) animated by .tile-anim CSS in the shared stylesheet
   var FLAT = { auto: '<span class="ta-speed"><i></i><i></i><i></i></span>', home: 'shield', condo: 'key', business: 'briefcase' }
   var svgs = {} // SVG sets are inlined so their own animations run and react to the card's hover (an <img> can't see :hover outside it)
-  var V = '20261029j' // bump when the icon SVGs change, so browsers don't keep old copies
+  var V = '20261029p' // bump when the icon SVGs change, so browsers don't keep old copies
   var N = STYLES.auto.length
   var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
