@@ -770,7 +770,7 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 .v6-hero .ml-v2-people.v6-alt{transform:translateX(4.6%) translateY(calc(var(--fam-base,0%) + var(--fam-lap,0%))) scale(1.22);transform-origin:50% 0}
 /* desktop hero: original V3 proportions (full-width art from the top), cut off at one screen height */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000){
-  .v6-hero .ml-hero-v2 .ml-stage{--ml-art-h:calc(100cqw * 1164 / 1728);aspect-ratio:auto!important;height:100vh;height:100svh;min-height:0;overflow:hidden}
+  .v6-hero .ml-hero-v2 .ml-stage{--ml-art-h:calc(100cqw * 1164 / 1728);aspect-ratio:auto!important;height:var(--hh);min-height:0;overflow:hidden}
   .v6-hero .ml-hero-v2 .ml-stage-art{top:0!important;height:var(--ml-art-h)!important;width:100%;left:0}
   .v6-hero .ml-hero-copy-v2{top:calc(var(--ml-art-h) * .1744)!important}
 }
@@ -785,15 +785,14 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 .v6-hero .ml-stage-art .ml-abs:has(.ml-v2-people){z-index:4!important}
 /* laptops: same layout, family sits a little lower so heads clear the buttons */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-height:960px){.v6-hero{--fam-lap:9%}}
-@media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-height:800px){.v6-hero{--fam-lap:13%}}
 /* each family lifted so most heads sit where the brokers' do (measured from the cutouts) */
 /* V3 only: this close-up family shown smaller than V1 */
 .v6-hero .ml-v2-people.v6-alt[data-fam="1"]{transform:translateX(4.6%) translateY(-18%) scale(1.15)}
 .v6-hero .ml-v2-people:not(.v6-alt){transform:translateY(calc(var(--fam-lap,0%) * .8 - 9%))}
-/* headline smaller on desktop */@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-l1{font-size:clamp(44px,4.4vw,86px)!important}.v6-hero .ml-hero-l2{font-size:clamp(36px,3.65vw,70px)!important}}
+/* headline smaller on desktop */@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-l1{font-size:clamp(40px,3.7vw,74px)!important}.v6-hero .ml-hero-l2{font-size:clamp(32px,3.05vw,60px)!important}}
 .v6-hero .ml-v2-people.v6-alt[data-rider]{transform:translateY(calc(var(--fam-lap,0%) * .8 - 16%))} /* riders share the brokers' frame */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-v2 .ml-stage{max-width:none}} /* the V2 stage caps at 1920px; bleed edge to edge on wider screens */
-@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-copy-v2{translate:0 -5svh}} /* text sits higher under the nav */
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-copy-v2{translate:0 calc(var(--hh) * -.05)}} /* text sits higher under the nav */
 /* mega menu: V2's layout (narrow card under the hovered link, one-column list with icons on the right, featured card below) */
 .nav-links .has-mega{position:relative}
 html .nav .mega{left:0;right:auto;width:min(460px,92vw);top:calc(100% + 22px)}
@@ -831,7 +830,7 @@ html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important
 /* narrow desktop windows (1101–1279px, e.g. half-width): compact nav so labels don't wrap, hero copy clears the nav */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1279px){.nav{gap:12px;padding-inline:20px 14px}.nav-logo img{height:40px}.nav-links{gap:0}.nav-links a{padding:10px 10px;font-size:15px;white-space:nowrap}.nav .btn{min-height:46px;padding:0 18px;font-size:14px;white-space:nowrap}.nav .theme-toggle{width:46px;height:46px}}
 /* hero copy: centred around 40% of the window height, but the buttons always end above the family's heads; never closer to the nav than ~50px */
-@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero{--fw:min(78vw,calc(100svh * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,min(calc(40svh - 130px),calc(100svh - var(--fw) * .408 - 314px)))!important}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero{--hh:max(100svh,940px);--fw:min(78vw,calc(var(--hh) * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,min(calc(var(--hh) * .4 - 130px),calc(var(--hh) - var(--fw) * .408 - 314px)))!important}}
 /* .block's padding shorthand was zeroing .wrap's side padding: content touched the screen edge below ~1330px */
 main>section.block.wrap{padding-inline:clamp(16px,3vw,24px)}
 /* mega menu: 3D renders (same style as the product cards) instead of glyph tiles */
@@ -896,16 +895,16 @@ html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 18.7%,r
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.4) 62%)}html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
 @media (prefers-reduced-motion:reduce){.v4-bg,.v4-fam img{translate:none!important;animation:none}}
 /* stacked hero (tablets + phones): exactly one screen tall, the autumn photo fills it, the family is anchored to the bottom and sized from the screen height; one long eased fade from solid at the top */
-@media (max-width:1100px), (max-aspect-ratio:6/5){.v4-hero .ml-stage{position:relative;height:100svh!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v4-hero{--mh:max(100svh,940px)}.v4-hero .ml-stage{position:relative;height:var(--mh)!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
   .v4-hero .ml-hero-copy{position:relative;z-index:2;translate:0 44px;flex:none!important}
   .v4-hero .ml-v2-hero-clip{position:absolute!important;inset:0;height:auto!important;clip-path:inset(0 round 0 0 min(32px,var(--ml-hero-radius,0px)) min(32px,var(--ml-hero-radius,0px)))!important}
   .v4-hero .ml-stage-art.v4-art{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;margin:0!important;overflow:hidden!important}
   .v4-art .v4-bg{top:0!important;left:0!important;width:100%!important;height:100%!important;translate:none!important;object-position:50% 45%}
   .v4-art .v4-wash{inset:0!important;height:100%!important}
-  .v4-fam{width:min(118%,calc(100svh * .85))}
+  .v4-fam{width:min(118%,calc(var(--mh) * .85))}
   html:not([data-theme=dark]) .v4-wash{background:linear-gradient(180deg,#f2f2f0 0,rgba(242,242,240,.97) 11%,rgba(242,242,240,.9) 21%,rgba(242,242,240,.78) 30%,rgba(242,242,240,.62) 38%,rgba(242,242,240,.45) 46%,rgba(242,242,240,.29) 54%,rgba(242,242,240,.16) 62%,rgba(242,242,240,.07) 70%,rgba(242,242,240,.02) 78%,rgba(242,242,240,0) 86%)}
   html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 0,rgba(16,16,17,.97) 11%,rgba(16,16,17,.9) 21%,rgba(16,16,17,.78) 30%,rgba(16,16,17,.62) 38%,rgba(16,16,17,.45) 46%,rgba(16,16,17,.29) 54%,rgba(16,16,17,.16) 62%,rgba(16,16,17,.07) 70%,rgba(16,16,17,.02) 78%,rgba(16,16,17,0) 86%)}}
-@media (max-width:700px){.v4-fam{width:min(165%,calc(100svh * .9))}.v4-art .v4-parents{left:22.65%;top:-9%}.v4-art .v4-kids{left:23.6%;z-index:2}}
+@media (max-width:700px){.v4-fam{width:min(165%,calc(var(--mh) * .9))}.v4-art .v4-parents{left:22.65%;top:-9%}.v4-art .v4-kids{left:23.6%;z-index:2}}
 /* yellow glow grows out from the bottom on load (--gs scales every glow radius) */
 @property --gs{syntax:'<number>';inherits:false;initial-value:1}
 .v4-wash{animation:v4-glow 2.2s cubic-bezier(.2,.8,.2,1) .2s both}
@@ -1505,6 +1504,6 @@ function spinIn(stack){
     if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*70)})/* scroll in from above */}
     clearInterval(iv);if(on)iv=setInterval(step,3500)},{threshold:.35}).observe(stack)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
-<script src="/static/js/icon-switch.js?v=20261029t" defer></script>
+<script src="/static/js/icon-switch.js?v=20261029v" defer></script>
 </body>
 </html>

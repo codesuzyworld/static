@@ -14,7 +14,7 @@
   // V3's flat icons are a small layered build (shadow, speed lines, accessory) animated by .tile-anim CSS in the shared stylesheet
   var FLAT = { auto: '<span class="ta-speed"><i></i><i></i><i></i></span>', home: 'shield', condo: 'key', business: 'briefcase' }
   var svgs = {} // SVG sets are inlined so their own animations run and react to the card's hover (an <img> can't see :hover outside it)
-  var V = '20261029t' // bump when the icon SVGs change, so browsers don't keep old copies
+  var V = '20261029v' // bump when the icon SVGs change, so browsers don't keep old copies
   var N = STYLES.auto.length
   var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
