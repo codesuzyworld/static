@@ -654,7 +654,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 /* version switch: only V2 and V4 are offered (other pages still exist; their own button shows when you are on them) */.mib-version-switch-item:is([href="/static/landing/old-v2"],[href="/static/landing/old-v4"],[href="/static/landing/v5"],[href="/static/landing/v1"],[href="/static/landing/v3"]):not([data-active]){display:none!important}
 /* locations: 3D Ontario map on the left (replaces the Google map), office card under the pills */
 .v4-ont{position:relative;aspect-ratio:1/1;width:100%;max-width:620px;justify-self:center}
-.v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none}
+.v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 160px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 160px),transparent)}/* zoomed in, the map reaches the canvas's right edge: fade instead of a hard cut */
 .v6-loc .ml-loc-copy .ml-v2-loc-card{margin-top:28px}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v4-ont{max-width:440px;margin-inline:auto}}
 /* soft yellow glow behind the Ontario map (left on desktop, under the copy when stacked) */
@@ -1322,7 +1322,9 @@ sec.addEventListener('pointerleave',()=>{tx=0;ty=0;go()});
 // one MIB shield floats over the shown office, glides there and spins when a pill is hovered
 const host=document.querySelector('.v4-ont');
 if(host){(async()=>{
-  const [T,{GLTFLoader},{RoomEnvironment},{toCreasedNormals}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js'),import('https://esm.sh/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js')]);
+  const [T,{GLTFLoader},{RoomEnvironment},{toCreasedNormals,mergeGeometries},{DRACOLoader}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js'),import('https://esm.sh/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/DRACOLoader.js')]);
+  // landmark models (modelled in Blender, Draco-compressed); fetched now, placed further down
+  const lmP=new GLTFLoader().setDRACOLoader(new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/')).loadAsync('/static/landing/v4-landmarks.glb');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const RINGS=[[[3.725,3.959],[3.743,0.566],[3.699,0.442],[3.792,0.265],[3.789,0.111],[3.986,-0.188],[4.126,-0.488],[4.294,-0.663],[5.077,-0.848],[5.236,-0.973],[5.315,-1.123],[5.454,-1.21],[5.51,-1.194],[5.517,-1.11],[5.589,-1.135],[5.684,-1.409],[5.908,-1.544],[6.012,-1.479],[6.086,-1.486],[6.242,-1.628],[6.511,-1.476],[6.905,-1.358],[7.061,-1.364],[7.231,-1.436],[7.175,-1.683],[7.281,-1.799],[7.157,-1.928],[6.595,-2.189],[6.154,-2.616],[5.795,-2.773],[5.669,-2.783],[5.467,-2.929],[5.408,-2.908],[5.533,-2.823],[5.424,-2.871],[5.448,-2.789],[5.076,-2.879],[5.063,-2.921],[5.242,-2.848],[5.239,-2.91],[5.404,-2.821],[5.369,-2.966],[5.561,-2.882],[5.427,-3.052],[5.56,-3.057],[5.364,-3.144],[5.297,-3.12],[5.34,-3.046],[5.268,-3.089],[5.232,-3.046],[5.282,-3.031],[5.125,-3.058],[5.06,-2.997],[5.088,-2.981],[4.976,-2.959],[4.953,-2.976],[4.993,-2.999],[4.907,-2.983],[4.029,-3.174],[3.845,-3.357],[3.773,-3.353],[3.691,-3.435],[3.563,-3.68],[3.612,-3.756],[3.857,-3.812],[4.042,-3.733],[4.038,-3.918],[4.143,-4.09],[4.025,-4.16],[3.782,-4.123],[3.271,-4.21],[3.103,-4.388],[3.332,-4.459],[3.054,-4.427],[2.779,-4.334],[2.501,-4.349],[2.192,-4.602],[2.144,-4.744],[2.118,-4.743],[2.143,-4.679],[2.1,-4.74],[1.997,-4.747],[1.781,-4.876],[1.719,-4.968],[1.701,-5.087],[1.618,-4.965],[1.439,-5.018],[1.28,-4.93],[1.343,-4.687],[1.71,-4.687],[1.755,-4.646],[1.76,-4.502],[1.611,-4.453],[1.692,-4.366],[1.724,-4.101],[1.76,-4.027],[1.926,-3.928],[2.22,-3.654],[2.252,-3.512],[2.22,-2.916],[2.308,-2.781],[2.332,-2.653],[2.452,-2.562],[2.545,-2.383],[2.489,-2.027],[2.432,-2.018],[2.325,-1.848],[2.335,-1.807],[2.237,-1.784],[2.254,-1.735],[2.535,-1.751],[2.506,-1.843],[2.547,-1.896],[2.555,-1.998],[2.653,-2.04],[2.625,-2.089],[2.763,-2.036],[2.637,-2.242],[2.73,-2.191],[2.801,-2.209],[2.767,-2.405],[2.861,-2.298],[2.967,-2.274],[3.011,-2.388],[3.349,-2.532],[3.412,-2.443],[3.419,-2.317],[3.333,-2.248],[3.339,-2.18],[3.447,-2.134],[3.494,-2.232],[3.642,-2.248],[3.6,-2.213],[3.626,-2.121],[3.589,-2.134],[3.589,-2.196],[3.558,-2.182],[3.527,-2.064],[3.469,-2.055],[3.454,-1.987],[3.342,-1.877],[3.418,-1.852],[3.322,-1.763],[3.384,-1.686],[3.369,-1.617],[3.323,-1.588],[3.279,-1.624],[3.298,-1.66],[3.251,-1.659],[3.181,-1.564],[3.171,-1.617],[3.137,-1.393],[3.068,-1.431],[2.9,-1.079],[2.698,-1.044],[2.622,-1.074],[2.613,-0.982],[2.557,-1.042],[2.389,-1.025],[2.389,-0.98],[2.271,-1.054],[2.335,-1.003],[2.288,-0.985],[2.384,-0.958],[2.248,-0.981],[2.357,-0.94],[2.304,-0.877],[2.221,-0.932],[2.209,-0.987],[2.198,-0.937],[2.241,-0.896],[1.954,-0.883],[1.794,-0.834],[1.826,-0.81],[1.586,-0.836],[1.616,-0.782],[1.373,-0.828],[0.774,-0.704],[0.762,-0.665],[0.648,-0.674],[0.601,-0.625],[0.631,-0.496],[0.564,-0.448],[0.329,-0.518],[0.279,-0.434],[0.394,-0.304],[0.364,-0.242],[0.308,-0.301],[0.311,-0.175],[0.414,-0.167],[0.443,-0.117],[0.377,-0.061],[0.289,-0.056],[0.27,-0.098],[0.152,-0.018],[0.287,0.289],[0.256,0.361],[-0.019,0.611],[0.022,0.681],[0.006,0.717],[0.073,0.79],[0.047,0.855],[0.106,0.949],[-0.38,0.926],[-0.587,0.985],[-0.772,1.241],[-0.861,1.584],[-0.978,1.777],[-1.059,1.732],[-1.161,1.81],[-1.265,1.751],[-1.344,1.81],[-1.366,1.775],[-1.562,1.767],[-1.667,1.844],[-1.737,1.834],[-1.757,1.886],[-1.807,1.863],[-2.016,1.951],[-2.07,2.022],[-2.171,1.966],[-2.224,1.993],[-2.219,1.872],[-2.118,1.787],[-2.116,1.712],[-2.185,1.607],[-2.218,1.595],[-2.202,1.637],[-2.239,1.604],[-2.273,1.657],[-2.259,1.582],[-2.313,1.541],[-2.339,1.574],[-2.375,1.471],[-2.428,1.43],[-2.449,1.49],[-2.425,1.546],[-2.285,1.678],[-2.26,1.761],[-2.292,1.836],[-2.374,1.854],[-2.419,1.765],[-2.393,1.716],[-2.422,1.699],[-2.414,1.645],[-2.472,1.625],[-2.478,1.522],[-2.519,1.508],[-2.551,1.37],[-2.686,1.314],[-2.564,1.581],[-2.823,1.484],[-2.894,1.388],[-2.864,1.324],[-2.958,1.116],[-3.09,1.002],[-3.239,1.027],[-3.342,0.993],[-3.509,1.113],[-3.917,1.089],[-4.0,1.254],[-4.255,1.081],[-4.482,1.044],[-4.48,1.105],[-4.572,1.115],[-4.577,1.197],[-4.76,1.251],[-4.798,1.356],[-4.962,1.352],[-4.963,1.244],[-5.026,1.221],[-5.113,1.44],[-5.256,1.46],[-5.201,1.503],[-5.212,1.54],[-5.42,1.628],[-5.663,1.637],[-5.807,1.534],[-5.989,1.512],[-6.031,1.625],[-6.295,1.652],[-6.337,1.708],[-6.527,1.714],[-6.611,1.778],[-6.602,1.877],[-6.705,2.331],[-6.923,2.372],[-6.922,5.826],[-5.901,6.722],[-3.986,8.668],[-2.936,9.627],[-2.851,9.869],[-2.646,9.858],[-2.287,9.553],[-2.029,9.437],[-1.762,9.076],[-1.784,9.003],[-1.738,9.05],[-1.604,8.993],[-1.611,8.947],[-1.35,8.932],[-0.871,8.729],[-0.644,8.698],[-0.394,8.563],[-0.268,8.409],[-0.088,8.346],[-0.083,8.303],[-0.146,8.273],[-0.271,8.101],[-0.289,7.991],[-0.132,8.244],[-0.001,8.297],[0.273,8.242],[0.736,8.319],[0.866,8.259],[0.861,8.215],[0.954,8.224],[0.981,8.131],[0.966,8.229],[0.888,8.283],[1.241,8.197],[1.388,8.234],[1.435,8.172],[1.4,8.106],[1.443,8.153],[1.68,8.164],[1.828,8.064],[1.814,8.165],[1.878,8.103],[1.85,8.037],[1.861,7.931],[1.913,7.845],[1.745,7.362],[1.75,7.209],[1.786,7.119],[1.88,7.068],[1.957,6.799],[1.898,6.604],[1.968,6.274],[1.875,6.212],[1.84,5.961],[1.977,5.88],[2.1,5.682],[2.347,5.456],[2.351,5.352],[2.402,5.302],[2.167,5.254],[2.125,5.187],[2.211,5.239],[2.386,5.233],[2.487,5.101],[2.736,5.008],[2.796,4.895],[2.854,4.88],[3.001,4.713],[3.059,4.524],[3.112,4.464],[3.121,4.364],[2.965,4.278],[2.718,4.028],[2.774,4.05],[2.766,4.008],[2.822,4.116],[2.936,4.156],[3.142,4.339],[3.412,4.255]],[[1.447,-1.031],[1.494,-1.008],[1.472,-1.08],[1.529,-1.156],[1.642,-1.15],[1.678,-1.214],[1.699,-1.151],[1.646,-1.098],[1.842,-1.008],[1.932,-1.162],[2.013,-1.035],[2.095,-1.022],[2.122,-1.051],[2.109,-1.108],[2.169,-1.12],[2.15,-1.215],[2.182,-1.268],[2.262,-1.095],[2.281,-1.139],[2.246,-1.202],[2.328,-1.2],[2.237,-1.394],[2.139,-1.479],[2.05,-1.44],[2.116,-1.423],[2.209,-1.299],[2.001,-1.441],[1.576,-1.207],[1.219,-1.126],[1.237,-1.035],[1.302,-1.081],[1.326,-1.039],[1.375,-1.07]]];
   const K=Math.cos(47*Math.PI/180),proj=(lat,lon)=>[(lon+85)*K,lat-47];
@@ -1338,7 +1340,7 @@ if(host){(async()=>{
   const sun=new T.DirectionalLight('#fffaf2',1.9);sun.position.set(-7,11,12);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.radius=12;sun.shadow.blurSamples=16;
   Object.assign(sun.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:60});scene.add(sun);
   // the map lies in its own XY plane (z = up from the land), the whole board tilts back toward the viewer
-  const YAW=.32,board=new T.Group;board.rotation.set(-.85,0,YAW);const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
+  const YAW=.32,board=new T.Group;board.rotation.set(-.5,0,YAW)/* -.5: closer to top-down */;const intro=new T.Group;intro.add(board);scene.add(intro);/* intro: parent for the scroll-in entrance */
   // soften the jagged coastline: three passes of corner cutting round off the zigzags without moving the overall outline
   const soften=pts=>{for(let n=0;n<4;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
   const shapes=RINGS.map(ring=>new T.Shape(soften(ring).map(([x,y])=>new T.Vector2(x,y))));
@@ -1379,11 +1381,53 @@ if(host){(async()=>{
     board.add(new T.Mesh(g,new T.MeshBasicMaterial({color:'#a8987a',transparent:true,opacity:.35,side:T.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2})))}
   const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.ShadowMaterial({opacity:.1}));floor.position.z=-.28;floor.receiveShadow=true;board.add(floor);
   const TOP=DEPTH+.14,at=i=>{const [x,y]=proj(...LL[i]);return new T.Vector3(x-c.x,y-c.y,TOP)};
-  // small dot per office; the active office's dot pulses two glowing rings
-  const dotGeo=new T.CylinderGeometry(.06,.06,.04,24),dotMat=new T.MeshStandardMaterial({color:'#b8924c',roughness:.5,metalness:.75,emissive:'#5e4512',emissiveIntensity:.3,normalMap:brush.n,normalScale:new T.Vector2(.5,.5)});/* gold, same as the plinth rim */
+  // a little building per office (house or small tower, charcoal walls under the plinth's gold); the active office pulses two glowing rings
+  const dotMat=new T.MeshStandardMaterial({color:'#b8924c',roughness:.5,metalness:.75,emissive:'#5e4512',emissiveIntensity:.3,normalMap:brush.n,normalScale:new T.Vector2(.5,.5)});/* gold, same as the plinth rim */
+  const wallMat=new T.MeshPhysicalMaterial({color:'#3a3a3d',roughness:.45,clearcoat:.5,clearcoatRoughness:.3})/* charcoal like the plinth, so pins stand out on the cream land */;
+  const up=g=>g.rotateX(Math.PI/2),box=new T.BoxGeometry(1,1,1),roofGeo=up(new T.ConeGeometry(.032,.035,4).rotateY(Math.PI/4)),cyl=(a,b,h,n=20)=>up(new T.CylinderGeometry(a,b,h,n));
+  const part=(geo,mat,x,y,z,sx=1,sy=1,sz=1)=>{const m=new T.Mesh(geo,mat);m.position.set(x,y,z);m.scale.set(sx,sy,sz);m.castShadow=m.receiveShadow=true;return m};
+  // lit windows: warm panes on the charcoal facade (sides only, plain top/bottom), glowing through the emissive map
+  const facade=(cols,rows)=>{const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d'),w=64/cols,h=64/rows;x.fillStyle='#3a3a3d';x.fillRect(0,0,64,64);x.fillStyle='#ffd36b';
+    for(let i=0;i<cols;i++)for(let j=0;j<rows;j++)x.fillRect(i*w+w*.28,j*h+h*.22,w*.44,h*.5);
+    const t=new T.CanvasTexture(cv);t.colorSpace=T.SRGBColorSpace;t.anisotropy=8;const m=wallMat.clone();m.color.set('#fff');m.map=m.emissiveMap=t;m.emissive.set('#ffb84a');m.emissiveIntensity=.7;return[m,m,m,m,wallMat,wallMat]};
+  const houseWin=facade(2,1),towerWin=facade(2,4);
+  const house=()=>[part(box,houseWin,0,0,.03,.045,.045,.06),part(roofGeo,dotMat,0,0,.0775)],tower=()=>[part(box,towerWin,0,0,.055,.035,.035,.11),part(box,dotMat,0,0,.115,.04,.04,.01)];
   const ringGeo=new T.RingGeometry(.07,.095,48),rings=[],dots=[];
-  LL.forEach((ll,i)=>{if(!ll)return;const d=new T.Mesh(dotGeo,dotMat);d.rotation.x=Math.PI/2;d.position.copy(at(i)).setZ(TOP+.02);board.add(d);dots.push(d);
+  const pin=(v,parts)=>{const gr=new T.Group;gr.add(...parts);gr.position.copy(v);board.add(gr);dots.push(gr)};
+  LL.forEach((ll,i)=>{if(!ll)return;pin(at(i),i%3===1?tower():house());
     for(let k=0;k<2;k++){const m=new T.Mesh(ringGeo,new T.MeshBasicMaterial({color:'#c99a3a',transparent:true,depthWrite:false}));m.position.copy(at(i)).setZ(TOP+.005);m.userData.ph=k/2;m.userData.i=i;board.add(m);rings.push(m)}});
+  // landmarks, so it reads like a fun map
+  const spot=(lat,lon)=>{const [x,y]=proj(lat,lon);return new T.Vector3(x-c.x,y-c.y,TOP)};
+  // landmarks sit back in faint stone, pale gold and soft tints so the gold-and-charcoal offices stay the stars
+  const stone=new T.MeshStandardMaterial({color:'#b3a996',roughness:.6}),paleGold=new T.MeshStandardMaterial({color:'#d2bd86',roughness:.45,metalness:.2}),leaf=new T.MeshStandardMaterial({color:'#b9c4a2',roughness:.7});
+  const water=new T.MeshStandardMaterial({color:'#8fbfd6',roughness:.2,side:T.DoubleSide}),mist=new T.MeshStandardMaterial({color:'#ffffff',roughness:1,transparent:true,opacity:.75});
+  // landmarks from the Blender file: Blender's material names map onto the page's own materials, so they match the map (and the theme)
+  const lm=(await lmP).scene,MAT={charcoal:wallMat,gold:dotMat,stone,paleGold,water,mist,leaf,
+    copper:new T.MeshStandardMaterial({color:'#a9c2b0',roughness:.5}),foam:new T.MeshStandardMaterial({color:'#dceef4',roughness:.3,side:T.DoubleSide}),
+    canoe:new T.MeshStandardMaterial({color:'#c98f72',roughness:.5}),glass:new T.MeshStandardMaterial({color:'#3a4148',roughness:.2,metalness:.3}),boat:new T.MeshStandardMaterial({color:'#6e93ae',roughness:.4})};
+  const model=(name,k)=>{const o=lm.getObjectByName(name),w=new T.Group;o.position.set(0,0,0);w.rotation.x=Math.PI/2;/* glTF is y-up, the board is z-up */w.scale.setScalar(k);w.add(o);
+    o.traverse(m=>{if(m.isMesh){m.material=MAT[m.material.name]||m.material;m.castShadow=m.receiveShadow=true}});return w};
+  pin(spot(43.74,-79.02),[model('lm_cn',.085)]);/* CN Tower, east of downtown so it doesn't cover HQ */
+  pin(spot(45.424,-75.701),[model('lm_parliament',.08)]);/* Parliament + Peace Tower, Ottawa */
+  pin(spot(43.1,-79.2),[model('lm_niagara',.09)]);/* Niagara Falls + Maid of the Mist, nudged inland off the shore */
+  pin(spot(45.58,-78.40),[model('lm_canoe',.09)]);/* Algonquin: canoe on a lake */
+  // Blue Mountain: the Niagara Escarpment as a ridge, steep at the back, a gentle front slope (facing the camera) with ski runs and pines between them, snow on the crest
+  {const H=(x,y)=>{const d=y-.03-.01*Math.sin(x*20);return Math.exp(-((d/(d>0?.02:.065))**2))*Math.max(0,1-(x/.16)**4)*(.75+.25*Math.exp(-(((x+.03)/.06)**2)))},
+      run=(x,y,h)=>y<.03&&h>.2&&h<.88&&Math.sin(x*40+1)>.88,Z=h=>.15*h-.012;/* flat skirt sinks under the land so only the ridge shows */
+    const g=new T.PlaneGeometry(.34,.2,68,40),P=g.attributes.position,col=[],cc=new T.Color,low=new T.Color('#a3ae8a'),rock=new T.Color('#9c9682'),wh=new T.Color('#ffffff');
+    for(let i=0;i<P.count;i++){const x=P.getX(i),y=P.getY(i),h=H(x,y);P.setZ(i,Z(h));cc.copy(low).lerp(rock,Math.min(1,h*1.6)).lerp(wh,run(x,y,h)?1:Math.min(1,Math.max(0,(h-.78)/.12)));col.push(cc.r,cc.g,cc.b)}
+    g.setAttribute('color',new T.Float32BufferAttribute(col,3));g.computeVertexNormals();
+    const cone=up(new T.ConeGeometry(.009,.026,6)).translate(0,0,.013),ts=[];
+    for(let x=-.14;x<=.14;x+=.014)for(let y=-.09;y<.03;y+=.013){const jx=x+.004*Math.sin(y*311),jy=y+.004*Math.cos(x*277),h=H(jx,jy);if(h>.12&&h<.75&&!run(jx,jy,h)&&!run(jx-.008,jy,h)&&!run(jx+.008,jy,h))ts.push(cone.clone().translate(jx,jy,Z(h)))}
+    pin(spot(44.50,-80.31),[part(g,new T.MeshStandardMaterial({vertexColors:true,roughness:.8,flatShading:true}),0,0,0),part(mergeGeometries(ts),new T.MeshStandardMaterial({color:'#8c9a74',roughness:.8}),0,0,0)])}
+  // forest: seeded clumps of pines, thick in the north-west and thinning toward the south, kept clear of the pins
+  let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+  const inLand=(x,y)=>RINGS.some(r=>{let o=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const [xi,yi]=r[i],[xj,yj]=r[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)o=!o}return o});
+  const clear=dots.map(d=>d.position.clone()),trunkG=cyl(.004,.004,.02,6).translate(0,0,.01),coneG=up(new T.ConeGeometry(.022,.06,8)).translate(0,0,.05);
+  for(let n=0,tries=0;n<55&&tries<3000;tries++){const lat=44.6+rnd()*5.5,lon=-84.5+rnd()*8.5,[x,y]=proj(lat,lon),v=new T.Vector3(x-c.x,y-c.y,TOP);
+    if(rnd()>Math.min(1,(lat-44.6)/3)*(lon<-79?1:.45)||!inLand(x,y)||clear.some(p=>p.distanceTo(v)<.35))continue;n++;clear.push(v);
+    const tr=[],lf=[];for(let k=2+rnd()*5|0;k--;){const a=rnd()*6.28,d=rnd()*.07,sc=.7+rnd()*.6,m=new T.Matrix4().makeTranslation(Math.cos(a)*d,Math.sin(a)*d,0).scale(new T.Vector3(sc,sc,sc));tr.push(trunkG.clone().applyMatrix4(m));lf.push(coneG.clone().applyMatrix4(m))}
+    pin(v,[part(mergeGeometries(tr),stone,0,0,0),part(mergeGeometries(lf),leaf,0,0,0)])}
   // dark mode: a warm charcoal board
   const setTheme=()=>{const dk=document.documentElement.dataset.theme==='dark';land.color.set(dk?'#c4b593':'#d4c6aa');floor.material.opacity=dk?.24:.07};setTheme();
   new MutationObserver(()=>{setTheme();go()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
@@ -1403,22 +1447,31 @@ if(host){(async()=>{
   // zoomed on the offices (Sudbury down to London); on desktop the canvas bleeds to the window's left edge like the old picture
   const FULL=new URLSearchParams(location.search).get('map')==='full';/* ?map=full: preview with the whole province in frame */
   const [fx,fy]=proj(45.5,-80.4),FOCUS=FULL?new T.Vector3(0,0,0):new T.Vector3(fx-c.x,fy-c.y,0);
+  const ZOOM=.7,cf=FOCUS.clone(),gf=FOCUS.clone();let zt=0,cv=0,gv=0,base=0,desk0=false,bleed0=0,zoomed=false;/* overview until an office is picked */
   const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:Math.max(0,document.documentElement.clientWidth-b.right),w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
     const et=Math.round(b.height*.4),eb=Math.round(b.height*.5);/* extra canvas above/below, same framing, so the map isn't hard-cut once the fade is gone */
     r.setSize(w,h+et+eb,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top-et+'px',width:w+'px',height:h+et+eb+'px'});cam.aspect=w/h;cam.setViewOffset(w,h,0,-et,w,h+et+eb);
-    const t=Math.tan(cam.fov*Math.PI/360),view=FULL?(desk?18:18):desk?8.2:6.8,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
-    const f=FOCUS.clone().applyEuler(board.rotation),dx=desk&&bleed?view*(FULL?.06:.1):0;
-    refD=dist;cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix();go()};
+    const view=FULL?(desk?18:18):desk?7.4:6.2;desk0=desk;bleed0=bleed;gv=view*(zoomed?ZOOM:1);if(!base)cv=gv;base=view;aim();go()};
+  // camera: frames focus cf at view width cv; tick() glides both toward gf/gv so picking an office zooms in on it
+  const distFor=v=>{const t=Math.tan(cam.fov*Math.PI/360);return Math.max(v/2/(t*cam.aspect),v*.42/t)};
+  const aim=()=>{const f=cf.clone().applyEuler(board.rotation),dx=desk0&&bleed0?cv*(FULL?.06:.1):0,dist=distFor(cv);
+    cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix()};
   // state: which office the shield is on, and whether a pill is being hovered (grow + spin)
-  let target=0,spinTo=0,spin=0,refD=1;const wp=new T.Vector3;
+  let target=0,spinTo=0,spin=0;const wp=new T.Vector3;
   const place=i=>{if(!LL[i]){pivot.visible=false;return}pivot.visible=true;return at(i)};
   let goal=place(0);pivot.position.copy(goal);
   document.addEventListener('v4-loc',e=>{const i=e.detail,hover=document.querySelector('.v6-loc .ml-loc-pill:hover,.v6-loc .ml-loc-pill:focus-visible');
-    const g=place(i);if(g&&i!==target){goal=g;pivot.position.copy(g);born=clock.elapsedTime}target=i;go()});/* shield appears at the new office instead of gliding there */
+    const g=place(i);if(g&&i!==target){goal=g;pivot.position.copy(g);born=clock.elapsedTime}target=i;
+    if(g&&!FULL&&base){/* the page's own show(0) fires before this module loads, so any event here is the visitor picking an office */clearTimeout(zt);zt=setTimeout(()=>{zoomed=true;gf.copy(g).setZ(0);gv=base*ZOOM;if(reduce){cf.copy(gf);cv=gv;aim()}go()},250)/* short hover delay: sweeping across pills doesn't yank the camera */}go()});/* shield appears at the new office instead of gliding there */
+  // moving off the pills glides back to the overview; scrolling the map away snaps back so it re-enters wide
+  const reset=snap=>{clearTimeout(zt);zoomed=false;gf.copy(FOCUS);gv=base;if(snap||reduce){cf.copy(gf);cv=gv;if(base)aim()}go()};
+  const pillBox=document.querySelector('.v6-loc .ml-loc-pills');
+  if(pillBox){pillBox.addEventListener('pointerleave',()=>reset());pillBox.addEventListener('focusout',e=>{if(!pillBox.contains(e.relatedTarget))reset()})}
   addEventListener('resize',fit);
   function go(){if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}}
   function tick(){raf=0;const dt=Math.min(clock.getDelta(),.05),e=1-Math.pow(.001,dt);
     if(goal)pivot.position.lerp(goal,reduce?1:e*1.6>1?1:e*1.6);
+    if(!reduce&&base){const z=Math.min(1,e*.4);/* slow ease, ~1.5s */cf.lerp(gf,z);cv+=(gv-cv)*z;aim()}
     spin+=(spinTo-spin)*(reduce?1:Math.min(1,dt*3.2));
     const tt=clock.elapsedTime,bp=reduce?1:Math.min(1,(tt-born)/.9),be=1-Math.pow(1-bp,3);/* spin-in: grows from nothing while turning 1.5 times */
     stand.rotation.y=spin+(reduce?0:.25*Math.sin(tt*.9))-(1-be)*3*Math.PI;
@@ -1426,17 +1479,17 @@ if(host){(async()=>{
     // entrance (once, when the map scrolls into view): the board rises and tilts into place, pins pop in one by one, then the shield drops in
     if(seen&&t0<0)t0=tt;const ip=reduce?1:t0<0?0:Math.min(1,(tt-t0)/2),ez=1-Math.pow(1-Math.min(1,ip/.65),3),pop=x=>{x=Math.min(1,Math.max(0,x))-1;return 1+2.7*x*x*x+1.7*x*x};
     intro.visible=ip>0;intro.position.set(0,-1.6*(1-ez),-2.4*(1-ez));intro.rotation.x=-.45*(1-ez);intro.scale.setScalar(.9+.1*ez);
-    dots.forEach((d,i)=>d.scale.setScalar(Math.max(1e-3,pop((ip-.4-i*.035)/.2))));
+    dots.forEach((d,i)=>{const u=d.userData,k=i===target&&i<LL.length?2:1;u.k=reduce||u.k==null?k:u.k+(k-u.k)*Math.min(1,dt*8);/* the selected office's building grows taller (not wider, so neighbours don't overlap) */const sc=2.2*Math.max(1e-3,pop((ip-.4-i*.3/dots.length)/.2));d.scale.set(sc,sc,sc*u.k)});/* 2.2: pins are modelled small; stagger fits all pins before ip=1 */
     const sk=Math.min(1,Math.max(0,(ip-.72)/.28)),sd=1-Math.pow(1-sk,3);
-    pivot.getWorldPosition(wp);pivot.scale.setScalar(Math.max(1e-3,sd*(bp<1?Math.max(.001,be+.12*Math.sin(bp*Math.PI)):1))*wp.distanceTo(cam.position)/refD);
-    // the shield hovers above its dot instead of sitting in it
-    stand.position.z=.28+(reduce?0:.06*Math.sin(tt*1.6))+1.2*(1-sd);
+    pivot.getWorldPosition(wp);pivot.scale.setScalar(Math.max(1e-3,sd*(bp<1?Math.max(.001,be+.12*Math.sin(bp*Math.PI)):1))*wp.distanceTo(cam.position)/distFor(cv));/* grows with the zoom like the map */
+    // the shield hovers above its building instead of sitting in it
+    stand.position.z=.75+(reduce?0:.06*Math.sin(tt*1.6))+1.2*(1-sd);
     rings.forEach(m=>{m.visible=m.userData.i===target&&ip>.9;const p=reduce?.35:(tt*.55+m.userData.ph)%1;m.scale.setScalar(1+p*2.4);m.material.opacity=.6*(1-p)});
     
     r.render(scene,cam);
     const moving=!reduce||Math.abs(spinTo-spin)>.001||(goal&&pivot.position.distanceTo(goal)>.001);
     if(vis&&moving)raf=requestAnimationFrame(tick)}
-  new IntersectionObserver(([en])=>{vis=en.isIntersecting;go()}).observe(host);
+  new IntersectionObserver(([en])=>{vis=en.isIntersecting;if(!vis)reset(true);go()}).observe(host);
   let seen=reduce,t0=-1;new IntersectionObserver(([en])=>{if(!seen&&en.intersectionRatio>=.3){seen=true;go()}},{threshold:.3}).observe(host);
   new ResizeObserver(fit).observe(host);fit();
   // ?export in the URL downloads the scene as ontario-map.glb (for the three.js editor / Blender)
@@ -1444,8 +1497,8 @@ if(host){(async()=>{
     new GLTFExporter().parse(scene,glb=>{const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([glb],{type:'model/gltf-binary'}));l.download='ontario-map.glb';l.click()},e=>console.error('export failed',e),{binary:true})}
 })()}
 </script>
-<script>/* Protect heading: --p goes 0 -> 1 as its section scrolls up into view */(function(){var pin=document.querySelector('.v4-pin');if(!pin)return;var track=pin.parentElement,raf=0;var glow=document.querySelector('.v4-glow'),row=document.querySelector('.v6-prod .ml-protect-row');
-function f(){raf=0;var r=track.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/(innerHeight*.75)));pin.style.setProperty('--p',p.toFixed(3));if(glow&&row){var c=row.getBoundingClientRect(),g=1-Math.min(1,Math.max(0,((c.top+c.bottom)/2-innerHeight/2)/(innerHeight*.9)));glow.style.setProperty('--g',(g*g).toFixed(3))}}addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);f()})()</script>
+<script>/* Protect heading: --p goes 0 -> 1 as it slides out from under the hero card */(function(){var pin=document.querySelector('.v4-pin');if(!pin)return;var track=pin.parentElement,raf=0;var glow=document.querySelector('.v4-glow'),row=document.querySelector('.v6-prod .ml-protect-row');
+function f(){raf=0;var hb=document.querySelector('.v6-hero').getBoundingClientRect().bottom,h=pin.firstElementChild.getBoundingClientRect(),p=Math.min(1,Math.max(0,(h.bottom-hb)/(track.querySelector('.ml-pin-hold').offsetHeight*.6)));pin.style.setProperty('--p',p.toFixed(3));if(glow&&row){var c=row.getBoundingClientRect(),g=1-Math.min(1,Math.max(0,((c.top+c.bottom)/2-innerHeight/2)/(innerHeight*.9)));glow.style.setProperty('--g',(g*g).toFixed(3))}}addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);f()})()</script>
 <script>/* V4 reviews: 3D ring carousel that loops forever. Desktop: one full spin when it first scrolls into view, then settles centred. Mobile: starts centred. Drag/swipe to turn; pauses on hover and for 6s after a touch. */
 (function(){var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,desk=matchMedia('(min-width:1101px) and (min-aspect-ratio:1201/1000)');
 function build(){var stack=document.querySelector('.v6-rev .ml-v2-reviews-stack');if(!stack)return setTimeout(build,300);
