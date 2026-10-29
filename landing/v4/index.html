@@ -865,6 +865,7 @@ main>section.block{padding-top:240px}
 .v6-hero{position:relative;z-index:3} /* the pinned heading scrolls under the hero card */
 /* the heading starts tucked underneath the hero card and slides out from its bottom edge */
 .v6-prod>.ml-v3-protect{margin-top:-100px;padding-top:0!important}
+/* desktop: cap art height so the wide car and the tall buildings read the same size */ @media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-prod .ml-protect-art img{max-height:170px}}
 /* desktop: title holds a little longer before the cards */ .v6-prod .v4-pin-track .ml-pin-hold{height:35vh!important}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v6-prod>.ml-v3-protect{margin-top:-110px}.v6-prod .v4-pin-track .ml-pin-hold{height:22vh!important}}
 /* legacy V1 glow: a big yellow glow pinned mid-screen travels with you from the heading down to the cards, where it stops */
