@@ -661,7 +661,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 html[data-theme=dark] .v6-loc .ml-v2-locations{--glow-a:.16}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-v2-locations{--glow-at:ellipse 70% 30% at 50% 78%}}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261029b">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261029d">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -1239,6 +1239,7 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
     el.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
       el.style.transition='transform .15s ease-out';el.style.transform='perspective(900px) rotateX('+(-y*12).toFixed(2)+'deg) rotateY('+(x*12).toFixed(2)+'deg) translateY(-8px)'});
     el.addEventListener('pointerleave',()=>{el.style.transition='transform .6s cubic-bezier(.22,1,.36,1)';el.style.transform=base})})})();
+
 // quote form: the outside glow glides after the cursor (eased each frame), pushed out toward the edges
 (()=>{
   const f=document.querySelector('.form');if(!f||matchMedia('(hover:none),(prefers-reduced-motion: reduce)').matches)return;
@@ -1504,5 +1505,6 @@ function spinIn(stack){
     if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*70)})/* scroll in from above */}
     clearInterval(iv);if(on)iv=setInterval(step,3500)},{threshold:.35}).observe(stack)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
+<script src="/static/js/icon-switch.js?v=20261029j" defer></script>
 </body>
 </html>

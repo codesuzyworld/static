@@ -336,6 +336,8 @@
     setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light')
     watch(document)
     megas(); mobile(); locations(); tilt(); form(); floats(); depth(); navScrolled(); inlineIcons(); pinFade()
+    // demo: icon-style switcher on the product cards
+    if (document.querySelector('.ml-v3-protect .ml-protect-art')) { var sw = document.createElement('script'); sw.src = '/static/js/icon-switch.js?v=20261029j'; document.body.appendChild(sw) }
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 })()
