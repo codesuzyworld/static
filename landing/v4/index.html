@@ -141,6 +141,7 @@ section{scroll-margin-top:100px}
 
 /* ---------- news ---------- */
 .news{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.news-cell,.news-tilt{height:100%}.news-cell .post{height:100%}
 .post{display:flex;flex-direction:column;text-decoration:none;border-radius:var(--r-lg);overflow:hidden;background:var(--paper);border:1px solid rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s}
 .post:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(15,15,15,.12)}
 .post img{aspect-ratio:4/3;object-fit:cover;width:100%}
@@ -309,7 +310,7 @@ body{background:var(--beige);color:var(--midnight)}
 .bento .tile:hover{box-shadow:0 18px 40px rgba(42,43,47,.1);border-color:#c9bea6}
 .tile h3{font-weight:300;font-size:34px;text-transform:none;letter-spacing:-.01em}
 /* tall Auto card: car sits in the middle of the space under the copy, not dropped to the bottom */
-@media (min-width:1101px){.bento .t-auto img{left:24px;width:calc(100% - 48px);bottom:auto;top:calc(50% + 48px);translate:0 -50%}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.bento .t-auto img{left:24px;width:calc(100% - 48px);bottom:auto;top:calc(50% + 48px);translate:0 -50%}}
 .tile p{opacity:1;color:var(--muted)}
 .tile .arrow{border-color:var(--stroke)}
 .tile:hover .arrow{background:var(--midnight);color:var(--beige);border-color:var(--midnight)}
@@ -470,7 +471,7 @@ main>section.block{padding-top:180px}
 
 /* footer: V2 format in V5 colours */
 .v5f{position:relative;margin-top:180px;border-radius:40px 40px 0 0;color:#fff;overflow:hidden;display:flex;flex-direction:column;min-height:0;
-  background:radial-gradient(ellipse 48% 70% at 50% 108%,rgba(246,212,56,.3),rgba(246,212,56,0) 72%),#2a2b2f}
+  background:radial-gradient(ellipse 48% 70% at 50% 108%,rgba(246,212,56,.3),rgba(246,212,56,0) 72%),#18181a}
 .v5f-cols{display:flex;justify-content:space-between;gap:clamp(40px,6vw,120px);padding:96px clamp(40px,6vw,110px) 0}
 .v5f-col{display:flex;flex-direction:column;gap:28px}
 .v5f-contact{max-width:420px}
@@ -495,7 +496,7 @@ main>section.block{padding-top:180px}
 @media (max-width:900px){.v5f-cols{flex-direction:column;gap:40px;padding:56px 24px 0}.v5f{min-height:0}.v5f-3d{min-height:260px}}
 
 /* ---------- tablet ---------- */
-@media (max-width:1100px){
+@media (max-width:1100px), (max-aspect-ratio:6/5){
   .nav-links{display:none}
   .nav-links.open{display:flex;flex-direction:column;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--glow),var(--navy);border:1px solid var(--line);border-radius:26px;padding:12px;box-shadow:0 20px 40px rgba(15,15,15,.3)}
   .nav-links.open a{font-size:20px;padding:12px 16px}
@@ -577,7 +578,7 @@ main>section.block{padding-top:180px}
 .theme-toggle{flex:none;width:60px;height:60px;border-radius:999px;display:grid;place-items:center;padding:0;border:1px solid rgba(15,15,15,.12);background:#fff;color:#0f0f0f;cursor:pointer;transition:background-color .2s,color .2s}
 .theme-toggle .material-symbols-rounded{font-size:22px}
 /* make room for the toggle so link labels don't wrap */
-@media (min-width:1101px){.nav{gap:24px}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.nav{gap:24px}}
 
 /* ---------- dark mode ---------- */
 html[data-theme=dark]{--midnight:#f3f1ea;--cream:#1c1c1e;--stroke:rgba(255,255,255,.12);--muted:#b9b9bd;--bronze:#e0b43a;--yellow-10:rgba(246,212,56,.12);--line:rgba(255,255,255,.12);color-scheme:dark;background:#101011}
@@ -623,23 +624,23 @@ html[data-theme=dark] .field input,html[data-theme=dark] .field select,html[data
 html[data-theme=dark] .v5f{background:radial-gradient(ellipse 48% 70% at 50% 108%,rgba(246,212,56,.16),rgba(246,212,56,0) 72%),#161617}
 /* mobile: smaller bar toggle, light menu panel in light mode, theme row in menu */
 .nav-theme-li{display:none}
-@media (max-width:1100px){.nav-links.open .nav-theme-li{display:block}.nav-theme-row{display:flex;align-items:center;gap:10px;width:100%;margin-top:4px;padding:12px 16px;border:0;border-top:1px solid var(--stroke);background:none;color:inherit;font:400 20px var(--sans);text-align:left;cursor:pointer}.nav-theme-row .material-symbols-rounded{font-size:22px}html:not([data-theme=dark]) .nav-links.open{background:#fefaf0;border-color:var(--stroke);box-shadow:0 20px 40px rgba(42,43,47,.15)}html[data-theme=dark] .nav-theme-row{border-top-color:rgba(255,255,255,.1)}html[data-theme=dark] .nav-links.open{background:#141416}}
-@media (max-width:1100px){.hero-copy{text-align:center}.hero-copy .seg{margin-inline:auto}.hero-ctas{justify-content:center}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.nav-links.open .nav-theme-li{display:block}.nav-theme-row{display:flex;align-items:center;gap:10px;width:100%;margin-top:4px;padding:12px 16px;border:0;border-top:1px solid var(--stroke);background:none;color:inherit;font:400 20px var(--sans);text-align:left;cursor:pointer}.nav-theme-row .material-symbols-rounded{font-size:22px}html:not([data-theme=dark]) .nav-links.open{background:#fefaf0;border-color:var(--stroke);box-shadow:0 20px 40px rgba(42,43,47,.15)}html[data-theme=dark] .nav-theme-row{border-top-color:rgba(255,255,255,.1)}html[data-theme=dark] .nav-links.open{background:#141416}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.hero-copy{text-align:center}.hero-copy .seg{margin-inline:auto}.hero-ctas{justify-content:center}}
 @media (max-width:720px){.theme-toggle{width:44px;height:44px}}
 .v5f-socials img[src$="social-messenger.svg"]{filter:invert(1)}
-@media (max-width:1100px){.hero-ctas{max-width:290px;gap:14px}.hero-ctas{margin-inline:auto}.hero-ctas .btn{min-height:52px;padding:0 18px}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.hero-ctas{max-width:290px;gap:14px}.hero-ctas{margin-inline:auto}.hero-ctas .btn{min-height:52px;padding:0 18px}}
 /* mobile: All products below the tiles, centered section titles, compact reviews */
-@media (max-width:1100px){.block .head .btn-line[href="/static/personal"]{display:none}.products-all{display:flex!important;width:100%;margin-top:20px;justify-content:center}.head:has(#reviews-title){justify-content:center;text-align:center}#reviews-title{margin-inline:auto}.review{padding:20px 22px;gap:12px}.review blockquote{font-size:16px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.review-list{gap:14px}.reviews{gap:14px}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.block .head .btn-line[href="/static/personal"]{display:none}.products-all{display:flex!important;width:100%;margin-top:20px;justify-content:center}.head:has(#reviews-title){justify-content:center;text-align:center}#reviews-title{margin-inline:auto}.review{padding:20px 22px;gap:12px}.review blockquote{font-size:16px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.review-list{gap:14px}.reviews{gap:14px}}
 .products-all{display:none}
 /* mobile stats: 2 per row, compact */
-@media (max-width:1100px){.stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}.stats .stat{padding:20px 0!important;border-left:0!important}.stats .stat strong{font-size:38px!important;margin-bottom:6px}.stats .stat span{font-size:12.5px;line-height:1.5}}
-.locdd{display:none}@media (max-width:1100px){.loc-pills-mobile-hide{display:none!important}.locdd{--dd-bg:#fff;--dd-stroke:#d8d8d4;--dd-fg:#0f0f0f;--dd-muted:#4a4a4a;--dd-sel:rgba(246,212,56,.22);--dd-hi:rgba(15,15,15,.05);display:block;position:relative;width:100%;max-width:420px;margin:0 auto;text-align:left;z-index:20;font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}html[data-theme=dark] .locdd{--dd-bg:#1f1f1f;--dd-stroke:#3a3a3a;--dd-fg:#fff;--dd-muted:silver;--dd-sel:rgba(246,212,56,.16);--dd-hi:rgba(255,255,255,.06)}.locdd-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 14px;border:1px solid var(--dd-stroke);border-radius:10px;background:var(--dd-bg);color:var(--dd-fg);font:500 15px inherit;font-family:inherit;cursor:pointer;text-align:left}.locdd-btn:focus-visible,.locdd-panel:focus-visible{outline:2px solid #f6d438;outline-offset:2px}.locdd-chev{display:inline-flex;color:var(--dd-muted);transition:transform .15s}.locdd.is-open .locdd-chev{transform:rotate(180deg)}.locdd-panel{position:absolute;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;max-height:320px;overflow-y:auto;border:1px solid var(--dd-stroke);border-radius:16px;background:var(--dd-bg);box-shadow:0 16px 40px rgba(0,0,0,.18)}.locdd-panel[hidden]{display:none}.locdd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px;border-radius:10px;color:var(--dd-fg);font-size:14px;font-weight:600;cursor:pointer}.locdd-item.is-hi{background:var(--dd-hi)}.locdd-item[aria-selected=true]{background:var(--dd-sel)}.locdd-check{display:inline-flex;color:#b58a1f;visibility:hidden}html[data-theme=dark] .locdd-check{color:#f6d438}.locdd-item[aria-selected=true] .locdd-check{visibility:visible}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 16px!important}.stats .stat{padding:20px 0!important;border-left:0!important}.stats .stat strong{font-size:38px!important;margin-bottom:6px}.stats .stat span{font-size:12.5px;line-height:1.5}}
+.locdd{display:none}@media (max-width:1100px), (max-aspect-ratio:6/5){.loc-pills-mobile-hide{display:none!important}.locdd{--dd-bg:#fff;--dd-stroke:#d8d8d4;--dd-fg:#0f0f0f;--dd-muted:#4a4a4a;--dd-sel:rgba(246,212,56,.22);--dd-hi:rgba(15,15,15,.05);display:block;position:relative;width:100%;max-width:420px;margin:0 auto;text-align:left;z-index:20;font-family:Montserrat,ui-sans-serif,system-ui,sans-serif}html[data-theme=dark] .locdd{--dd-bg:#1f1f1f;--dd-stroke:#3a3a3a;--dd-fg:#fff;--dd-muted:silver;--dd-sel:rgba(246,212,56,.16);--dd-hi:rgba(255,255,255,.06)}.locdd-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 14px;border:1px solid var(--dd-stroke);border-radius:10px;background:var(--dd-bg);color:var(--dd-fg);font:500 15px inherit;font-family:inherit;cursor:pointer;text-align:left}.locdd-btn:focus-visible,.locdd-panel:focus-visible{outline:2px solid #f6d438;outline-offset:2px}.locdd-chev{display:inline-flex;color:var(--dd-muted);transition:transform .15s}.locdd.is-open .locdd-chev{transform:rotate(180deg)}.locdd-panel{position:absolute;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;max-height:320px;overflow-y:auto;border:1px solid var(--dd-stroke);border-radius:16px;background:var(--dd-bg);box-shadow:0 16px 40px rgba(0,0,0,.18)}.locdd-panel[hidden]{display:none}.locdd-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px;border-radius:10px;color:var(--dd-fg);font-size:14px;font-weight:600;cursor:pointer}.locdd-item.is-hi{background:var(--dd-hi)}.locdd-item[aria-selected=true]{background:var(--dd-sel)}.locdd-check{display:inline-flex;color:#b58a1f;visibility:hidden}html[data-theme=dark] .locdd-check{color:#f6d438}.locdd-item[aria-selected=true] .locdd-check{visibility:visible}}
 
 /* mobile: fixed-size glows so they stay round on tall narrow screens */
-@media (max-width:1100px){.v5f{background:radial-gradient(ellipse 48% 70% at 50% 108%,rgba(246,212,56,.16),rgba(246,212,56,0) 72%),#161617}.talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.2),transparent 70%),var(--midnight)}html[data-theme=dark] .talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.14),transparent 70%),#1c1c1e}html[data-theme=dark] .careers{background:radial-gradient(circle 260px at 85% 100%,rgba(246,212,56,.1),transparent 70%),#1c1c1e}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v5f{background:radial-gradient(ellipse 48% 70% at 50% 108%,rgba(246,212,56,.16),rgba(246,212,56,0) 72%),#161617}.talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.2),transparent 70%),var(--midnight)}html[data-theme=dark] .talk{background:radial-gradient(circle 260px at 50% 100%,rgba(246,212,56,.14),transparent 70%),#1c1c1e}html[data-theme=dark] .careers{background:radial-gradient(circle 260px at 85% 100%,rgba(246,212,56,.1),transparent 70%),#1c1c1e}}
 
 /* phones: talk card sizes to its content */
-@media (max-width:1100px){.talk{min-height:0!important;padding:36px 24px!important;justify-content:flex-start}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.talk{min-height:0!important;padding:36px 24px!important;justify-content:flex-start}}
 html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#fff!important;background:#0f0f0f!important}
 /* toggle follows a dark nav even in light mode */html:not([data-theme=dark]) .nav.solid .theme-toggle{background:#1f1f22!important;color:#f3f1ea!important;border-color:rgba(255,255,255,.14)!important}
 
@@ -653,14 +654,14 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 .v4-ont{position:relative;aspect-ratio:1/1;width:100%;max-width:620px;justify-self:center}
 .v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none}
 .v6-loc .ml-loc-copy .ml-v2-loc-card{margin-top:28px}
-@media (max-width:1100px){.v4-ont{max-width:440px;margin-inline:auto}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v4-ont{max-width:440px;margin-inline:auto}}
 /* soft yellow glow behind the Ontario map (left on desktop, under the copy when stacked) */
 .v6-loc .ml-v2-locations{isolation:isolate;--glow-at:ellipse 42% 58% at 24% 56%;--glow:246,212,56;--glow-a:.34}
 .v6-loc .ml-v2-locations::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(var(--glow-at),rgba(var(--glow),var(--glow-a)) 0,rgba(var(--glow),calc(var(--glow-a) * .4)) 45%,rgba(var(--glow),0) 75%)}
 html[data-theme=dark] .v6-loc .ml-v2-locations{--glow-a:.16}
-@media (max-width:1100px){.v6-loc .ml-v2-locations{--glow-at:ellipse 70% 30% at 50% 78%}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-v2-locations{--glow-at:ellipse 70% 30% at 50% 78%}}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261028b">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261029b">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -700,7 +701,7 @@ html:not([data-theme=dark]) .score{background:radial-gradient(70% 38% at 50% 0%,
 /* About: photo and stats share one card */
 .about-v5 .about-photo img.ph{border-radius:var(--r-xl) var(--r-xl) 0 0}
 .stats{margin-top:0;padding:4px 36px 36px;background:var(--cream);border:1px solid var(--stroke);border-top:0;border-radius:0 0 var(--r-xl) var(--r-xl)}
-@media (max-width:1100px){.stats{margin-top:0!important;padding:4px 20px 16px}.about-v5 .about-photo img.ph{border-radius:var(--r-lg) var(--r-lg) 0 0}.stats{border-radius:0 0 var(--r-lg) var(--r-lg)}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.stats{margin-top:0!important;padding:4px 20px 16px}.about-v5 .about-photo img.ph{border-radius:var(--r-lg) var(--r-lg) 0 0}.stats{border-radius:0 0 var(--r-lg) var(--r-lg)}}
 /* soft yellow light behind the middle of each section */
 main>section.block{position:relative;isolation:isolate}
 main>section.block::before{content:"";position:absolute;z-index:-1;pointer-events:none;width:min(1100px,100vw);height:70%;left:50%;top:22%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(246,212,56,.34),rgba(248,226,128,.14) 50%,rgba(246,212,56,0));filter:blur(24px)}
@@ -746,11 +747,11 @@ html:not([data-theme=dark]) :is(.tile,.review,.post,.score,.stats,.v6-loc .ml-hq
 html[data-theme=dark] :is(.tile,.bento .tile,.review,.post,.score,.stats,.v6-loc .ml-hq){border-color:rgba(255,255,255,.18);box-shadow:0 0 0 1px rgba(255,255,255,.1),var(--gx) var(--gy) 30px 4px rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.3)}
 html[data-theme=dark] :is(.tile,.bento .tile,.review,.post,.score,.stats,.v6-loc .ml-hq):hover{box-shadow:0 0 0 1px rgba(255,255,255,.16),var(--gx) var(--gy) 36px 6px rgba(255,255,255,.13),0 18px 40px rgba(0,0,0,.4)}
 /* quote form: yellow glow outside the card; its brightest spot slides along the edge nearest the cursor */
-html .form{position:relative;transition:--fx .8s ease-out,--fy .8s ease-out}
+html .form{position:relative}
 /* quote form sits next to the dark card: rim + a tight glow only, so no white haze spills onto it */
 html:not([data-theme=dark]) .form{border-color:#fff;box-shadow:0 0 0 1.5px #fff,0 0 12px 1px rgba(255,255,255,.8),0 0 0 0 rgba(255,255,255,0),0 8px 24px rgba(15,15,15,.05)}
 html[data-theme=dark] .form{border-color:rgba(255,255,255,.18);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 0 30px 4px rgba(255,255,255,.09),0 8px 24px rgba(0,0,0,.3)}
-.form::before{content:"";position:absolute;z-index:-1;inset:-28px;border-radius:calc(var(--r-lg) + 28px);pointer-events:none;background:radial-gradient(320px circle at var(--fx) var(--fy),rgba(246,212,56,.75),rgba(246,212,56,.25) 45%,rgba(246,212,56,0) 75%);filter:blur(18px);opacity:0;transition:opacity 1.4s ease}
+.form::before{content:"";position:absolute;z-index:-1;inset:-28px;border-radius:calc(var(--r-lg) + 28px);pointer-events:none;background:radial-gradient(320px circle at var(--fx) var(--fy),rgba(246,212,56,.75),rgba(246,212,56,.25) 45%,rgba(246,212,56,0) 75%);filter:blur(18px);opacity:0;transition:opacity .35s ease-out}
 .form:hover::before{opacity:1}
 html[data-theme=dark] .form:hover::before{opacity:.7}
 /* while hovering the quote card, the white halo steps aside so the yellow edge glow reads */
@@ -768,7 +769,7 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 /* families: the people slot sits 2.75% left of centre (fits the brokers' pose); shift the family frames so they centre under the headline */
 .v6-hero .ml-v2-people.v6-alt{transform:translateX(4.6%) translateY(calc(var(--fam-base,0%) + var(--fam-lap,0%))) scale(1.22);transform-origin:50% 0}
 /* desktop hero: original V3 proportions (full-width art from the top), cut off at one screen height */
-@media (min-width:1101px){
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){
   .v6-hero .ml-hero-v2 .ml-stage{--ml-art-h:calc(100cqw * 1164 / 1728);aspect-ratio:auto!important;height:100vh;height:100svh;min-height:0;overflow:hidden}
   .v6-hero .ml-hero-v2 .ml-stage-art{top:0!important;height:var(--ml-art-h)!important;width:100%;left:0}
   .v6-hero .ml-hero-copy-v2{top:calc(var(--ml-art-h) * .1744)!important}
@@ -783,16 +784,16 @@ html[data-theme=dark] .form:hover{box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0
 @media (prefers-reduced-motion:reduce){.v6-hero .ml-stage-art .ml-abs img{animation:none!important}.v6-hero .ml-stage-art .ml-abs>.ml-w{translate:none}}
 .v6-hero .ml-stage-art .ml-abs:has(.ml-v2-people){z-index:4!important}
 /* laptops: same layout, family sits a little lower so heads clear the buttons */
-@media (min-width:1101px) and (max-height:960px){.v6-hero{--fam-lap:9%}}
-@media (min-width:1101px) and (max-height:800px){.v6-hero{--fam-lap:13%}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-height:960px){.v6-hero{--fam-lap:9%}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-height:800px){.v6-hero{--fam-lap:13%}}
 /* each family lifted so most heads sit where the brokers' do (measured from the cutouts) */
 /* V3 only: this close-up family shown smaller than V1 */
 .v6-hero .ml-v2-people.v6-alt[data-fam="1"]{transform:translateX(4.6%) translateY(-18%) scale(1.15)}
 .v6-hero .ml-v2-people:not(.v6-alt){transform:translateY(calc(var(--fam-lap,0%) * .8 - 9%))}
-/* headline smaller on desktop */@media (min-width:1101px){.v6-hero .ml-hero-l1{font-size:clamp(44px,4.4vw,86px)!important}.v6-hero .ml-hero-l2{font-size:clamp(36px,3.65vw,70px)!important}}
+/* headline smaller on desktop */@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-l1{font-size:clamp(44px,4.4vw,86px)!important}.v6-hero .ml-hero-l2{font-size:clamp(36px,3.65vw,70px)!important}}
 .v6-hero .ml-v2-people.v6-alt[data-rider]{transform:translateY(calc(var(--fam-lap,0%) * .8 - 16%))} /* riders share the brokers' frame */
-@media (min-width:1101px){.v6-hero .ml-hero-v2 .ml-stage{max-width:none}} /* the V2 stage caps at 1920px; bleed edge to edge on wider screens */
-@media (min-width:1101px){.v6-hero .ml-hero-copy-v2{translate:0 -5svh}} /* text sits higher under the nav */
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-v2 .ml-stage{max-width:none}} /* the V2 stage caps at 1920px; bleed edge to edge on wider screens */
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero .ml-hero-copy-v2{translate:0 -5svh}} /* text sits higher under the nav */
 /* mega menu: V2's layout (narrow card under the hovered link, one-column list with icons on the right, featured card below) */
 .nav-links .has-mega{position:relative}
 html .nav .mega{left:0;right:auto;width:min(460px,92vw);top:calc(100% + 22px)}
@@ -828,9 +829,9 @@ html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important
 .v4-art .v4-bg{left:-5%;top:-5%;width:110%!important;height:110%!important;max-width:none;object-fit:cover;will-change:translate;translate:calc(var(--mx,0) * -12px) calc(var(--my,0) * -8px + var(--sy,0) * .3px)}
 .v4-wash{inset:0;background:linear-gradient(180deg,#fff 18.7%,rgba(255,255,255,.4) 55%,rgba(255,255,255,0) 82%)} /* no yellow glow; the wash clears toward the bottom so the photo's real colour shows */
 /* narrow desktop windows (1101–1279px, e.g. half-width): compact nav so labels don't wrap, hero copy clears the nav */
-@media (min-width:1101px) and (max-width:1279px){.nav{gap:12px;padding-inline:20px 14px}.nav-logo img{height:40px}.nav-links{gap:0}.nav-links a{padding:10px 10px;font-size:15px;white-space:nowrap}.nav .btn{min-height:46px;padding:0 18px;font-size:14px;white-space:nowrap}.nav .theme-toggle{width:46px;height:46px}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1279px){.nav{gap:12px;padding-inline:20px 14px}.nav-logo img{height:40px}.nav-links{gap:0}.nav-links a{padding:10px 10px;font-size:15px;white-space:nowrap}.nav .btn{min-height:46px;padding:0 18px;font-size:14px;white-space:nowrap}.nav .theme-toggle{width:46px;height:46px}}
 /* hero copy: centred around 40% of the window height, but the buttons always end above the family's heads; never closer to the nav than ~50px */
-@media (min-width:1101px){.v6-hero{--fw:min(78vw,calc(100svh * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,min(calc(40svh - 130px),calc(100svh - var(--fw) * .408 - 314px)))!important}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero{--fw:min(78vw,calc(100svh * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,min(calc(40svh - 130px),calc(100svh - var(--fw) * .408 - 314px)))!important}}
 /* .block's padding shorthand was zeroing .wrap's side padding: content touched the screen edge below ~1330px */
 main>section.block.wrap{padding-inline:clamp(16px,3vw,24px)}
 /* mega menu: 3D renders (same style as the product cards) instead of glyph tiles */
@@ -840,7 +841,7 @@ html .nav .mega-item:has(.mega-icon-3d){flex-direction:row;justify-content:flex-
 .mega-item:hover .mega-icon-3d img,.mega-item:focus-visible .mega-icon-3d img{transform:translateY(-3px) scale(1.08)}
 @media (prefers-reduced-motion:reduce){.mega-icon-3d img{transition:none}}
 /* mobile quote: the black card sits flush on top of the form card, square bottom, text centred */
-@media (max-width:1100px){.quote{gap:0!important}.talk{border-bottom-left-radius:0!important;border-bottom-right-radius:0!important;text-align:center;align-items:center;padding-bottom:64px!important}.talk p{margin-inline:auto}.talk .call{align-self:stretch;align-items:center!important}.quote>.form{margin-top:-28px;position:relative;z-index:1}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.quote{gap:0!important}.talk{border-bottom-left-radius:0!important;border-bottom-right-radius:0!important;text-align:center;align-items:center;padding-bottom:64px!important}.talk p{margin-inline:auto}.talk .call{align-self:stretch;align-items:center!important}.quote>.form{margin-top:-28px;position:relative;z-index:1}}
 /* mobile news: compact rows, thumbnail left, text right */
 @media (max-width:700px){.news{gap:12px!important}.post{flex-direction:row!important;align-items:stretch}.post img{flex:0 0 38%;width:38%!important;aspect-ratio:auto!important;height:auto;min-height:112px;object-fit:cover}.post div{flex:1;min-width:0;padding:14px 16px!important;gap:8px!important;justify-content:center}.post .tag{font-size:10px!important;flex-wrap:wrap;gap:6px}.post h3{font-size:16px!important;line-height:1.3!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}}
 /* V4 reviews ring carousel */
@@ -851,20 +852,21 @@ html .nav .mega-item:has(.mega-icon-3d){flex-direction:row;justify-content:flex-
 main>section.block{padding-top:240px}
 .v6-prod>.ml-v3-protect{padding-block:160px 40px}
 .v6-rev .ml-v2-reviews{padding-block:200px 60px}
-@media (max-width:1100px){main>section.block{padding-top:140px}.v6-prod>.ml-v3-protect{padding-block:96px 24px}.v6-rev .ml-v2-reviews{padding-block:120px 40px}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){main>section.block{padding-top:140px}.v6-prod>.ml-v3-protect{padding-block:96px 24px}.v6-rev .ml-v2-reviews{padding-block:120px 40px}}
 /* Protect heading: pinned mid-screen, fades and settles in as you scroll (old V2 'Insurance for everyone') */
 .v4-pin-track{--v4-pin-fs:clamp(30px,3.3vw,60px);--ml-pin-half:calc(var(--v4-pin-fs) * .6)}.v4-pin .ml-display{font-size:var(--v4-pin-fs)}.v4-pin .ml-display-l1{line-height:1.1}
 .v6-prod .ml-protect-row{margin-top:72px}
 /* stacked locations (≤1240px): heading, picker (pills or dropdown), then the map, then the office card, so the map never lands on the heading */
 @media (max-width:1240px){.v6-loc .ml-loc-copy{display:contents}.v6-loc .ml-loc-copy>h2{order:1}.v6-loc .ml-loc-copy>.locdd,.v6-loc .ml-loc-copy>.ml-loc-pills{order:2}.v6-loc .v4-ont{order:3}.v6-loc .ml-loc-copy>.ml-v2-loc-card{order:4}.v6-loc .ml-v2-locations{gap:32px!important}}
-@media (min-width:1101px) and (max-width:1240px){.v6-loc .v4-ont{margin-top:56px}}
-@media (max-width:1100px){.v6-loc .ml-loc-copy>.locdd{justify-self:center;width:100%}.v6-loc .ml-v2-locations{gap:24px!important}.careers{margin-inline:0!important;border-radius:32px} /* same inset as the quote card below */}
-@media (max-width:1100px){.v6-prod .v4-pin-track .ml-pin-hold{height:6vh!important}.v6-prod .ml-protect-row{margin-top:32px}.v6-prod>.ml-v3-protect{padding-top:64px!important}} /* mobile: title sits close to the cards */
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1240px){.v6-loc .v4-ont{margin-top:56px}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-loc-copy>.locdd{justify-self:center;width:100%}.v6-loc .ml-v2-locations{gap:24px!important}.careers{margin-inline:0!important;border-radius:32px} /* same inset as the quote card below */}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-prod .v4-pin-track .ml-pin-hold{height:6vh!important}.v6-prod .ml-protect-row{margin-top:32px}.v6-prod>.ml-v3-protect{padding-top:64px!important}} /* mobile: title sits close to the cards */
 .v4-pin{opacity:calc(.15 + .85 * var(--p,1))}
 .v6-hero{position:relative;z-index:3} /* the pinned heading scrolls under the hero card */
 /* the heading starts tucked underneath the hero card and slides out from its bottom edge */
 .v6-prod>.ml-v3-protect{margin-top:-100px;padding-top:0!important}
-@media (max-width:1100px){.v6-prod>.ml-v3-protect{margin-top:-110px}.v6-prod .v4-pin-track .ml-pin-hold{height:22vh!important}}
+/* desktop: title holds a little longer before the cards */ .v6-prod .v4-pin-track .ml-pin-hold{height:35vh!important}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-prod>.ml-v3-protect{margin-top:-110px}.v6-prod .v4-pin-track .ml-pin-hold{height:22vh!important}}
 /* legacy V1 glow: a big yellow glow pinned mid-screen travels with you from the heading down to the cards, where it stops */
 .v6-prod>.ml-v3-protect{position:relative;overflow-x:clip;--gw:min(1500px,120vw);--gh:calc(var(--gw) / 1.6)}
 .v4-glow-track{position:absolute;top:0;left:0;right:0;bottom:calc(40px + 190px - var(--gh) / 2);z-index:0;pointer-events:none}
@@ -887,13 +889,13 @@ html[data-theme=dark] .v6-rev .ml-v2-reviews::before{background:radial-gradient(
 .v4-art .v4-kids{left:0;top:27.47%;width:52.85%!important;height:72.53%!important;animation-delay:.4s;translate:calc(var(--mx,0) * 20px) calc(var(--my,0) * 8px + var(--sy,0) * .06px)}
 @keyframes v4-in{from{opacity:0;transform:translateY(60px)}}
 html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 18.7%,rgba(16,16,17,.4) 75.3%)}
-@media (min-width:1101px){
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){
   .v4-hero .ml-hero-v2 .ml-stage-art.v4-art{height:100%!important}
 }
-@media (max-width:1100px){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.4) 62%)}html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v4-hero .ml-stage-art.v4-art{position:relative!important;left:0!important;right:auto!important;margin:0!important;width:100%!important;height:auto!important;aspect-ratio:1/.95;transform:none!important}.v4-fam{left:50%;width:118%}html:not([data-theme=dark]) .v4-wash{background:linear-gradient(180deg,#f2f2f0 0,rgba(255,255,255,.4) 62%)}html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 0,rgba(16,16,17,.4) 62%)}}
 @media (prefers-reduced-motion:reduce){.v4-bg,.v4-fam img{translate:none!important;animation:none}}
 /* stacked hero (tablets + phones): exactly one screen tall, the autumn photo fills it, the family is anchored to the bottom and sized from the screen height; one long eased fade from solid at the top */
-@media (max-width:1100px){.v4-hero .ml-stage{position:relative;height:100svh!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v4-hero .ml-stage{position:relative;height:100svh!important;min-height:0!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important}
   .v4-hero .ml-hero-copy{position:relative;z-index:2;translate:0 44px;flex:none!important}
   .v4-hero .ml-v2-hero-clip{position:absolute!important;inset:0;height:auto!important;clip-path:inset(0 round 0 0 min(32px,var(--ml-hero-radius,0px)) min(32px,var(--ml-hero-radius,0px)))!important}
   .v4-hero .ml-stage-art.v4-art{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;margin:0!important;overflow:hidden!important}
@@ -943,10 +945,10 @@ html[data-theme=dark] .v4-wash{background:linear-gradient(180deg,#101011 18.7%,r
   <section class="block wrap" aria-labelledby="news-title">
     <div class="head"><h2 class="h2" id="news-title">MIB <em>News</em></h2><a class="btn btn-line" href="/static/posts">Read more</a></div>
     <div class="news">
-      <a class="post" href="/static/posts/5-ontario-road-trip-destinations-you-havent-tried-yet"><img src="/static/api/media/file/client_newsletter_header_travel_edition_32ee1cbfd2.png" alt="" loading="lazy"><div><span class="tag"><b>CAR</b>July 15, 2026</span><h3>5 Ontario Road Trip Destinations You Haven't Tried Yet</h3></div></a>
-      <a class="post" href="/static/posts/does-your-auto-insurance-premium-reflect-how-safely-you-drive"><img src="/static/api/media/file/let_your_driving_2b635deccb.png" alt="" loading="lazy"><div><span class="tag"><b>CAR</b>April 2, 2026</span><h3>Does Your Auto Insurance Premium Reflect How Safely You Drive?</h3></div></a>
-      <a class="post" href="/static/posts/start-2026-right-the-10-minute-coverage-check-every-household-needs"><img src="/static/api/media/file/winter_home4_f2bd3247f6.png" alt="" loading="lazy"><div><span class="tag"><b>HOME</b>January 6, 2026</span><h3>Start 2026 Right: The 10-Minute Coverage Check Every Household Needs</h3></div></a>
-      <a class="post" href="/static/posts/package-theft-and-porch-pirates-how-to-protect-your-deliveries-this-holiday-season"><img src="/static/api/media/file/Holiday_Shopping_fbc859f38e.png" alt="" loading="lazy"><div><span class="tag"><b>HOME</b>December 16, 2025</span><h3>Package Theft &amp; Porch Pirates: How to Protect Your Deliveries This Holiday Season</h3></div></a>
+      <div class="news-cell" style="z-index: 1; opacity: 0; transform: translateX(156%) scale(0.72) rotate(6deg);" data-a-to="z-index: 1; opacity: 1; transform: none;"><div class="news-tilt" style="transform: perspective(900px);" data-tilt=""><a class="post" href="/static/posts/5-ontario-road-trip-destinations-you-havent-tried-yet"><img src="/static/api/media/file/client_newsletter_header_travel_edition_32ee1cbfd2.png" alt="" loading="lazy"><div><span class="tag"><b>CAR</b>July 15, 2026</span><h3>5 Ontario Road Trip Destinations You Haven't Tried Yet</h3></div></a></div></div>
+      <div class="news-cell" style="z-index: 3; opacity: 0; transform: translateX(52%) scale(0.72) rotate(2deg);" data-a-to="z-index: 3; opacity: 1; transform: none;"><div class="news-tilt" style="transform: perspective(900px);" data-tilt=""><a class="post" href="/static/posts/does-your-auto-insurance-premium-reflect-how-safely-you-drive"><img src="/static/api/media/file/let_your_driving_2b635deccb.png" alt="" loading="lazy"><div><span class="tag"><b>CAR</b>April 2, 2026</span><h3>Does Your Auto Insurance Premium Reflect How Safely You Drive?</h3></div></a></div></div>
+      <div class="news-cell" style="z-index: 3; opacity: 0; transform: translateX(-52%) scale(0.72) rotate(-2deg);" data-a-to="z-index: 3; opacity: 1; transform: none;"><div class="news-tilt" style="transform: perspective(900px);" data-tilt=""><a class="post" href="/static/posts/start-2026-right-the-10-minute-coverage-check-every-household-needs"><img src="/static/api/media/file/winter_home4_f2bd3247f6.png" alt="" loading="lazy"><div><span class="tag"><b>HOME</b>January 6, 2026</span><h3>Start 2026 Right: The 10-Minute Coverage Check Every Household Needs</h3></div></a></div></div>
+      <div class="news-cell" style="z-index: 1; opacity: 0; transform: translateX(-156%) scale(0.72) rotate(-6deg);" data-a-to="z-index: 1; opacity: 1; transform: none;"><div class="news-tilt" style="transform: perspective(900px);" data-tilt=""><a class="post" href="/static/posts/package-theft-and-porch-pirates-how-to-protect-your-deliveries-this-holiday-season"><img src="/static/api/media/file/Holiday_Shopping_fbc859f38e.png" alt="" loading="lazy"><div><span class="tag"><b>HOME</b>December 16, 2025</span><h3>Package Theft &amp; Porch Pirates: How to Protect Your Deliveries This Holiday Season</h3></div></a></div></div>
     </div>
   </section>
 
@@ -1088,7 +1090,7 @@ function split(el){
   el.querySelectorAll('.w').forEach((w,i)=>w.style.setProperty('--i',i));
 }
 document.querySelectorAll('.hero h1,.h2').forEach(h=>{split(h);h.classList.add('split')});
-const REVEAL='.hero-copy .eyebrow,.hero-ctas,.head>*,.tile,.score,.review,.post,.loc-tabs,.loc-card,.loc-map,.about-photo,.about .eyebrow,.about .lead,.about .btn,.stat,.careers .lead,.careers .head .btn,.marquee:has(.photo-track),.ml-v2-loc-card,.ml-loc-copy,.talk,.form,.foot-grid>div';
+const REVEAL='.hero-copy .eyebrow,.hero-ctas,.head>*,.tile,.score,.review,.loc-tabs,.loc-card,.loc-map,.about-photo,.about .eyebrow,.about .lead,.about .btn,.stat,.careers .lead,.careers .head .btn,.marquee:has(.photo-track),.ml-v2-loc-card,.ml-loc-copy,.talk,.form,.foot-grid>div';
 document.querySelectorAll(REVEAL).forEach(el=>{
   el.dataset.reveal='';
   const sib=[...el.parentElement.children].filter(c=>c.matches(REVEAL));
@@ -1228,12 +1230,20 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
     c.addEventListener('pointerleave',()=>{['--lx','--ly','--gx','--gy'].forEach(p=>c.style.removeProperty(p))});
   });
 })();
+
+// tilt: cards lean toward the pointer (max 6deg, lift 8px), same as site.js, which V2 doesn't load; review cards join in
+(()=>{if(matchMedia('(hover:none),(prefers-reduced-motion: reduce)').matches)return;
+  document.querySelectorAll('.v6-rev .ml-abs>.ml-w').forEach(el=>el.dataset.tilt='');
+  document.querySelectorAll('[data-tilt]').forEach(el=>{const base=el.style.transform||'perspective(900px)';
+    el.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      el.style.transition='transform .15s ease-out';el.style.transform='perspective(900px) rotateX('+(-y*12).toFixed(2)+'deg) rotateY('+(x*12).toFixed(2)+'deg) translateY(-8px)'});
+    el.addEventListener('pointerleave',()=>{el.style.transition='transform .6s cubic-bezier(.22,1,.36,1)';el.style.transform=base})})})();
 // quote form: the outside glow glides after the cursor (eased each frame), pushed out toward the edges
 (()=>{
   const f=document.querySelector('.form');if(!f||matchMedia('(hover:none),(prefers-reduced-motion: reduce)').matches)return;
   const P=28; // glow box is 28px larger than the card on each side
   let tx=1,ty=0,x=1,y=0,raf=0;
-  const tick=()=>{x+=(tx-x)*.12;y+=(ty-y)*.12;
+  const tick=()=>{x+=(tx-x)*.25;y+=(ty-y)*.25;
     const r=f.getBoundingClientRect(),W=r.width+2*P,H=r.height+2*P;
     f.style.setProperty('--fx',(x*r.width+P)/W*100+'%');f.style.setProperty('--fy',(y*r.height+P)/H*100+'%');
     raf=Math.abs(tx-x)+Math.abs(ty-y)>.001?requestAnimationFrame(tick):0};
@@ -1269,7 +1279,7 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
   const im=document.querySelector('.v6-hero .v6-alt[data-fam="1"]'),btn=document.querySelector('.v6-hero .ml-btn-row');if(!im||!btn)return;
   const BOX=[444,100,1555,1250],FW=2000,FH=1333; // family's opaque box inside its 2000x1333 frame
   const fit=()=>{
-    if(innerWidth<1101){im.style.transform='';im.style.transformOrigin='';im.dataset.fit=1;return}
+    if((innerWidth<1101||innerWidth*5<=innerHeight*6)){im.style.transform='';im.style.transformOrigin='';im.dataset.fit=1;return}
     im.style.transform='none';const r=im.getBoundingClientRect(),cp=btn.offsetParent,b=cp.getBoundingClientRect().top+btn.offsetTop+btn.offsetHeight;
     const top=b+34,SHOW=.84,bottom=innerHeight;
     let s=(bottom-top)/((BOX[3]-BOX[1])/FH*r.height*SHOW);
@@ -1289,12 +1299,12 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
 })();
 </script>
 <script>// V2 products + old V2 reviews: entrance (data-a-to), floating shapes (data-float) and pointer depth (data-depth), same numbers as site.js
-;(function(){document.querySelectorAll('.v6-prod .ml-v3-protect,.v6-rev .ml-v2-reviews').forEach(sec=>{
+;(function(){document.querySelectorAll('.v6-prod .ml-v3-protect,.v6-rev .ml-v2-reviews,.news').forEach(sec=>{
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,E='cubic-bezier(.22,1,.36,1)';
 const play=(el,d)=>{const to=el.getAttribute('data-a-to');el.removeAttribute('data-a-to');if(reduce){el.setAttribute('style',to);return}
-  el.style.transition=el.classList.contains('ml-protect-cell')?'opacity .45s ease '+d+'s, transform 1.1s cubic-bezier(.34,1.45,.64,1) '+d+'s':'opacity .7s '+E+' '+d+'s, transform .9s '+E+' '+d+'s';/* protect cards: springy spread with overshoot, like old V2 */void el.offsetWidth;el.style.opacity='1';el.style.transform='none'};
+  el.style.transition=el.matches('.ml-protect-cell,.news-cell')?'opacity .45s ease '+d+'s, transform 1.1s cubic-bezier(.34,1.45,.64,1) '+d+'s':'opacity .7s '+E+' '+d+'s, transform .9s '+E+' '+d+'s';/* protect cards: springy spread with overshoot, like old V2 */void el.offsetWidth;el.style.opacity='1';el.style.transform='none'};
 const io=new IntersectionObserver(es=>{let i=0;es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);play(e.target,Math.min(i++*.07,.6))}})},{rootMargin:'0px 0px -6% 0px'});
-sec.querySelectorAll('[data-a-to]').forEach(el=>io.observe(el));
+/* news fans out only in the 4-up desktop row; stacked layouts would start cards off-screen, so they rise in */ if(sec.matches('.news')&&matchMedia('(max-width:1100px),(max-aspect-ratio:6/5)').matches)sec.querySelectorAll('.news-cell').forEach(c=>c.style.transform='translateY(40px) scale(.95)'); sec.querySelectorAll('[data-a-to]').forEach(el=>io.observe(el));
 if(reduce)return;
 sec.querySelectorAll('[data-float]').forEach(el=>{const f=el.dataset.float.split(',').map(Number);
   el.animate([{transform:'none'},{transform:'translateY('+-f[0]+'px) rotate('+f[1]+'deg)'},{transform:'none'}],{duration:f[2]*1000,delay:f[3]*1000,iterations:Infinity,easing:'ease-in-out'})});
@@ -1434,7 +1444,7 @@ if(host){(async()=>{
 <script>/* Protect heading: --p goes 0 -> 1 as its section scrolls up into view */(function(){var pin=document.querySelector('.v4-pin');if(!pin)return;var track=pin.parentElement,raf=0;var glow=document.querySelector('.v4-glow'),row=document.querySelector('.v6-prod .ml-protect-row');
 function f(){raf=0;var r=track.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/(innerHeight*.75)));pin.style.setProperty('--p',p.toFixed(3));if(glow&&row){var c=row.getBoundingClientRect(),g=1-Math.min(1,Math.max(0,((c.top+c.bottom)/2-innerHeight/2)/(innerHeight*.9)));glow.style.setProperty('--g',(g*g).toFixed(3))}}addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(f)},{passive:true});addEventListener('resize',f);f()})()</script>
 <script>/* V4 reviews: 3D ring carousel that loops forever. Desktop: one full spin when it first scrolls into view, then settles centred. Mobile: starts centred. Drag/swipe to turn; pauses on hover and for 6s after a touch. */
-(function(){var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,desk=matchMedia('(min-width:1101px)');
+(function(){var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,desk=matchMedia('(min-width:1101px) and (min-aspect-ratio:1201/1000)');
 function build(){var stack=document.querySelector('.v6-rev .ml-v2-reviews-stack');if(!stack)return setTimeout(build,300);
   if(desk.matches)return spinIn(stack);/* desktop keeps the original overlapping stack; shortcut: layout is picked at load, a resize across 1100px needs a reload */
   var src=[].map.call(stack.querySelectorAll('article.ml-review'),function(a){return a});if(!src.length)return;
@@ -1488,9 +1498,9 @@ function spinIn(stack){
   if(reduce)return;var hover=false,iv=0;stack.addEventListener('mouseenter',function(){hover=true});stack.addEventListener('mouseleave',function(){hover=false});
   var rest=p.slice();cards.forEach(function(c,i){p[i]=2.6;draw(c,2.6)});/* hidden behind the cylinder until it scrolls in */
   function order(){var m=function(v){return((v%3)+3)%3};return cards.map(function(c,i){return i}).sort(function(a,b){return m(tgt[b])-m(tgt[a])})}/* bottom card first */
-  function step(){if(hover||document.hidden||t0.some(function(v){return v>=0}))return;order().forEach(function(i,k){move(i,tgt[i]+1,k*140)})}
+  function step(){if(hover||document.hidden||t0.some(function(v){return v>=0}))return;order().forEach(function(i,k){move(i,tgt[i]+1,k*50)})}
   new IntersectionObserver(function(es){var on=es[0].isIntersecting;
-    if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*160)})/* scroll in from above */}
+    if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*70)})/* scroll in from above */}
     clearInterval(iv);if(on)iv=setInterval(step,3500)},{threshold:.35}).observe(stack)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
 </body>
