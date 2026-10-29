@@ -208,6 +208,8 @@ section{scroll-margin-top:100px}
 .talk .sph{width:150px;right:4%;bottom:40px;z-index:2}
 .form{background:var(--paper);border:1px solid rgba(0,0,0,.08);border-radius:var(--r-xl);padding:56px 48px}
 .form h2{font-family:var(--serif);font-size:40px;margin-bottom:28px}
+/* phones: "What do you need to protect" fills one screen, cards grow to fill it */ @media (max-width:700px){.v6-prod .ml-protect-row{height:calc(100svh - 200px);min-height:420px;grid-template-rows:1fr 1fr!important;margin-bottom:24px}.v6-prod .ml-protect-cell,.v6-prod .ml-protect-tilt,.v6-prod .ml-protect{height:100%!important;min-height:0!important}}
+/* phones/tablets: form title centred like the card above it */ @media (max-width:1100px), (max-aspect-ratio:6/5){.form h2{text-align:center}}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
 .field{display:flex;flex-direction:column;gap:8px}
 .field.full{grid-column:1/-1}
@@ -858,7 +860,7 @@ main>section.block{padding-top:240px}
 /* stacked locations (≤1240px): heading, picker (pills or dropdown), then the map, then the office card, so the map never lands on the heading */
 @media (max-width:1240px){.v6-loc .ml-loc-copy{display:contents}.v6-loc .ml-loc-copy>h2{order:1}.v6-loc .ml-loc-copy>.locdd,.v6-loc .ml-loc-copy>.ml-loc-pills{order:2}.v6-loc .v4-ont{order:3}.v6-loc .ml-loc-copy>.ml-v2-loc-card{order:4}.v6-loc .ml-v2-locations{gap:32px!important}}
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1240px){.v6-loc .v4-ont{margin-top:56px}}
-@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-loc-copy>.locdd{justify-self:center;width:100%}.v6-loc .ml-v2-locations{gap:24px!important}.careers{margin-inline:0!important;border-radius:32px} /* same inset as the quote card below */}
+@media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-loc-copy>.locdd{justify-self:center;width:100%;order:3}.v6-loc .ml-v2-locations{gap:24px!important}.careers{margin-inline:0!important;border-radius:32px} /* same inset as the quote card below */}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v6-prod .v4-pin-track .ml-pin-hold{height:6vh!important}.v6-prod .ml-protect-row{margin-top:32px}.v6-prod>.ml-v3-protect{padding-top:64px!important}} /* mobile: title sits close to the cards */
 .v4-pin{opacity:calc(.15 + .85 * var(--p,1))}
 .v6-hero{position:relative;z-index:3} /* the pinned heading scrolls under the hero card */
@@ -1404,7 +1406,7 @@ if(host){(async()=>{
   const fit=()=>{const b=host.getBoundingClientRect(),cp=document.querySelector('.v6-loc .ml-loc-copy').getBoundingClientRect(),desk=cp.left>=b.right-1,bleed=Math.max(0,b.left),/* bleed to the window's left edge (mobile too) */extra=desk?90:0,w=b.width+bleed+extra,h=b.height*(desk?1.25:1.15),top=desk?-.08*b.height:0;if(!b.width||!b.height)return;
     const et=Math.round(b.height*.4),eb=Math.round(b.height*.5);/* extra canvas above/below, same framing, so the map isn't hard-cut once the fade is gone */
     r.setSize(w,h+et+eb,false);Object.assign(r.domElement.style,{left:-bleed+'px',top:top-et+'px',width:w+'px',height:h+et+eb+'px'});cam.aspect=w/h;cam.setViewOffset(w,h,0,-et,w,h+et+eb);
-    const t=Math.tan(cam.fov*Math.PI/360),view=FULL?(desk?18:18):desk?8.2:10.4,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
+    const t=Math.tan(cam.fov*Math.PI/360),view=FULL?(desk?18:18):desk?8.2:6.8,dist=Math.max(view/2/(t*cam.aspect),view*.42/t);
     const f=FOCUS.clone().applyEuler(board.rotation),dx=desk&&bleed?view*(FULL?.06:.1):0;
     refD=dist;cam.position.set(f.x+dx,f.y-.2,f.z+dist);cam.lookAt(f.x+dx,f.y-.2,f.z);cam.updateProjectionMatrix();go()};
   // state: which office the shield is on, and whether a pill is being hovered (grow + spin)
