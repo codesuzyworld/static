@@ -1490,7 +1490,13 @@ if(host){(async()=>{
   let goal=place(0);pivot.position.copy(goal);
   document.addEventListener('v4-loc',e=>{const i=e.detail,hover=document.querySelector('.v6-loc .ml-loc-pill:hover,.v6-loc .ml-loc-pill:focus-visible');
     const g=place(i);if(g&&i!==target){goal=g;pivot.position.copy(g);born=clock.elapsedTime}target=i;
-    if(g&&!FULL&&base){/* the page's own show(0) fires before this module loads, so any event here is the visitor picking an office */clearTimeout(zt);zt=setTimeout(()=>{zoomed=true;gf.copy(g).setZ(0);gv=base*ZOOM;if(reduce){cf.copy(gf);cv=gv;aim()}go()},250)/* short hover delay: sweeping across pills doesn't yank the camera */}go()});/* shield appears at the new office instead of gliding there */
+    if(g&&!FULL&&base){/* the page's own show(0) fires before this module loads, so any event here is the visitor picking an office */clearTimeout(zt);zt=setTimeout(()=>{zoomed=true;gf.copy(g).setZ(0);if(mapZoom)gf.lerp(FOCUS,ZOOM);/* picked on the map: zoom about the building, so it stays under the cursor */gv=base*ZOOM;if(reduce){cf.copy(gf);cv=gv;aim()}go()},250)/* short hover delay: sweeping across pills doesn't yank the camera */}go()});/* shield appears at the new office instead of gliding there */
+  // hovering (or tapping) an office on the map picks it like its pill (zoom included); moving off it glides back out
+  let mapZoom=false;const sp=new T.Vector3,mpills=document.querySelectorAll('.v6-loc .ml-loc-pill');
+  const nearest=e=>{const b=r.domElement.getBoundingClientRect();if(!vis||e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom||e.target.closest('.ml-loc-copy,.ml-art-nav,.nav,.locdd'))return -2;
+    let best=-1,bd=32;LL.forEach((_,i)=>{dots[i].getWorldPosition(sp);sp.project(cam);const d=Math.hypot(b.left+(sp.x+1)/2*b.width-e.clientX,b.top+(1-sp.y)/2*b.height-e.clientY);if(d<bd){bd=d;best=i}});return best};
+  const pick=e=>{const i=nearest(e);host.style.cursor=i<0?'':'pointer';if(i<0&&mapZoom){mapZoom=false;reset()}/* off the building: glide back out */if(i>=0&&i!==target&&mpills[i]){mapZoom=true;mpills[i].click()}};
+  document.addEventListener('pointermove',pick,{passive:true});document.addEventListener('pointerdown',pick,{passive:true});
   // moving off the pills glides back to the overview; scrolling the map away snaps back so it re-enters wide
   const reset=snap=>{clearTimeout(zt);zoomed=false;gf.copy(FOCUS);gv=base;if(snap||reduce){cf.copy(gf);cv=gv;if(base)aim()}go()};
   const pillBox=document.querySelector('.v6-loc .ml-loc-pills');
