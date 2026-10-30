@@ -1346,11 +1346,12 @@ if(host){(async()=>{
   const soften=pts=>{for(let n=0;n<4;n++)pts=pts.flatMap((a,i)=>{const b=pts[(i+1)%pts.length];return[[a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]]});return pts};
   const hitP=(a,b,p,q)=>{const r=[b[0]-a[0],b[1]-a[1]],w=[q[0]-p[0],q[1]-p[1]],d=r[0]*w[1]-r[1]*w[0];if(!d)return null;const t=((p[0]-a[0])*w[1]-(p[1]-a[1])*w[0])/d,u=((p[0]-a[0])*r[1]-(p[1]-a[1])*r[0])/d;return t>0&&t<1&&u>0&&u<1?[a[0]+t*r[0],a[1]+t*r[1]]:null};
   const inPoly=(q,x,y)=>{let o=false;for(let i=0,j=q.length-1;i<q.length;j=i++){const [xi,yi]=q[i],[xj,yj]=q[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)o=!o}return o};
-  const area=(o,a,b)=>{let s=0;for(let t=a;t<b;t++)s+=o[t][0]*o[t+1][1]-o[t+1][0]*o[t][1];return(s+o[b][0]*o[a][1]-o[a][0]*o[b][1])/2};/* only small loops are cut, never a real stretch of coast */
   // each ring's outline pushed out by the bevel offset, with the little loops the push makes in tight bays cut off
   const OUT=RINGS.map(ring=>{const q=soften(ring),n=q.length,cw=q.reduce((a,p,i)=>a+p[0]*q[(i+1)%n][1]-q[(i+1)%n][0]*p[1],0)>0?1:-1,
     o=q.map((p,i)=>{const a=q[(i+n-1)%n],b=q[(i+1)%n],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;return[p[0]+cw*dy/l*.075,p[1]-cw*dx/l*.075]}),r=[];
-    for(let i=0;i<n;){r.push(o[i]);let j=Math.min(i+250,n-1),X=null;for(;j>i+1;j--)if((X=hitP(o[i],o[(i+1)%n],o[j],o[(j+1)%n]))&&Math.abs(area(o,i+1,j))<.03)break;else X=null;if(X){r.push(X);i=j+1}else i++}return r});
+    // a loop the push makes (a bay pinched shut) is cut at its crossing; two passes catch loops inside loops
+    const cut=o=>{const n=o.length,r=[];for(let i=0;i<n;){r.push(o[i]);let j=Math.min(i+600,n-2),X=null;for(;j>i+1;j--)if(X=hitP(o[i],o[i+1],o[j],o[j+1]))break;if(X){r.push(X);i=j+1}else i++}return r};
+    return cut(cut(o))});
   // the land is built from that clean pushed-out outline (letting the extrude push it out folds the cap over itself in tight bays)
   const shapes=OUT.map(r=>new T.Shape(r.map(([x,y])=>new T.Vector2(x,y))));
   const DEPTH=.53;let geo=new T.ExtrudeGeometry(shapes,{depth:DEPTH,bevelEnabled:true,bevelThickness:.03,bevelSize:.025,bevelSegments:3,curveSegments:1});
@@ -1444,7 +1445,7 @@ if(host){(async()=>{
   const STY=[
     {top:flat('#fef9ef'),side:flat(INK),tc:['#fef9ef','#ece3cf'],base:flat('#f6d438'),rim:flat(INK),line:true,shield:flat('#f6d438'),/* line art: flat fills, ink outlines, solid ink sides */
       off:{cream:flat('#ffffff'),charcoal:flat(INK),gold:flat('#f6d438'),window:flat('#f6d438'),shrub:flat(INK)}},
-    {cards:true,top:std('#ffffff'),side:std('#ffffff'),tc:['#ffffff','#2a2a2d'],shield:flat('#f6d438'),ink:['#bdb8ad','#bdb8ad'],/* like the UI cards: the land is a thin white card on a charcoal and a yellow card, soft shadow and glow */
+    {cards:true,top:std('#ffffff'),side:std('#ffffff'),tc:['#ffffff','#2a2a2d'],shield:flat('#f6d438'),ink:['#b3afa6','#bdb8ad'],/* like the UI cards: the land is a thin white card on a charcoal and a yellow card, soft shadow and glow */
       off:{cream:flat('#ffffff'),charcoal:flat('#2a2b2f'),gold:flat('#f6d438'),window:flat('#f6d438'),shrub:flat('#cfcac0')}},
     {top:glaze,side:glaze,strip:std('#cbbd9f',{roughness:.5}),tc:['#ede5d4','#d6cab0'],base:baseMat,rim:goldMat,off:OFF0}];
   // line art outlines, built on first use: the land's top and foot edges, county lines, every office and the shield (screen-space widths)
@@ -1460,12 +1461,12 @@ if(host){(async()=>{
     if(shield){const l=seg(edges(shield.geometry,50),thinM);shield.add(l);ls.push(l)}return ls};
   // the card stack, built on first use: same outline as the land, three thin cards with gaps, each lower one nudged toward the viewer so it peeks out
   let stack=null;const cards=()=>{const g=new T.Group,mk=(c,e)=>new T.MeshStandardMaterial({color:c,roughness:.75,emissive:e||c,emissiveIntensity:e?.35:.3});
-    [[0,0,[mk('#ffffff'),mk('#cfccc4')]],[.09,.05,[mk('#2a2b2f'),mk('#1f2023')]],[.18,.1,[mk('#f8e49a','#f6d438'),mk('#e8c94a','#f6d438')]]]/* [face, edge]: a darker edge outlines each card without a line */.forEach(([dz,dy,m])=>{let cg=new T.ExtrudeGeometry(shapes,{depth:.02,bevelEnabled:true,bevelThickness:1e-4,bevelSize:1e-4,bevelOffset:.025,bevelSegments:1,curveSegments:1}/* square cut edge: the bevel only pushes the outline out to the land's footprint */);
+    [[0,0,[mk('#ffffff'),mk('#cfccc4')]],[.09,.05,[mk('#141416'),mk('#0b0b0c')]],[.18,.1,[mk('#f8e49a','#f6d438'),mk('#e8c94a','#f6d438')]]]/* [face, edge]: a darker edge outlines each card without a line */.forEach(([dz,dy,m])=>{let cg=new T.ExtrudeGeometry(shapes,{depth:.02,bevelEnabled:true,bevelThickness:1e-4,bevelSize:1e-4,bevelSegments:1,curveSegments:1}/* square cut edge: the bevel only pushes the outline out to the land's footprint */);
       cg=toCreasedNormals(cg,Math.PI*.2);cg.translate(-c.x,-c.y-dy,TOP-.02-dz);const k=new T.Mesh(cg,m);k.castShadow=k.receiveShadow=true;g.add(k)});board.add(g);return g};
   let si=0;const apply=()=>{const S=STY[si],dk=document.documentElement.dataset.theme==='dark';
     S.top.color.set(S.tc[+dk]);floor.material.opacity=(dk?.24:.07)*(S.cards?2:1);ont.material=[S.top,S.side];if(S.cards&&!stack)stack=cards();if(stack)stack.visible=!!S.cards;ont.visible=baseSlab.visible=rimSlab.visible=!S.cards;strips.visible=!S.line&&!S.cards;if(S.strip)strips.material=S.strip;if(S.base){baseSlab.material=S.base;rimSlab.material=S.rim}
     dots.forEach(d=>d.traverse(m=>{if(m.isMesh&&S.off[m.userData.mn])m.material=S.off[m.userData.mn]}));if(shield){shield.material=S.shield||shield0;const thin=S.line||S.cards;shield.scale.z=thin?.15:1;}/* line art and cards: a thin shield *//* line art: a thin cut-out card, so its outline stays clean */
-    inkM.color.set(S.ink?S.ink[0]:INK);thinM.color.set(S.ink?S.ink[0]:INK);hairM.color.set(S.ink?S.ink[1]:INK);if((S.line||S.cards)&&!outl)outl=outline();if(outl)outl.forEach((l,i)=>l.visible=!!(S.line||S.cards&&i===2));/* cards keep the county lines only */go()};
+    inkM.color.set(S.ink?S.ink[0]:INK);thinM.color.set(S.ink?S.ink[0]:INK);hairM.color.set(S.ink?S.ink[1]:INK);if((S.line||S.cards)&&!outl)outl=outline();if(outl)outl.forEach((l,i)=>l.visible=!!(S.line||S.cards&&i!==1));/* cards: a grey top edge and the county lines */go()};
   apply();new MutationObserver(apply).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   let prevB=null;[-1,1].forEach(d=>{const b=document.createElement('button');if(d<0)prevB=b;b.type='button';b.className='ml-art-nav '+(d<0?'is-prev':'is-next');b.setAttribute('aria-label',d<0?'Previous map style':'Next map style');b.innerHTML=ARROW;
