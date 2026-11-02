@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><script src="/static/js/lite.js?v=20261102a"></script>
+<head><script src="/static/js/lite.js?v=20261102b"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MIB Landing Exploration</title>
@@ -1151,6 +1151,7 @@ document.getElementById('quote-form').addEventListener('submit',e=>{e.preventDef
 const box=document.querySelector('.v5f-3d');
 if(box&&!document.documentElement.hasAttribute('data-lite')){(async()=>{/* lite mode: the flat logo fallback stays */
   const [T,{GLTFLoader},{RoomEnvironment}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js')]);
+  const LITE=()=>document.documentElement.hasAttribute('data-lite');if(LITE())return;/* switched to lite while three.js loaded */
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.toneMapping=T.ACESFilmicToneMapping;r.outputColorSpace=T.SRGBColorSpace;
   const scene=new T.Scene(),pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
@@ -1187,7 +1188,8 @@ if(box&&!document.documentElement.hasAttribute('data-lite')){(async()=>{/* lite 
       bump*=Math.exp(-5*dt);const sq=Math.sin((1-bump)*Math.PI*3)*bump*.18;wrap.scale.set(1+.6*sq,1-sq,1+.6*sq);
       ang+=(goal-ang)*Math.min(1,4.5*dt);spin.rotation.y=ang+.08*Math.sin(1.4*t)}
     r.render(scene,cam);if(vis&&!reduce)raf=requestAnimationFrame(tick)};
-  new IntersectionObserver(([e])=>{vis=e.isIntersecting;if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}},{threshold:.1}).observe(box);
+  new IntersectionObserver(([e])=>{vis=e.isIntersecting&&!LITE();if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}},{threshold:.1}).observe(box);
+  addEventListener('mib:lite',()=>{vis=false;cancelAnimationFrame(raf);raf=0;box.classList.remove('live');r.domElement.remove();r.dispose()});/* page turned out too slow: back to the flat logo */
   if(reduce)tick();
 })().catch(e=>console.warn('[v5 footer 3d]',e))}
 </script>
@@ -1327,7 +1329,8 @@ sec.addEventListener('pointerleave',()=>{tx=0;ty=0;go()});
 // one MIB shield floats over the shown office, glides there and spins when a pill is hovered
 const host=document.querySelector('.v4-ont');
 /* lite mode (weak machines, see js/lite.js): a still of the map instead of the WebGL scene */
-if(host&&document.documentElement.hasAttribute('data-lite'))host.innerHTML=['light','dark'].map(t=>`<img class="v4-ont-still is-${t}" src="/static/landing/v4/map-${t}.webp" alt="" decoding="async">`).join('');
+const LITE=()=>document.documentElement.hasAttribute('data-lite'),still=()=>{host.innerHTML=['light','dark'].map(t=>`<img class="v4-ont-still is-${t}" src="/static/landing/v4/map-${t}.webp" alt="" decoding="async">`).join('');host.style.cursor=''};
+if(host&&LITE())still();
 else if(host){(async()=>{
   const [T,{GLTFLoader},{RoomEnvironment},{toCreasedNormals},{DRACOLoader},{LineSegments2},{LineSegmentsGeometry},{LineMaterial}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js'),import('https://esm.sh/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/DRACOLoader.js'),...['LineSegments2','LineSegmentsGeometry','LineMaterial'].map(f=>import(`https://esm.sh/three@0.170.0/examples/jsm/lines/${f}.js`))]);
   // landmark models (modelled in Blender, Draco-compressed); fetched now, placed further down
@@ -1336,6 +1339,7 @@ else if(host){(async()=>{
   const RINGS=[[[3.725,3.959],[3.743,0.566],[3.699,0.442],[3.792,0.265],[3.789,0.111],[3.986,-0.188],[4.126,-0.488],[4.294,-0.663],[5.077,-0.848],[5.236,-0.973],[5.315,-1.123],[5.454,-1.21],[5.51,-1.194],[5.517,-1.11],[5.589,-1.135],[5.684,-1.409],[5.908,-1.544],[6.012,-1.479],[6.086,-1.486],[6.242,-1.628],[6.511,-1.476],[6.905,-1.358],[7.061,-1.364],[7.231,-1.436],[7.175,-1.683],[7.281,-1.799],[7.157,-1.928],[6.595,-2.189],[6.154,-2.616],[5.795,-2.773],[5.669,-2.783],[5.467,-2.929],[5.408,-2.908],[5.533,-2.823],[5.424,-2.871],[5.448,-2.789],[5.076,-2.879],[5.063,-2.921],[5.242,-2.848],[5.239,-2.91],[5.404,-2.821],[5.369,-2.966],[5.561,-2.882],[5.427,-3.052],[5.56,-3.057],[5.364,-3.144],[5.297,-3.12],[5.34,-3.046],[5.268,-3.089],[5.232,-3.046],[5.282,-3.031],[5.125,-3.058],[5.06,-2.997],[5.088,-2.981],[4.976,-2.959],[4.953,-2.976],[4.993,-2.999],[4.907,-2.983],[4.029,-3.174],[3.845,-3.357],[3.773,-3.353],[3.691,-3.435],[3.563,-3.68],[3.612,-3.756],[3.857,-3.812],[4.042,-3.733],[4.038,-3.918],[4.143,-4.09],[4.025,-4.16],[3.782,-4.123],[3.271,-4.21],[3.103,-4.388],[3.332,-4.459],[3.054,-4.427],[2.779,-4.334],[2.501,-4.349],[2.192,-4.602],[2.144,-4.744],[2.118,-4.743],[2.143,-4.679],[2.1,-4.74],[1.997,-4.747],[1.781,-4.876],[1.719,-4.968],[1.701,-5.087],[1.618,-4.965],[1.439,-5.018],[1.28,-4.93],[1.343,-4.687],[1.71,-4.687],[1.755,-4.646],[1.76,-4.502],[1.611,-4.453],[1.692,-4.366],[1.724,-4.101],[1.76,-4.027],[1.926,-3.928],[2.22,-3.654],[2.252,-3.512],[2.22,-2.916],[2.308,-2.781],[2.332,-2.653],[2.452,-2.562],[2.545,-2.383],[2.489,-2.027],[2.432,-2.018],[2.325,-1.848],[2.335,-1.807],[2.237,-1.784],[2.254,-1.735],[2.535,-1.751],[2.506,-1.843],[2.547,-1.896],[2.555,-1.998],[2.653,-2.04],[2.625,-2.089],[2.763,-2.036],[2.637,-2.242],[2.73,-2.191],[2.801,-2.209],[2.767,-2.405],[2.861,-2.298],[2.967,-2.274],[3.011,-2.388],[3.349,-2.532],[3.412,-2.443],[3.419,-2.317],[3.333,-2.248],[3.339,-2.18],[3.447,-2.134],[3.494,-2.232],[3.642,-2.248],[3.6,-2.213],[3.626,-2.121],[3.589,-2.134],[3.589,-2.196],[3.558,-2.182],[3.527,-2.064],[3.469,-2.055],[3.454,-1.987],[3.342,-1.877],[3.418,-1.852],[3.322,-1.763],[3.384,-1.686],[3.369,-1.617],[3.323,-1.588],[3.279,-1.624],[3.298,-1.66],[3.251,-1.659],[3.181,-1.564],[3.171,-1.617],[3.137,-1.393],[3.068,-1.431],[2.9,-1.079],[2.698,-1.044],[2.622,-1.074],[2.613,-0.982],[2.557,-1.042],[2.389,-1.025],[2.389,-0.98],[2.271,-1.054],[2.335,-1.003],[2.288,-0.985],[2.384,-0.958],[2.248,-0.981],[2.357,-0.94],[2.304,-0.877],[2.221,-0.932],[2.209,-0.987],[2.198,-0.937],[2.241,-0.896],[1.954,-0.883],[1.794,-0.834],[1.826,-0.81],[1.586,-0.836],[1.616,-0.782],[1.373,-0.828],[0.774,-0.704],[0.762,-0.665],[0.648,-0.674],[0.601,-0.625],[0.631,-0.496],[0.564,-0.448],[0.329,-0.518],[0.279,-0.434],[0.394,-0.304],[0.364,-0.242],[0.308,-0.301],[0.311,-0.175],[0.414,-0.167],[0.443,-0.117],[0.377,-0.061],[0.289,-0.056],[0.27,-0.098],[0.152,-0.018],[0.287,0.289],[0.256,0.361],[-0.019,0.611],[0.022,0.681],[0.006,0.717],[0.073,0.79],[0.047,0.855],[0.106,0.949],[-0.38,0.926],[-0.587,0.985],[-0.772,1.241],[-0.861,1.584],[-0.978,1.777],[-1.059,1.732],[-1.161,1.81],[-1.265,1.751],[-1.344,1.81],[-1.366,1.775],[-1.562,1.767],[-1.667,1.844],[-1.737,1.834],[-1.757,1.886],[-1.807,1.863],[-2.016,1.951],[-2.07,2.022],[-2.171,1.966],[-2.224,1.993],[-2.219,1.872],[-2.118,1.787],[-2.116,1.712],[-2.185,1.607],[-2.218,1.595],[-2.202,1.637],[-2.239,1.604],[-2.273,1.657],[-2.259,1.582],[-2.313,1.541],[-2.339,1.574],[-2.375,1.471],[-2.428,1.43],[-2.449,1.49],[-2.425,1.546],[-2.285,1.678],[-2.26,1.761],[-2.292,1.836],[-2.374,1.854],[-2.419,1.765],[-2.393,1.716],[-2.422,1.699],[-2.414,1.645],[-2.472,1.625],[-2.478,1.522],[-2.519,1.508],[-2.551,1.37],[-2.686,1.314],[-2.564,1.581],[-2.823,1.484],[-2.894,1.388],[-2.864,1.324],[-2.958,1.116],[-3.09,1.002],[-3.239,1.027],[-3.342,0.993],[-3.509,1.113],[-3.917,1.089],[-4.0,1.254],[-4.255,1.081],[-4.482,1.044],[-4.48,1.105],[-4.572,1.115],[-4.577,1.197],[-4.76,1.251],[-4.798,1.356],[-4.962,1.352],[-4.963,1.244],[-5.026,1.221],[-5.113,1.44],[-5.256,1.46],[-5.201,1.503],[-5.212,1.54],[-5.42,1.628],[-5.663,1.637],[-5.807,1.534],[-5.989,1.512],[-6.031,1.625],[-6.295,1.652],[-6.337,1.708],[-6.527,1.714],[-6.611,1.778],[-6.602,1.877],[-6.705,2.331],[-6.923,2.372],[-6.922,5.826],[-5.901,6.722],[-3.986,8.668],[-2.936,9.627],[-2.851,9.869],[-2.646,9.858],[-2.287,9.553],[-2.029,9.437],[-1.762,9.076],[-1.784,9.003],[-1.738,9.05],[-1.604,8.993],[-1.611,8.947],[-1.35,8.932],[-0.871,8.729],[-0.644,8.698],[-0.394,8.563],[-0.268,8.409],[-0.088,8.346],[-0.083,8.303],[-0.146,8.273],[-0.271,8.101],[-0.289,7.991],[-0.132,8.244],[-0.001,8.297],[0.273,8.242],[0.736,8.319],[0.866,8.259],[0.861,8.215],[0.954,8.224],[0.981,8.131],[0.966,8.229],[0.888,8.283],[1.241,8.197],[1.388,8.234],[1.435,8.172],[1.4,8.106],[1.443,8.153],[1.68,8.164],[1.828,8.064],[1.814,8.165],[1.878,8.103],[1.85,8.037],[1.861,7.931],[1.913,7.845],[1.745,7.362],[1.75,7.209],[1.786,7.119],[1.88,7.068],[1.957,6.799],[1.898,6.604],[1.968,6.274],[1.875,6.212],[1.84,5.961],[1.977,5.88],[2.1,5.682],[2.347,5.456],[2.351,5.352],[2.402,5.302],[2.167,5.254],[2.125,5.187],[2.211,5.239],[2.386,5.233],[2.487,5.101],[2.736,5.008],[2.796,4.895],[2.854,4.88],[3.001,4.713],[3.059,4.524],[3.112,4.464],[3.121,4.364],[2.965,4.278],[2.718,4.028],[2.774,4.05],[2.766,4.008],[2.822,4.116],[2.936,4.156],[3.142,4.339],[3.412,4.255]],[[1.447,-1.031],[1.494,-1.008],[1.472,-1.08],[1.529,-1.156],[1.642,-1.15],[1.678,-1.214],[1.699,-1.151],[1.646,-1.098],[1.842,-1.008],[1.932,-1.162],[2.013,-1.035],[2.095,-1.022],[2.122,-1.051],[2.109,-1.108],[2.169,-1.12],[2.15,-1.215],[2.182,-1.268],[2.262,-1.095],[2.281,-1.139],[2.246,-1.202],[2.328,-1.2],[2.237,-1.394],[2.139,-1.479],[2.05,-1.44],[2.116,-1.423],[2.209,-1.299],[2.001,-1.441],[1.576,-1.207],[1.219,-1.126],[1.237,-1.035],[1.302,-1.081],[1.326,-1.039],[1.375,-1.07]]];
   const K=Math.cos(47*Math.PI/180),proj=(lat,lon)=>[(lon+85)*K,lat-47];
   // same order as OFFICES
+  if(LITE())return still();/* switched to lite while three.js loaded */
   const LL=[[43.8425,-79.385],[43.8441,-79.3861],[42.9596,-81.3321],[42.7779,-81.1861],[43.2343,-79.7618],[46.4724,-81.008],[43.7513,-79.7388],[43.5091,-79.6728],[43.6074,-79.6178],[43.8516,-79.3882]];/* geocoded from each office's street address (OpenStreetMap); HQ = across Hwy 7 from 500 Hwy 7 E */
   const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.outputColorSpace=T.SRGBColorSpace;r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=.9;r.shadowMap.enabled=true;r.shadowMap.type=T.PCFShadowMap;
   const scene=new T.Scene(),cam=new T.PerspectiveCamera(30,1,.1,200);
@@ -1510,7 +1514,7 @@ else if(host){(async()=>{
   const pillBox=document.querySelector('.v6-loc .ml-loc-pills');
   if(pillBox){pillBox.addEventListener('pointerleave',()=>reset());pillBox.addEventListener('focusout',e=>{if(!pillBox.contains(e.relatedTarget))reset()})}
   addEventListener('resize',fit);
-  function go(){if(vis&&!raf){clock.getDelta();raf=requestAnimationFrame(tick)}}
+  function go(){if(vis&&!raf&&!LITE()){clock.getDelta();raf=requestAnimationFrame(tick)}}
   function tick(){raf=0;const dt=Math.min(clock.getDelta(),.05),e=1-Math.pow(.001,dt);
     if(goal)pivot.position.lerp(goal,reduce?1:e*1.6>1?1:e*1.6);
     if(!reduce&&base){const z=Math.min(1,e*.4);/* slow ease, ~1.5s */cf.lerp(gf,z);cv+=(gv-cv)*z;aim()}
@@ -1530,7 +1534,8 @@ else if(host){(async()=>{
     
     r.render(scene,cam);
     const moving=!reduce||Math.abs(spinTo-spin)>.001||(goal&&pivot.position.distanceTo(goal)>.001);
-    if(vis&&moving)raf=requestAnimationFrame(tick)}
+    if(vis&&moving&&!LITE())raf=requestAnimationFrame(tick)}
+  addEventListener('mib:lite',()=>{cancelAnimationFrame(raf);raf=0;vis=false;still();r.dispose()});/* page turned out too slow: swap in the still */
   new IntersectionObserver(([en])=>{vis=en.isIntersecting;if(!vis)reset(true);go()}).observe(host);
   let seen=reduce,t0=-1;new IntersectionObserver(([en])=>{if(!seen&&en.intersectionRatio>=.3){seen=true;go()}},{threshold:.3}).observe(host);
   new ResizeObserver(fit).observe(host);fit();
