@@ -116,3 +116,5 @@ html[data-theme=dark] .ml-art-line{--ink:#f3f1ea;--paper:#1c1c1e}
 @keyframes ta-float{50%{transform:translateY(-2%) rotate(1deg)}}
 @keyframes ta-wiggle{30%{transform:scale(1.08) rotate(-10deg)}55%{transform:scale(1.05) rotate(8deg)}80%{transform:rotate(-3deg)}}
 @media (prefers-reduced-motion:reduce){.ml-protect-art .tile-anim *{animation:none!important}}
+
+/* lite mode (weak machines, see js/lite.js): no backdrop blurs, they redraw on the CPU every scroll */html[data-lite] *,html[data-lite] *::before,html[data-lite] *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}

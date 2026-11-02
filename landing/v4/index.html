@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head><script src="/static/js/lite.js?v=20261102a"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MIB Landing Exploration</title>
@@ -657,6 +657,9 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 /* map style arrows: the product cards' buttons, on the map's own edges */.v4-ont .ml-art-nav.is-prev{left:12px}.v4-ont .ml-art-nav.is-next{right:12px}.v4-ont:hover .ml-art-nav{opacity:1}
 .v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none;--fx:linear-gradient(to right,#000 calc(100% - 160px),transparent);--fy:linear-gradient(to bottom,transparent,#000 20%);-webkit-mask-image:var(--fx),var(--fy);-webkit-mask-composite:source-in;mask-image:var(--fx),var(--fy);mask-composite:intersect}/* zoomed in, the map reaches the canvas's right and top edges: fade instead of a hard cut (top 20% ~ the extra canvas above, et in fit()) */
 .v6-loc .ml-loc-copy .ml-v2-loc-card{margin-top:28px}
+/* lite mode: still of the map, placed where the WebGL canvas draws it; no backdrop blurs (they redraw on the CPU every scroll) */
+.v4-ont-still{position:absolute;left:-6.45%;top:-22.6%;width:121%;height:auto;max-width:none;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%);mask-image:linear-gradient(to bottom,transparent,#000 22%)}html[data-theme=dark] .v4-ont-still.is-light,html:not([data-theme=dark]) .v4-ont-still.is-dark{display:none}
+html[data-lite] *,html[data-lite] *::before,html[data-lite] *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v4-ont{max-width:440px;margin-inline:auto}}
 /* soft yellow glow behind the Ontario map (left on desktop, under the copy when stacked) */
 .v6-loc .ml-v2-locations{isolation:isolate;--glow-at:ellipse 42% 58% at 24% 56%;--glow:246,212,56;--glow-a:.34}
@@ -664,7 +667,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 html[data-theme=dark] .v6-loc .ml-v2-locations{--glow-a:.16}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v6-loc .ml-v2-locations{--glow-at:ellipse 70% 30% at 50% 78%}}
 </style>
-<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261029f">
+<link rel="stylesheet" href="/static/_next/static/css/2a41b0aba88d4d69.css?v=20261102a">
 <style>@property --fx{syntax:"<percentage>";inherits:true;initial-value:100%}
 @property --fy{syntax:"<percentage>";inherits:true;initial-value:0%}
 @property --gx{syntax:"<length>";inherits:false;initial-value:0px}
@@ -1146,7 +1149,7 @@ document.getElementById('quote-form').addEventListener('submit',e=>{e.preventDef
 <script type="module">
 // V2's 3D footer logo, recoloured for V4: cream body, bronze shield on navy
 const box=document.querySelector('.v5f-3d');
-if(box&&true){(async()=>{
+if(box&&!document.documentElement.hasAttribute('data-lite')){(async()=>{/* lite mode: the flat logo fallback stays */
   const [T,{GLTFLoader},{RoomEnvironment}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js')]);
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.toneMapping=T.ACESFilmicToneMapping;r.outputColorSpace=T.SRGBColorSpace;
@@ -1322,7 +1325,9 @@ sec.addEventListener('pointerleave',()=>{tx=0;ty=0;go()});
 // locations: extruded 3D Ontario (outline from public boundary data, lon/lat projected at 47N) with a pin per office;
 // one MIB shield floats over the shown office, glides there and spins when a pill is hovered
 const host=document.querySelector('.v4-ont');
-if(host){(async()=>{
+/* lite mode (weak machines, see js/lite.js): a still of the map instead of the WebGL scene */
+if(host&&document.documentElement.hasAttribute('data-lite'))host.innerHTML=['light','dark'].map(t=>`<img class="v4-ont-still is-${t}" src="/static/landing/v4/map-${t}.webp" alt="" decoding="async">`).join('');
+else if(host){(async()=>{
   const [T,{GLTFLoader},{RoomEnvironment},{toCreasedNormals},{DRACOLoader},{LineSegments2},{LineSegmentsGeometry},{LineMaterial}]=await Promise.all([import('https://esm.sh/three@0.170.0'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/GLTFLoader.js'),import('https://esm.sh/three@0.170.0/examples/jsm/environments/RoomEnvironment.js'),import('https://esm.sh/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js'),import('https://esm.sh/three@0.170.0/examples/jsm/loaders/DRACOLoader.js'),...['LineSegments2','LineSegmentsGeometry','LineMaterial'].map(f=>import(`https://esm.sh/three@0.170.0/examples/jsm/lines/${f}.js`))]);
   // landmark models (modelled in Blender, Draco-compressed); fetched now, placed further down
   const lmP=new GLTFLoader().setDRACOLoader(new DRACOLoader().setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/')).loadAsync('/static/landing/v4-landmarks.glb');
