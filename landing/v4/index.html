@@ -655,7 +655,7 @@ html[data-theme=dark] .mib-version-switch-item:not([data-active]):hover{color:#f
 /* locations: 3D Ontario map on the left (replaces the Google map), office card under the pills */
 .v4-ont{position:relative;aspect-ratio:1/1;width:100%;max-width:620px;justify-self:center}
 /* map style arrows: the product cards' buttons, on the map's own edges */.v4-ont .ml-art-nav.is-prev{left:12px}.v4-ont .ml-art-nav.is-next{right:12px}.v4-ont:hover .ml-art-nav{opacity:1}
-.v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 160px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 160px),transparent)}/* zoomed in, the map reaches the canvas's right edge: fade instead of a hard cut */
+.v4-ont canvas{position:absolute;top:0;left:0;display:block;pointer-events:none;--fx:linear-gradient(to right,#000 calc(100% - 160px),transparent);--fy:linear-gradient(to bottom,transparent,#000 20%);-webkit-mask-image:var(--fx),var(--fy);-webkit-mask-composite:source-in;mask-image:var(--fx),var(--fy);mask-composite:intersect}/* zoomed in, the map reaches the canvas's right and top edges: fade instead of a hard cut (top 20% ~ the extra canvas above, et in fit()) */
 .v6-loc .ml-loc-copy .ml-v2-loc-card{margin-top:28px}
 @media (max-width:1100px), (max-aspect-ratio:6/5){.v4-ont{max-width:440px;margin-inline:auto}}
 /* soft yellow glow behind the Ontario map (left on desktop, under the copy when stacked) */
@@ -829,7 +829,7 @@ html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important
 .v4-art{overflow:hidden}
 .v4-art>*{position:absolute;pointer-events:none}
 .v4-art .v4-bg{left:-5%;top:-5%;width:110%!important;height:110%!important;max-width:none;object-fit:cover;will-change:translate;translate:calc(var(--mx,0) * -12px) calc(var(--my,0) * -8px + var(--sy,0) * .3px)}
-.v4-wash{inset:0;background:linear-gradient(180deg,#fff 18.7%,rgba(255,255,255,.4) 55%,rgba(255,255,255,0) 82%)} /* no yellow glow; the wash clears toward the bottom so the photo's real colour shows */
+.v4-wash{inset:0;background:linear-gradient(180deg,#fff 0,rgba(255,255,255,.9) 10%,rgba(255,255,255,.72) 22%,rgba(255,255,255,.52) 36%,rgba(255,255,255,.32) 50%,rgba(255,255,255,.14) 64%,rgba(255,255,255,0) 82%)} /* no yellow glow; one eased fade from the top (no solid white band behind the logos), clearing toward the bottom so the photo's real colour shows */
 /* narrow desktop windows (1101–1279px, e.g. half-width): compact nav so labels don't wrap, hero copy clears the nav */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1279px){.nav{gap:12px;padding-inline:20px 14px}.nav-logo img{height:40px}.nav-links{gap:0}.nav-links a{padding:10px 10px;font-size:15px;white-space:nowrap}.nav .btn{min-height:46px;padding:0 18px;font-size:14px;white-space:nowrap}.nav .theme-toggle{width:46px;height:46px}}
 /* hero copy: centred around 40% of the window height, but the buttons always end above the family's heads; never closer to the nav than ~50px */
