@@ -55,6 +55,13 @@
     var cards = arts.map(function (a) { var n = a.firstElementChild; return n && read(n) })
     if (!arts.length || cards.some(function (c) { return !c })) return
     var k = cards[0].style, busy = false
+    // a page that ships an inline-style SVG as a plain <img> (V4's mono default) gets it inlined, so its hover and dark-mode ink work
+    arts.forEach(function (a, i) {
+      var n = a.firstElementChild, src = STYLES[cards[i].kind][cards[i].style]
+      if (n.tagName.toLowerCase() === 'img' && /\.svg$/.test(src) && src.indexOf('/v3/icons/') < 0) {
+        var box = make(cards[i].kind, cards[i].style, src); box.ready.then(function () { if (n.isConnected) a.replaceChild(box, n) })
+      }
+    })
     // one element per style per card; the page's own artwork is kept so its animations come back intact
     var els = arts.map(function (a, i) {
       return STYLES[cards[i].kind].map(function (src, s) {
