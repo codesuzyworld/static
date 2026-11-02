@@ -1220,7 +1220,8 @@ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).o
   const sec=document.querySelector('.v6-hero .ml-hero-v2');if(!sec)return;
   [['.ml-stage-art .ml-abs>.ml-w>.ml-w'],['.ml-word-inner'],['.ml-hero-copy-v2>.ml-w']].forEach(([q])=>sec.querySelectorAll(q).forEach((el,i)=>el.style.setProperty('--i',i)));
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const set=()=>{const p=reduce?1:Math.min(scrollY/500,1);sec.style.setProperty('--ml-hero-inset',3.47*p+'%');sec.style.setProperty('--ml-hero-radius',48*p+'px');sec.style.setProperty('--ml-hero-p',p)};
+  const lite=document.documentElement.hasAttribute('data-lite');/* lite mode: stays full screen instead of jumping to the panel */
+  const set=()=>{const p=lite?0:reduce?1:Math.min(scrollY/500,1);sec.style.setProperty('--ml-hero-inset',3.47*p+'%');sec.style.setProperty('--ml-hero-radius',48*p+'px');sec.style.setProperty('--ml-hero-p',p)};
   addEventListener('scroll',set,{passive:true});set();
 })();
 // card light follows the pointer, clamped to the top-right corner; eases back to the corner on leave
