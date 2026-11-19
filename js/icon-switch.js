@@ -1,24 +1,24 @@
 /* icon-switch.js: demo arrows at the screen edges of the "What do you need to protect" cards (V1 + V2).
-   Each arrow moves every card to the previous / next icon style (mono, iso, glass, line, flat, 3D); the solid and deco sets are parked in /versioning/icons, one card after another.
+   Each arrow moves every card to the previous / next icon style (pencil, mono, iso, glass, line, flat, 3D); the solid and deco sets are parked in /versioning/icons, one card after another.
    Cards are matched by kind (auto, home, condo, business), so any card order works; rows with other cards are left alone. */
 ;(function () {
   if (window.__iconSwitch) return
   window.__iconSwitch = 1
   var STYLES = {
-    auto: ['/static/landing/v4/mono/auto.svg', '/static/landing/v4/iso/auto.svg', '/static/landing/v4/glass/auto.svg', '/static/landing/line-auto-anim.svg', '/static/landing/v3/icons/car.svg', '/static/landing/v4/auto.webp'],
-    home: ['/static/landing/v4/mono/home.svg', '/static/landing/v4/iso/home.svg', '/static/landing/v4/glass/home.svg', '/static/landing/line-home-anim.svg', '/static/landing/v3/icons/house.svg', '/static/landing/v4/home.webp'],
-    condo: ['/static/landing/v4/mono/condo.svg', '/static/landing/v4/iso/condo.svg', '/static/landing/v4/glass/condo.svg', '/static/landing/line-condo-anim.svg', '/static/landing/v3/icons/condo.svg', '/static/landing/v4/condo.webp'],
-    business: ['/static/landing/v4/mono/business.svg', '/static/landing/v4/iso/business.svg', '/static/landing/v4/glass/business.svg', '/static/landing/line-business-anim.svg', '/static/landing/v3/icons/store.svg', '/static/landing/v4/business-cafe.webp']
+    auto: ['/static/landing/v4/pencil/auto.svg', '/static/landing/v4/mono/auto.svg', '/static/landing/v4/iso/auto.svg', '/static/landing/v4/glass/auto.svg', '/static/landing/line-auto-anim.svg', '/static/landing/v3/icons/car.svg', '/static/landing/v4/auto.webp'],
+    home: ['/static/landing/v4/pencil/home.svg', '/static/landing/v4/mono/home.svg', '/static/landing/v4/iso/home.svg', '/static/landing/v4/glass/home.svg', '/static/landing/line-home-anim.svg', '/static/landing/v3/icons/house.svg', '/static/landing/v4/home.webp'],
+    condo: ['/static/landing/v4/pencil/condo.svg', '/static/landing/v4/mono/condo.svg', '/static/landing/v4/iso/condo.svg', '/static/landing/v4/glass/condo.svg', '/static/landing/line-condo-anim.svg', '/static/landing/v3/icons/condo.svg', '/static/landing/v4/condo.webp'],
+    business: ['/static/landing/v4/pencil/business.svg', '/static/landing/v4/mono/business.svg', '/static/landing/v4/iso/business.svg', '/static/landing/v4/glass/business.svg', '/static/landing/line-business-anim.svg', '/static/landing/v3/icons/store.svg', '/static/landing/v4/business-cafe.webp']
   }
   var ALIAS = { car: 'auto', house: 'home', store: 'business', cafe: 'business' }
   // V3's flat icons are a small layered build (shadow, speed lines, accessory) animated by .tile-anim CSS in the shared stylesheet
   var FLAT = { auto: '<span class="ta-speed"><i></i><i></i><i></i></span>', home: 'shield', condo: 'key', business: 'briefcase' }
   var svgs = {} // SVG sets are inlined so their own animations run and react to the card's hover (an <img> can't see :hover outside it)
-  var V = '20261102d' // bump when the icon SVGs change, so browsers don't keep old copies
+  var V = '20261119l' // bump when the icon SVGs change, so browsers don't keep old copies
   var N = STYLES.auto.length
   var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
-  // what an art node shows: kind from its file name (img) or class (V1 inlines the mono icons as <svg class="mi-auto ...">)
+  // what an art node shows: kind from its file name (img) or class (V1 inlines the pencil icons as <svg class="pi-auto ...">)
   function read(node) {
     var id = node.getAttribute('src') || node.getAttribute('class') || ''
     var m = /(auto|car|home|house|condo|business|store|cafe)/.exec(id.split('/').pop())
