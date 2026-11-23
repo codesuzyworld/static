@@ -836,7 +836,7 @@ html[data-theme=dark] .nav .mega-surface{background:rgba(24,24,26,.98)!important
 /* narrow desktop windows (1101–1279px, e.g. half-width): compact nav so labels don't wrap, hero copy clears the nav */
 @media (min-width:1101px) and (min-aspect-ratio:1201/1000) and (max-width:1279px){.nav{gap:12px;padding-inline:20px 14px}.nav-logo img{height:40px}.nav-links{gap:0}.nav-links a{padding:10px 10px;font-size:15px;white-space:nowrap}.nav .btn{min-height:46px;padding:0 18px;font-size:14px;white-space:nowrap}.nav .theme-toggle{width:46px;height:46px}}
 /* hero copy: centred around 40% of the window height, but the buttons always end above the family's heads; never closer to the nav than ~50px */
-@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero{--hh:max(100svh,940px);--fw:min(78vw,calc(var(--hh) * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,min(calc(var(--hh) * .4 - 130px),calc(var(--hh) - var(--fw) * .408 - 314px)))!important}}
+@media (min-width:1101px) and (min-aspect-ratio:1201/1000){.v6-hero{--hh:max(100svh,940px);--fw:min(78vw,calc(var(--hh) * .6 * 2516 / 1295))}.v6-hero .ml-hero-copy-v2{top:max(218px,calc(var(--hh) * .1 + 160px),min(calc(var(--hh) * .4 - 130px),calc(var(--hh) - var(--fw) * .408 - 314px)))!important}@media (min-width:1101px) and (max-height:900px){.v6-hero .ml-hero-copy-v2{scale:.88;transform-origin:50% 0}}}
 /* .block's padding shorthand was zeroing .wrap's side padding: content touched the screen edge below ~1330px */
 main>section.block.wrap{padding-inline:clamp(16px,3vw,24px)}
 /* mega menu: 3D renders (same style as the product cards) instead of glyph tiles */
