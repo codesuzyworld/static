@@ -1619,7 +1619,7 @@ function spinIn(stack){
     if(on&&!stack.dataset.in){stack.dataset.in=1;cards.map(function(c,i){return i}).sort(function(a,b){return rest[b]-rest[a]}).forEach(function(i,k){p[i]=2.6;move(i,rest[i]+3,k*70)})/* scroll in from above */}
     clearInterval(iv);if(on)iv=setInterval(step,3500)},{threshold:.35}).observe(stack)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build()})()</script>
-<script src="/static/js/icon-switch.js?v=20261119m" defer></script>
+<script src="/static/js/icon-switch.js?v=20261123a" defer></script>
 <script>/* V2 hero: the photo only changes when clicked (no auto-cycling) */(function(){const f=[...document.querySelectorAll('.v4-art .v4-fam')];if(f.length<2)return;let i=0;const bg=[...document.querySelectorAll('.v4-art .v4-bg-alt')];
 const step=()=>{f[i].classList.remove('is-on');i=(i+1)%f.length;f[i].classList.add('is-on');bg.forEach((b,k)=>b.classList.toggle('is-on',k===i-1));f[i].closest('.v4-art').classList.toggle('is-alt',i>0)};
 document.addEventListener('click',e=>{if(e.target.closest('a,button,input,select,textarea'))return;const r=f[i].getBoundingClientRect();if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)step()})})();</script>
