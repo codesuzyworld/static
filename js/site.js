@@ -331,12 +331,12 @@
     '@keyframes ml-icon-float{0%,100%{transform:translateY(-2px)}50%{transform:translateY(-7px)}}' +
     '@media (prefers-reduced-motion:reduce){.ml-protect:hover .ml-protect-art svg.ml-anim-icon{animation:none}}' +
     'html[data-theme=dark] .ml-protect-art svg.ml-anim-icon{--ink:#f3f1ea;--paper:#1c1c1e}' + // the mono set draws in --ink
-    // V1 hero: a set width on ultrawide screens, so the family photo stops scaling with the window
+    // V1 hero: on desktop the scene is sized by the screen height too (max 1920px wide), so short, wide windows don't blow the people up past the screen
     '.ml-hero-v3 .ml-stage{max-width:1920px!important;margin-inline:auto}' +
-    // past 1920px the scene keeps its 1920px size; the sky/sand backdrop spans the full window width and height
+    '@media (min-width:1101px) and (min-aspect-ratio:6/5){.ml-hero-v3 .ml-stage{max-width:min(1920px,147svh)!important}}' +
+    // whenever the scene is narrower than the window, the sky/sand backdrop spans the full window width and height
     // (fading the whole capped scene read as a box), and the photo layers fade softly at the bottom
-    '@media (min-width:1921px){.ml-hero-v3{overflow-x:clip}.ml-hero-v3::after{top:auto!important;height:90px!important}' + // short bottom fade so the sand stays visible
-   
+    '@media (min-width:1101px) and (min-aspect-ratio:147/100),(min-width:1921px){.ml-hero-v3{overflow-x:clip}.ml-hero-v3::after{top:auto!important;height:90px!important}' +
     '.ml-hero-v3 .ml-v3-hero-bg{-webkit-mask-image:none!important;mask-image:none!important;overflow:visible!important}' +
     '.ml-hero-v3 .ml-v3-hero-bg img[data-layer=bd]{left:calc(50% - 50vw)!important;width:100vw!important;top:0!important;bottom:auto!important;height:max(100%,100svh)!important;object-fit:cover!important;object-position:50% 100%!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%)}' +
     '.ml-hero-v3 .ml-v3-hero-bg img.ml-cover:not([data-layer]){-webkit-mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important}' +
