@@ -335,7 +335,8 @@
     '.ml-hero-v3 .ml-stage{max-width:1920px!important;margin-inline:auto}' +
     // past 1920px the scene keeps its 1920px size; the sky/sand backdrop spans the full window width and height
     // (fading the whole capped scene read as a box), and the photo layers fade softly at the bottom
-    '@media (min-width:1921px){.ml-hero-v3{overflow-x:clip}' +
+    '@media (min-width:1921px){.ml-hero-v3{overflow-x:clip}.ml-hero-v3::after{top:auto!important;height:90px!important}' + // short bottom fade so the sand stays visible
+   
     '.ml-hero-v3 .ml-v3-hero-bg{-webkit-mask-image:none!important;mask-image:none!important;overflow:visible!important}' +
     '.ml-hero-v3 .ml-v3-hero-bg img[data-layer=bd]{left:calc(50% - 50vw)!important;width:100vw!important;top:0!important;bottom:auto!important;height:max(100%,100svh)!important;object-fit:cover!important;object-position:50% 100%!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%)}' +
     '.ml-hero-v3 .ml-v3-hero-bg img.ml-cover:not([data-layer]){-webkit-mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important}' +
