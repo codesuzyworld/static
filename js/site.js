@@ -311,7 +311,7 @@
   function inlineIcons() {
     $$('.ml-protect-art img[src*="-anim.svg"]').forEach(function (img) {
       // V1 shows the pencil set by default (mono, then the gold line set, follow in icon-switch.js)
-      fetch(img.getAttribute('src').split('#')[0].replace(/line-(\w+)-anim\.svg.*/, 'v4/pencil/$1.svg?v=20261123a')).then(function (r) { return r.ok ? r.text() : null }).then(function (t) {
+      fetch(img.getAttribute('src').split('#')[0].replace(/line-(\w+)-anim\.svg.*/, 'v4/pencil/$1.svg?v=20261123b')).then(function (r) { return r.ok ? r.text() : null }).then(function (t) {
         if (!t || !img.isConnected) return
         var box = document.createElement('div'); box.innerHTML = t
         var svg = box.querySelector('svg'); if (!svg) return
@@ -330,7 +330,7 @@
     '.ml-protect:hover .ml-protect-art svg.ml-anim-icon{animation:ml-icon-float 2.6s cubic-bezier(.45,0,.55,1) infinite}' +
     '@keyframes ml-icon-float{0%,100%{transform:translateY(-2px)}50%{transform:translateY(-7px)}}' +
     '@media (prefers-reduced-motion:reduce){.ml-protect:hover .ml-protect-art svg.ml-anim-icon{animation:none}}' +
-    'html[data-theme=dark] .ml-protect-art svg.ml-anim-icon{filter:brightness(1.25);--ink:#f3f1ea;--paper:#1c1c1e}' // the mono set draws in --ink
+    'html[data-theme=dark] .ml-protect-art svg.ml-anim-icon{--ink:#f3f1ea;--paper:#1c1c1e}' // the mono set draws in --ink
   document.head.appendChild(st)
 
   function init() {
@@ -338,7 +338,7 @@
     watch(document)
     megas(); mobile(); locations(); tilt(); form(); floats(); depth(); navScrolled(); inlineIcons(); pinFade()
     // demo: icon-style switcher on the product cards
-    if (document.querySelector('.ml-v3-protect .ml-protect-art')) { var sw = document.createElement('script'); sw.src = '/static/js/icon-switch.js?v=20261123a'; document.body.appendChild(sw) }
+    if (document.querySelector('.ml-v3-protect .ml-protect-art')) { var sw = document.createElement('script'); sw.src = '/static/js/icon-switch.js?v=20261123b'; document.body.appendChild(sw) }
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 })()
