@@ -333,8 +333,14 @@
     'html[data-theme=dark] .ml-protect-art svg.ml-anim-icon{--ink:#f3f1ea;--paper:#1c1c1e}' + // the mono set draws in --ink
     // V1 hero: a set width on ultrawide screens, so the family photo stops scaling with the window
     '.ml-hero-v3 .ml-stage{max-width:1920px!important;margin-inline:auto}' +
-    // fade the scene's sides into the page so the capped width has no hard edge (keeps the existing top fade)
-    '@media (min-width:1921px){.ml-hero-v3 .ml-v3-hero-bg{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%),linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)!important;mask-image:linear-gradient(to bottom,transparent 0,#000 7%),linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)!important;-webkit-mask-composite:source-in;mask-composite:intersect}}'
+    // past 1920px the scene keeps its 1920px size; the sky/sand backdrop spans the full window width and height
+    // (fading the whole capped scene read as a box), and the photo layers fade softly at the bottom
+    '@media (min-width:1921px){.ml-hero-v3{overflow-x:clip}' +
+    '.ml-hero-v3 .ml-v3-hero-bg{-webkit-mask-image:none!important;mask-image:none!important;overflow:visible!important}' +
+    '.ml-hero-v3 .ml-v3-hero-bg img[data-layer=bd]{left:calc(50% - 50vw)!important;width:100vw!important;top:0!important;bottom:auto!important;height:max(100%,100svh)!important;object-fit:cover!important;object-position:50% 100%!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%);mask-image:linear-gradient(to bottom,transparent 0,#000 7%)}' +
+    '.ml-hero-v3 .ml-v3-hero-bg img.ml-cover:not([data-layer]){-webkit-mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important;mask-image:linear-gradient(to bottom,#000 85%,transparent 100%)!important}' +
+    // the riders photo is not a cutout, so it alone also fades at the sides (the cutouts keep their full width)
+    '.ml-hero-v3 .ml-v3-hero-bg img.ml-cover[src*="riders"]:not([data-layer]){-webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent),linear-gradient(to bottom,#000 85%,transparent 100%)!important;mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent),linear-gradient(to bottom,#000 85%,transparent 100%)!important;-webkit-mask-composite:source-in!important;mask-composite:intersect!important}}'
   document.head.appendChild(st)
 
   function init() {
@@ -342,7 +348,7 @@
     watch(document)
     megas(); mobile(); locations(); tilt(); form(); floats(); depth(); navScrolled(); inlineIcons(); pinFade()
     // demo: icon-style switcher on the product cards
-    if (document.querySelector('.ml-v3-protect .ml-protect-art')) { var sw = document.createElement('script'); sw.src = '/static/js/icon-switch.js?v=20261123f'; document.body.appendChild(sw) }
+    if (document.querySelector('.ml-v3-protect .ml-protect-art')) { var sw = document.createElement('script'); sw.src = '/static/js/icon-switch.js?v=20261123h'; document.body.appendChild(sw) }
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init()
 })()
@@ -404,16 +410,17 @@ function wire(){[].forEach.call(document.querySelectorAll(".ml-about-value"),fun
 var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,150)}).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState!=="loading")wire();else document.addEventListener("DOMContentLoaded",wire)})();
 ;(function(){if(typeof document==="undefined")return;
 // V1 footer logo: inline the classed SVG so shield, m, i, b and tagline can fade in one after another
+// each copy gets its own gradient/mask ids: duplicate ids point at the first copy, and a hidden first copy blanks the shield
 var svg=null;
 function wire(){var img=document.querySelector(".ml-footer-v1 .ml-footer-logo img");if(!img||img.dataset.anim)return;img.dataset.anim="1";
-fetch("/static/brand/miblogo-dark-anim.svg").then(function(r){return r.text()}).then(function(t){var box=document.createElement("span");box.className="ml-logo-anim";box.setAttribute("aria-hidden","true");box.innerHTML=t;var s=box.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");img.after(box);
+fetch("/static/brand/miblogo-dark-anim.svg").then(function(r){return r.text()}).then(function(t){var box=document.createElement("span");box.className="ml-logo-anim";box.setAttribute("aria-hidden","true");box.innerHTML=t.replace(/_7747_4675/g,"_l"+(window.__logoN=(window.__logoN||0)+1));var s=box.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");img.after(box);
 if(!("IntersectionObserver" in window)){box.classList.add("is-in");return}
 new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("is-in",e.isIntersecting)})},{threshold:.35}).observe(box)}).catch(function(){})}
 var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(wire,200)}).observe(document.documentElement,{childList:true,subtree:true});if(document.readyState!=="loading")wire();else document.addEventListener("DOMContentLoaded",wire)})();
 ;(function(){if(typeof document==="undefined")return;
 // V3 nav + footer logos (and V1 footer ink): inline the classed SVG so its parts fade in one after another
 var txt=null,io="IntersectionObserver" in window?new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle("is-in",e.isIntersecting)})},{threshold:.3}):null;
-function make(ink,extra){var b=document.createElement("span");b.className="ml-logo-anim"+(extra?" "+extra:"");b.setAttribute("aria-hidden","true");b.dataset.ink=ink;b.innerHTML=txt;var s=b.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");s.setAttribute("preserveAspectRatio","xMinYMid meet");if(io)io.observe(b);else b.classList.add("is-in");return b}
+function make(ink,extra){var b=document.createElement("span");b.className="ml-logo-anim"+(extra?" "+extra:"");b.setAttribute("aria-hidden","true");b.dataset.ink=ink;b.innerHTML=txt.replace(/_7747_4675/g,"_l"+(window.__logoN=(window.__logoN||0)+1));var s=b.querySelector("svg");s.removeAttribute("width");s.removeAttribute("height");s.setAttribute("preserveAspectRatio","xMinYMid meet");if(io)io.observe(b);else b.classList.add("is-in");return b}
 function wire(){if(!txt)return;
 [].forEach.call(document.querySelectorAll(".ml-footer-v1 .ml-logo-anim:not([data-ink])"),function(b){b.dataset.ink="theme"});
 [].forEach.call(document.querySelectorAll(".mib-v3-footer img[src*='miblogo']:not([data-anim])"),function(i){i.dataset.anim="1";i.style.display="none";i.after(make("white"))});
